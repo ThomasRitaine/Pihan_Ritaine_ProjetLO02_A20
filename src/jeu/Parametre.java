@@ -9,14 +9,16 @@ public class Parametre {
     private int nombreJoueurHumain;
     private int nombreJoueurIA;
     private FormesPlateau formePlateau;
+    private int nbManche;
 
     
 //	Constructeur
-    public Parametre(int nbJoueur, int nbJoueurHumain, FormesPlateau formePlateau) {
+    public Parametre(int nbJoueur, int nbJoueurHumain, FormesPlateau formePlateau, int nbManche) {
     	this.nombreJoueurs = nbJoueur;
     	this.nombreJoueurHumain = nbJoueurHumain;
     	this.nombreJoueurIA = nbJoueur - nbJoueurHumain;
     	this.formePlateau = formePlateau;
+    	this.setNbManche(nbJoueur);
     }
     
 //	Getter et Setter
@@ -51,5 +53,13 @@ public class Parametre {
     public FormesPlateau getFormePlateau() {
         return this.formePlateau;
     }
+
+	public int getNbManche() {
+		return nbManche;
+	}
+
+	public void setNbManche(int nbManche) {
+		this.nbManche = nbManche;
+	}
 
 }

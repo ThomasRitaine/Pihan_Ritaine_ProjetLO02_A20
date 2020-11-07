@@ -15,7 +15,6 @@ public class Pioche {
 	private static boolean cree = false;
 	
 //	Attributs
-    	//private Carte[] cartes = new Carte[18];
     private Queue<Carte> cartes;
 
     
@@ -41,7 +40,7 @@ public class Pioche {
 
 
 //	Obtenir une instance du singleton
-    public Pioche getPioche() {
+    public static Pioche getPioche() {
     	Pioche pioche = null;
     	if (!Pioche.cree) {
 			pioche = new Pioche();
@@ -64,5 +63,11 @@ public class Pioche {
 		}
 		return cartePiochee;
     }
+    
+
+//	Supprimer l'instance de Pioche
+    public static void supprime() {
+		Pioche.cree = false;
+	}
 
 }

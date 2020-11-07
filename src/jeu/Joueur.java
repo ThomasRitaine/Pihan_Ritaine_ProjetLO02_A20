@@ -30,6 +30,10 @@ public class Joueur {
     String getNom() {
         return this.nom;
     }
+    
+    void setCarteVictoire(Carte value) {
+        this.carteVictoire = value;
+    }
 
     Carte getCarteVictoire() {
         return this.carteVictoire;
