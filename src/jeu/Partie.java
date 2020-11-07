@@ -1,14 +1,45 @@
 package jeu;
 
+import jeu.Plateau.FormesPlateau;
+
 public class Partie {
 	
-    private Joueur[] joueurHumain = new Joueur[3];
-    private JoueurIA[] joueurIA = new JoueurIA[3];
-    private int[] pointsTotaux = new int[3];
+//	Attributs
+    private Joueur[] joueurHumain;
+    private JoueurIA[] joueurIA;
+    private int[][] pointsTotaux = new int[3][4];
     private Manche[] manches = new Manche[4];
     private Parametre parametre;
  
+    
+    
+//	Constructeur
+    public Partie(int nbJoueur, int nbJoueurHumain, String nomJ1, String nomJ2, String nomJ3, FormesPlateau formePlateau) {
+		
+    	//	Initialisation des paramètres
+    	this.parametre = new Parametre(nbJoueur, nbJoueurHumain, formePlateau);
+    	
+    	//	Initialisation des joueurs
+		this.joueurHumain = new Joueur[this.parametre.getNombreJoueurHumain()];
+		this.joueurIA = new JoueurIA[this.parametre.getNombreJoueurIA()];
+		
+		if (this.parametre.getNombreJoueurHumain() > 0) {
+			for (int i = 0; i < this.parametre.getNombreJoueurHumain(); i++) {
+				this.joueurHumain[i] = new Joueur();
+			}
+		}
+		
+		if (this.parametre.getNombreJoueurIA() > 0) {
+			for (int i = 0; i < this.parametre.getNombreJoueurIA(); i++) {
+				this.joueurIA[i] = new JoueurIA();
+			}
+		}
+	}
+    
+    
 
+    
+//	Méthodes
     public void demarrer() {
     }
 
@@ -42,5 +73,12 @@ public class Partie {
         return this.joueurIA;
     }
     */
+    
+    
+    public static void main(String[] args) {
+    	System.out.println("---  Bienvenue dans le jeu Shape Up !  ---\n\n");
+    	
+    	Partie maPartie = new Partie();
+    }
 
 }

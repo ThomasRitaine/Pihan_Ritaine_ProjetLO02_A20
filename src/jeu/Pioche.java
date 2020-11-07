@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import jeu.Carte.Couleurs;
-import jeu.Carte.Formes;
+import jeu.Carte.CouleursCarte;
+import jeu.Carte.FormesCarte;
 
 
 public class Pioche {
@@ -28,8 +28,8 @@ public class Pioche {
     	for (int i = 0; i < 2; i++) {	//	On fait deux fois cette boucle. La première fois, rempli == flase
 			if (i==1) rempli = true;	//	Au deuxième passage de la boucle, rempli == true
 			
-			for ( Formes forme : Formes.values()) {
-				for ( Couleurs couleur : Couleurs.values()) {
+			for ( FormesCarte forme : FormesCarte.values()) {
+				for ( CouleursCarte couleur : CouleursCarte.values()) {
 					this.cartes.add(new Carte(rempli, forme, couleur));
 				}
 			}

@@ -2,43 +2,43 @@ package jeu;
 
 public class Carte {
 	
-	//	Enumérations
-	public enum Formes {
+//	Enumérations
+	public enum FormesCarte {
     	CARRE,
     	ROND,
     	TRIANGLE;
     }
 	
-	public enum Couleurs {
+	public enum CouleursCarte {
     	VERT,
     	BLEU,
     	ROUGE;
     }
 	
-	//	Attributs
-    private Formes forme;
+//	Attributs
+    private FormesCarte forme;
     private boolean rempli;
-    private Couleurs couleur;
+    private CouleursCarte couleur;
 
     
-    //	Constructeur
-    public Carte(boolean rempli, Formes forme, Couleurs couleur) {
+//	Constructeur
+    public Carte(boolean rempli, FormesCarte forme, CouleursCarte couleur) {
 		this.rempli = rempli;
 		this.forme = forme;
 		this.couleur = couleur;
 	}
     
 
-    //	Getter
+//	Getter
     boolean estRempli() {
         return this.rempli;
     }
 
-    Formes getForme() {
+    FormesCarte getForme() {
         return this.forme;
     }
     
-    Couleurs getCouleur() {
+    CouleursCarte getCouleur() {
         return this.couleur;
     }
 

@@ -1,43 +1,54 @@
 package jeu;
 
+import jeu.Plateau.FormesPlateau;
+
 public class Parametre {
+	
+//	Attributs
     private int nombreJoueurs;
-
     private int nombreJoueurHumain;
-
     private int nombreJoueurIA;
+    private FormesPlateau formePlateau;
 
-    private String formePlateau;
-
-    int getNombreJoueurs() {
+    
+//	Constructeur
+    public Parametre(int nbJoueur, int nbJoueurHumain, FormesPlateau formePlateau) {
+    	this.nombreJoueurs = nbJoueur;
+    	this.nombreJoueurHumain = nbJoueurHumain;
+    	this.nombreJoueurIA = nbJoueur - nbJoueurHumain;
+    	this.formePlateau = formePlateau;
+    }
+    
+//	Getter et Setter
+    public int getNombreJoueurs() {
         return this.nombreJoueurs;
     }
 
-    void setNombreJoueurs(int value) {
+    public void setNombreJoueurs(int value) {
         this.nombreJoueurs = value;
     }
 
-    int getNombreJoueurHumain() {
+    public int getNombreJoueurHumain() {
         return this.nombreJoueurHumain;
     }
 
-    void setNombreJoueurHumain(int value) {
+    public void setNombreJoueurHumain(int value) {
         this.nombreJoueurHumain = value;
     }
 
-    void setNombreJoueurIA(int value) {
+    public void setNombreJoueurIA(int value) {
         this.nombreJoueurIA = value;
     }
 
-    int getNombreJoueurIA() {
+    public int getNombreJoueurIA() {
         return this.nombreJoueurIA;
     }
 
-    void setFormePlateau(String value) {
+    public void setFormePlateau(FormesPlateau value) {
         this.formePlateau = value;
     }
 
-    String getFormePlateau() {
+    public FormesPlateau getFormePlateau() {
         return this.formePlateau;
     }
 
