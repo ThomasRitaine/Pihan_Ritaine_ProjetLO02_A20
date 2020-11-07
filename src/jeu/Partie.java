@@ -14,7 +14,7 @@ public class Partie {
     
     
 //	Constructeur
-    public Partie(int nbJoueur, int nbJoueurHumain, String nomJ1, String nomJ2, String nomJ3, FormesPlateau formePlateau) {
+    public Partie(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau) {
 		
     	//	Initialisation des paramètres
     	this.parametre = new Parametre(nbJoueur, nbJoueurHumain, formePlateau);
@@ -25,13 +25,13 @@ public class Partie {
 		
 		if (this.parametre.getNombreJoueurHumain() > 0) {
 			for (int i = 0; i < this.parametre.getNombreJoueurHumain(); i++) {
-				this.joueurHumain[i] = new Joueur();
+				this.joueurHumain[i] = new Joueur(i, noms[i]);
 			}
 		}
 		
 		if (this.parametre.getNombreJoueurIA() > 0) {
-			for (int i = 0; i < this.parametre.getNombreJoueurIA(); i++) {
-				this.joueurIA[i] = new JoueurIA();
+			for (int i = this.parametre.getNombreJoueurHumain(); i < this.parametre.getNombreJoueurs(); i++) {
+				this.joueurIA[i] = new JoueurIA(i, noms[i]);
 			}
 		}
 	}

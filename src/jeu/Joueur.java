@@ -1,22 +1,23 @@
 package jeu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Joueur {
-    private String nom;
+	
+//	Attributs
+    protected String nom;
+    protected Carte carteVictoire;
+    protected Carte carteAJouer;
+    protected int id;
+    protected InterfaceNatureJoueur typeJouer = new jouerHumain();
 
-    private Carte carteVictoire;
-    private Carte carteAJouer;
+    
+//	Constructeur
+    public Joueur(int id, String nom) {
+		this.id = id;
+		this.nom = nom;
+	}
 
-    private int id;
-
-    private InterfaceNatureJoueur typeJouer;
-
-    //public List<Carte>  = new ArrayList<Carte> ();
-
-    //public List<InterfaceNatureJoueur>  = new ArrayList<InterfaceNatureJoueur> ();
-
+    
+//	Méthodes
     public void bougerCarte() {
     }
 
