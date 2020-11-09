@@ -21,23 +21,23 @@ public class Partie {
     	this.parametre = parametre;
     	
     	//	Initialisation des joueurs
-		this.joueurHumain = new Joueur[this.parametre.getNombreJoueurHumain()];
-		this.joueurIA = new JoueurIA[this.parametre.getNombreJoueurIA()];
+		this.joueurHumain = new Joueur[this.parametre.getNbJoueurHumain()];
+		this.joueurIA = new JoueurIA[this.parametre.getNbJoueurIA()];
 		
-		if (this.parametre.getNombreJoueurHumain() > 0) {
-			for (int i = 0; i < this.parametre.getNombreJoueurHumain(); i++) {
+		if (this.parametre.getNbJoueurHumain() > 0) {
+			for (int i = 0; i < this.parametre.getNbJoueurHumain(); i++) {
 				this.joueurHumain[i] = new Joueur(i, this.parametre.getNomJoueurs(i));
 			}
 		}
 		
-		if (this.parametre.getNombreJoueurIA() > 0) {
-			for (int i = this.parametre.getNombreJoueurHumain(); i < this.parametre.getNombreJoueurs(); i++) {
-				this.joueurIA[i-this.parametre.getNombreJoueurHumain()] = new JoueurIA(i, this.parametre.getNomJoueurs(i));
+		if (this.parametre.getNbJoueurIA() > 0) {
+			for (int i = this.parametre.getNbJoueurHumain(); i < this.parametre.getNbJoueur(); i++) {
+				this.joueurIA[i-this.parametre.getNbJoueurHumain()] = new JoueurIA(i, this.parametre.getNomJoueurs(i));
 			}
 		}
 		
 		//	Initialisation des points
-		pointsTotaux = new int[this.parametre.getNombreJoueurs()][this.parametre.getNbManche()];
+		pointsTotaux = new int[this.parametre.getNbJoueur()][this.parametre.getNbManche()];
 	}
     
     
@@ -66,10 +66,10 @@ public class Partie {
     
     public Joueur getJoueurParId(int id) {
     	Joueur joueur;
-    	if (id < this.parametre.getNombreJoueurHumain()) {
+    	if (id < this.parametre.getNbJoueurHumain()) {
 			joueur = this.joueurHumain[id];
 		} else {
-			joueur = this.joueurIA[id - this.parametre.getNombreJoueurHumain()];
+			joueur = this.joueurIA[id - this.parametre.getNbJoueurHumain()];
 		}
 		return joueur;
 	}

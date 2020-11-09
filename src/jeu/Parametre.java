@@ -1,7 +1,5 @@
 package jeu;
 
-import java.io.Console;
-import java.io.Reader;
 import java.util.Scanner;
 
 import jeu.Plateau.FormesPlateau;
@@ -9,9 +7,9 @@ import jeu.Plateau.FormesPlateau;
 public class Parametre {
 	
 //	Attributs
-    private int nombreJoueurs;
-    private int nombreJoueurHumain;
-    private int nombreJoueurIA;
+    private int nbJoueur;
+    private int nbJoueurHumain;
+    private int nbJoueurIA;
     private String[] nomsJoueurs = new String[3];
     private FormesPlateau formePlateau;
     private int nbManche;
@@ -19,10 +17,10 @@ public class Parametre {
     
 //	Constructeurs
     public Parametre(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, int nbManche) {
-    	this.nombreJoueurs = nbJoueur;
-    	this.nombreJoueurHumain = nbJoueurHumain;
-    	this.nombreJoueurIA = nbJoueur - nbJoueurHumain;
-    	for (int i = 0; i < this.nombreJoueurs; i++) {
+    	this.nbJoueur = nbJoueur;
+    	this.nbJoueurHumain = nbJoueurHumain;
+    	this.nbJoueurIA = nbJoueur - nbJoueurHumain;
+    	for (int i = 0; i < this.nbJoueur; i++) {
 			this.nomsJoueurs[i] = noms[i];
 		}
     	this.formePlateau = formePlateau;
@@ -44,20 +42,20 @@ public class Parametre {
     	//	Récupération du nombre de joueur
     	System.out.println("-   1. Paramétrons la partie !   -\n");
     	System.out.println("Entrez le nombre de joueur (Humain + IA <= 3) : ");
-    	this.nombreJoueurs = scanner.nextInt();
+    	this.nbJoueur = scanner.nextInt();
     	
     	//	Récupération du nombre de joueur humain
-    	System.out.println("\nParmi ces " + this.nombreJoueurs + " joueurs, combien sont humains ?");
-    	this.nombreJoueurHumain = scanner.nextInt();
+    	System.out.println("\nParmi ces " + this.nbJoueur + " joueurs, combien sont humains ?");
+    	this.nbJoueurHumain = scanner.nextInt();
     	
     	//	Calcul et confirmation du nombre de joueur IA
-    	this.nombreJoueurIA = this.nombreJoueurs - this.nombreJoueurHumain;
-    	System.out.println("\nIl y a donc " + this.nombreJoueurIA + " joueur(s) IA.");
+    	this.nbJoueurIA = this.nbJoueur - this.nbJoueurHumain;
+    	System.out.println("\nIl y a donc " + this.nbJoueurIA + " joueur(s) IA.");
     	
     	//	A faire : récupération des noms des joueurs
     	scanner.nextLine();
-    	for (int i = 0; i < this.nombreJoueurs; i++) {
-			if (i < this.nombreJoueurHumain) {
+    	for (int i = 0; i < this.nbJoueur; i++) {
+			if (i < this.nbJoueurHumain) {
 				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un humain)");
 				//this.nomsJoueurs[i] = console.readLine("\nQuel est le nom du joueur n°" + i + " ? (C'est un humain)\n");
 			} else {
@@ -98,10 +96,10 @@ public class Parametre {
     public void resumerParametre() {
     	// 	On résume les paramètres
     	System.out.println("\nVoici un résumé des paramètres choisis :");
-    	System.out.println("Nombre de joueurs humains : " + this.nombreJoueurHumain);
-    	System.out.println("Nombre de joueurs IA : " + this.nombreJoueurIA);
-    	System.out.println("Nombre de joueurs totaux : " + this.nombreJoueurs);
-    	for (int i = 0; i < this.nombreJoueurs; i++) {
+    	System.out.println("Nombre de joueurs humains : " + this.nbJoueurHumain);
+    	System.out.println("Nombre de joueurs IA : " + this.nbJoueurIA);
+    	System.out.println("Nombre de joueurs totaux : " + this.nbJoueur);
+    	for (int i = 0; i < this.nbJoueur; i++) {
     		System.out.println("Le joueur n°" + (i+1) + " se nomme : " + this.nomsJoueurs[i]);
 		}
     	System.out.println("Plateau choisi : " + this.formePlateau);
@@ -109,28 +107,28 @@ public class Parametre {
 	}
     
 //	Getter et Setter
-    public int getNombreJoueurs() {
-        return this.nombreJoueurs;
+    public int getNbJoueur() {
+        return this.nbJoueur;
     }
 
-    public void setNombreJoueurs(int value) {
-        this.nombreJoueurs = value;
+    public void setNbJoueur(int value) {
+        this.nbJoueur = value;
     }
 
-    public int getNombreJoueurHumain() {
-        return this.nombreJoueurHumain;
+    public int getNbJoueurHumain() {
+        return this.nbJoueurHumain;
     }
 
-    public void setNombreJoueurHumain(int value) {
-        this.nombreJoueurHumain = value;
+    public void setNbJoueurHumain(int value) {
+        this.nbJoueurHumain = value;
     }
 
-    public void setNombreJoueurIA(int value) {
-        this.nombreJoueurIA = value;
+    public void setNbJoueurIA(int value) {
+        this.nbJoueurIA = value;
     }
 
-    public int getNombreJoueurIA() {
-        return this.nombreJoueurIA;
+    public int getNbJoueurIA() {
+        return this.nbJoueurIA;
     }
 
     public void setFormePlateau(FormesPlateau value) {

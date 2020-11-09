@@ -16,7 +16,7 @@ public class Manche implements Visitable {
     
 //	Méthodes 
     public void attribuerCarte(Partie partieEnCours) {
-		for (int i = 0; i < partieEnCours.getParametre().getNombreJoueurs(); i++) {
+		for (int i = 0; i < partieEnCours.getParametre().getNbJoueur(); i++) {
 			Joueur joueur = partieEnCours.getJoueurParId(i);
 			Carte cartePiochee = this.pioche.piocher();
 			joueur.setCarteVictoire(cartePiochee);
@@ -36,7 +36,7 @@ public class Manche implements Visitable {
     
     private void jouerTour(Partie partieEnCours, int tour) {
     		//	Obtenir le joueur
-    	int idJoueur = tour%partieEnCours.getParametre().getNombreJoueurs();
+    	int idJoueur = tour%partieEnCours.getParametre().getNbJoueur();
     	Joueur joueur = partieEnCours.getJoueurParId(idJoueur);
     	
 			//	Donner une carte à un joueur
