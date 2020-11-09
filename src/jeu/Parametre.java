@@ -18,12 +18,17 @@ public class Parametre {
 
     
 //	Constructeurs
-    public Parametre(int nbJoueur, int nbJoueurHumain, FormesPlateau formePlateau, int nbManche) {
+    public Parametre(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, int nbManche) {
     	this.nombreJoueurs = nbJoueur;
     	this.nombreJoueurHumain = nbJoueurHumain;
     	this.nombreJoueurIA = nbJoueur - nbJoueurHumain;
+    	for (int i = 0; i < this.nombreJoueurs; i++) {
+			this.nomsJoueurs[i] = noms[i];
+		}
     	this.formePlateau = formePlateau;
     	this.nbManche = nbManche;
+    	
+    	this.resumerParametre();
     }
     
     public Parametre() {
@@ -87,12 +92,16 @@ public class Parametre {
     	//	On ferme la lecture
     	scanner.close();
     	
-    	//	On résume les paramètres
+    	this.resumerParametre();
+	}
+    
+    public void resumerParametre() {
+    	// 	On résume les paramètres
     	System.out.println("\nVoici un résumé des paramètres choisis :");
     	System.out.println("Nombre de joueurs humains : " + this.nombreJoueurHumain);
     	System.out.println("Nombre de joueurs IA : " + this.nombreJoueurIA);
-    	System.out.println("Nombre de joueurs totaux :" + this.nombreJoueurs);
-    	for (i = 0; i < this.nombreJoueurs; i++) {
+    	System.out.println("Nombre de joueurs totaux : " + this.nombreJoueurs);
+    	for (int i = 0; i < this.nombreJoueurs; i++) {
     		System.out.println("Le joueur n°" + (i+1) + " se nomme : " + this.nomsJoueurs[i]);
 		}
     	System.out.println("Plateau choisi : " + this.formePlateau);

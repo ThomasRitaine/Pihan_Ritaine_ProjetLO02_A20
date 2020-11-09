@@ -14,32 +14,7 @@ public class Partie {
  
     
     
-//	Constructeurs
-    public Partie(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, int nbManche) {
-		
-    	//	Initialisation des paramètres
-    	this.parametre = new Parametre(nbJoueur, nbJoueurHumain, formePlateau, nbManche);
-    	
-    	//	Initialisation des joueurs
-		this.joueurHumain = new Joueur[this.parametre.getNombreJoueurHumain()];
-		this.joueurIA = new JoueurIA[this.parametre.getNombreJoueurIA()];
-		
-		if (this.parametre.getNombreJoueurHumain() > 0) {
-			for (int i = 0; i < this.parametre.getNombreJoueurHumain(); i++) {
-				this.joueurHumain[i] = new Joueur(i, noms[i]);
-			}
-		}
-		
-		if (this.parametre.getNombreJoueurIA() > 0) {
-			for (int i = this.parametre.getNombreJoueurHumain(); i < this.parametre.getNombreJoueurs(); i++) {
-				this.joueurIA[i-this.parametre.getNombreJoueurHumain()] = new JoueurIA(i, noms[i]);
-			}
-		}
-		
-		//	Initialisation des points
-		pointsTotaux = new int[this.parametre.getNombreJoueurs()][this.parametre.getNbManche()];
-	}
-    
+//	Constructeur
     public Partie(Parametre parametre) {
 		
     	//	Récupération des paramètres
@@ -114,9 +89,10 @@ public class Partie {
     	Parametre parametre = new Parametre();
     	parametre.parametrerPartie();
     	
-    	
+    	//	Paramétrage rapide, sans passer par le formulaire
     	//String[] noms = {"Pierre", "Juliette", "Ordi_1"};
-    	//Partie maPartie = new Partie(3, 2, noms, FormesPlateau.RECTANGLE, 4);
+    	//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 4);
+    	
     	Partie maPartie = new Partie(parametre);
     	maPartie.joueurPartie();
     	
