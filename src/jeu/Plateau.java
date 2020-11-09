@@ -16,6 +16,7 @@ public class Plateau {
 
 //	Méthodes
     public boolean peutPoserCarte(Case emplacement) {
+    	//blaabla
 		return false;
     }
 
