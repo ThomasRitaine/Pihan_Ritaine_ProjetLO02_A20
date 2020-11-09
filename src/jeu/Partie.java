@@ -14,7 +14,7 @@ public class Partie {
  
     
     
-//	Constructeur
+//	Constructeurs
     public Partie(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, int nbManche) {
 		
     	//	Initialisation des paramètres
@@ -40,6 +40,31 @@ public class Partie {
 		pointsTotaux = new int[this.parametre.getNombreJoueurs()][this.parametre.getNbManche()];
 	}
     
+    public Partie(Parametre parametre) {
+		
+    	//	Récupération des paramètres
+    	this.parametre = parametre;
+    	
+    	//	Initialisation des joueurs
+		this.joueurHumain = new Joueur[this.parametre.getNombreJoueurHumain()];
+		this.joueurIA = new JoueurIA[this.parametre.getNombreJoueurIA()];
+		
+		if (this.parametre.getNombreJoueurHumain() > 0) {
+			for (int i = 0; i < this.parametre.getNombreJoueurHumain(); i++) {
+				this.joueurHumain[i] = new Joueur(i, this.parametre.getNomJoueurs(i));
+			}
+		}
+		
+		if (this.parametre.getNombreJoueurIA() > 0) {
+			for (int i = this.parametre.getNombreJoueurHumain(); i < this.parametre.getNombreJoueurs(); i++) {
+				this.joueurIA[i-this.parametre.getNombreJoueurHumain()] = new JoueurIA(i, this.parametre.getNomJoueurs(i));
+			}
+		}
+		
+		//	Initialisation des points
+		pointsTotaux = new int[this.parametre.getNombreJoueurs()][this.parametre.getNbManche()];
+	}
+    
     
 
     
@@ -48,7 +73,7 @@ public class Partie {
     	//	Pour chacune des manches
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
 			this.manches[this.mancheActuelle] = new Manche(this);
-			this.manches[this.mancheActuelle].jouerManche();
+			this.manches[this.mancheActuelle].jouerManche(this);
 			
 		}
     }
@@ -86,8 +111,13 @@ public class Partie {
     public static void main(String[] args) {
     	System.out.println("---  Bienvenue dans le jeu Shape Up !  ---\n\n");
     	
-    	String[] noms = {"Pierre", "Juliette", "Ordi_1"};
-    	Partie maPartie = new Partie(3, 2, noms, FormesPlateau.RECTANGLE, 4);
+    	Parametre parametre = new Parametre();
+    	parametre.parametrerPartie();
+    	
+    	
+    	//String[] noms = {"Pierre", "Juliette", "Ordi_1"};
+    	//Partie maPartie = new Partie(3, 2, noms, FormesPlateau.RECTANGLE, 4);
+    	Partie maPartie = new Partie(parametre);
     	maPartie.joueurPartie();
     	
     }

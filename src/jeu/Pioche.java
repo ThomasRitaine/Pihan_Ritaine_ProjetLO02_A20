@@ -64,6 +64,10 @@ public class Pioche {
 		return cartePiochee;
     }
     
+    public boolean estVide() {
+    	return this.cartes.isEmpty();
+	}
+    
 
 //	Supprimer l'instance de Pioche
     public static void supprime() {

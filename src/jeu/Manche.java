@@ -8,7 +8,7 @@ public class Manche implements Visitable {
     
 //	Constructeur
     public Manche(Partie partieEnCours) {
-		this.plateau = new Plateau();
+		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau());
 		this.pioche = Pioche.getPioche();
 		this.attribuerCarte(partieEnCours);
 	}
@@ -18,15 +18,33 @@ public class Manche implements Visitable {
     public void attribuerCarte(Partie partieEnCours) {
 		for (int i = 0; i < partieEnCours.getParametre().getNombreJoueurs(); i++) {
 			Joueur joueur = partieEnCours.getJoueurParId(i);
-			Carte cartePiocheeCarte = this.pioche.piocher();
-			joueur.setCarteVictoire(cartePiocheeCarte);
+			Carte cartePiochee = this.pioche.piocher();
+			joueur.setCarteVictoire(cartePiochee);
 		}
 	}
     
-    public void jouerManche() {
+    public void jouerManche(Partie partieEnCours) {
+    	int tour = 0;
+    	while (!this.pioche.estVide()) {
+			this.jouerTour(partieEnCours, tour);
+			tour++;
+		}
 		
     	//	Fin de la manche, on supprime la pioche
     	this.supprimerPioche();
+	}
+    
+    private void jouerTour(Partie partieEnCours, int tour) {
+    		//	Obtenir le joueur
+    	int idJoueur = tour%partieEnCours.getParametre().getNombreJoueurs();
+    	Joueur joueur = partieEnCours.getJoueurParId(idJoueur);
+    	
+			//	Donner une carte à un joueur
+		Carte cartePiochee = this.pioche.piocher();
+		joueur.setCarteAJouer(cartePiochee);
+		
+			//	Jouer le tour du joueur
+		joueur.typeJouer.jouerTour();
 	}
     
     public void supprimerPioche() {
