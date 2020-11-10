@@ -3,65 +3,93 @@ package jeu;
 
 public class Case {
 
-    private boolean vide;
+//Attributs
+   private Carte carte;//si carte value = null alors case vide 
+   /*private boolean vide = true;*/
+   
+   private int coordX;
 
-    private Carte carte;
-
-    private int coordX;
-
-    private int coordY;
-
-    public Carte Contient;// a quoi ça sert ? il me faut un boolean qui test si une case contient une carte en prenant en paramètre les coord de la case 
-    
-   int getCoordX() {
-    	return this.coordX;
+   private int coordY;
+   
+   private boolean interdite = false;   
+   
+ //Methodes get et set   
+   public int getCoordX() {
+     return this.coordX;
     }
    
-   int getCoordY() {
-   	return this.coordY;
-   }
-    
-   void setCoordX(int x) {
+   public void setCoordX(int x) {
    	 this.coordX=x;
-   }
+   }    
   
- void setCoordY(int y) {
+   public int getCoordY() {
+   	 return this.coordY;
+   }
+   public void setCoordY(int y) {
   	 this.coordY=y;
   }
    
-    
-    boolean isAvecCarte(int x, int y) {
-    	if (x==this.coordX & y==this.coordY) {
-    		return true;
+   public Carte getCarte() {
+       return this.carte;
+   }
+   
+   public void setCarte(Carte value) {
+       this.carte = value;
+   }   
+  
+   public boolean getInterdite() {
+	   return this.interdite;
+   }
+   
+   public void setInterdite() {
+	   this.interdite=true;
+   }
+   
+ /* boolean isInterdite() {//fonction utile par la suite? 
+	  if (this.getInterdite()){
+		  return true;
+	  }else return false;
+  }*/
+   
+   public boolean contientCarte(Plateau p, int x, int y) { //fonction dépendante de la fonction rechercheCase dans Plateau
+	  Case caseTrouvee=p.rechercheCase(x,y);
+	  if (caseTrouvee != null) {
+    		if (caseTrouvee.getCarte() != null) {
+    			return true;
+    		}else {
+    			System.out.println("[isWithCarte]: La case est vide");
+    			return false; 
+    		}
     	}else {
-    		this.vide = false;
+    		System.out.println("[isWithCarte]: Aucune case ne possède ces coordonnées.");
     		return false;
     	}
-    }
-
-    boolean isVide() {
-        return this.vide;
-    }
-
-    void setVide(boolean value) {
-        this.vide = value;
-    }
-
-    void setCarte(Carte value) {
-        this.carte = value;
-    }
-
-    Carte getCarte() {
-        return this.carte;
-    }
+    }    
     
-    boolean isCaseAdjacente() {
-    	if(isAvecCarte(coordX+1,coordY) | isAvecCarte(coordX,coordY+1) |isAvecCarte(coordX-1,coordY) |isAvecCarte(coordX,coordY-1)) {
-    		
-    	}
+    public boolean isCaseAdjacente(Plateau p) {
+    	if(contientCarte(p,coordX+1,coordY) | contientCarte(p,coordX,coordY+1) |contientCarte(p,coordX-1,coordY)|contientCarte(p,coordX,coordY-1)) {
+    		return true;
+    	}else return false;
     }
 
-    boolean isCaseDansPlateau() {
+    public boolean isCaseDansPlateau() {//à développer que si l'on sait comment implémenter un plateau mobile
     	
     }
+    
+    
+    /*
+    boolean isVide() {//en fait pas besoin d'un attribut vide la valeur de la carte suffit!
+         if(this.getCarte()==null) {
+      	   return true;
+         }else return false;
+      }
+
+     boolean getVide() {
+  	   return this.vide;
+     }
+      void setVide() {
+          if(this.getCarte()==null) {
+          	this.vide=true;
+          }else this.vide=false;
+      }*/
 }

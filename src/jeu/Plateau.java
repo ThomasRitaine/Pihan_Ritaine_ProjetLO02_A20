@@ -13,20 +13,22 @@ public class Plateau {
     private Case[] cases = new Case[15];
     private Carte carteCachee;
     private FormesPlateau forme;
+    Carte CASE_VIDE=null;
+    
 
     
 //	Constructeur
     public Plateau(FormesPlateau forme) {
 		this.forme = forme;
-		Carte CASE_VIDE=null;
+		
 		//Génération des cases du plateau et de leurs coordonnées
 		if(forme==FormesPlateau.RECTANGLE) {//on doit générer un rectangle de 3*5		
 		int c=0;
 		for (int i=0; i<3; i++) {
 			for (int j=0; j<5; j++) {
 				this.cases[c] = new Case();
-				cases[c].setCoordX(j);
-				cases[c].setCoordY(i);
+				this.cases[c].setCoordX(j);
+				this.cases[c].setCoordY(i);
 				c++;
 			}
 		}}else if(forme==FormesPlateau.TRIANGLE) {
@@ -38,8 +40,8 @@ public class Plateau {
 			for (int i=0; i<4; i++) {
 				for (int j=0; j<7; j++) {
 					this.cases[c] = new Case();
-					cases[c].setCoordX(j);
-					cases[c].setCoordY(i);
+					this.cases[c].setCoordX(j);
+					this.cases[c].setCoordY(i);
 					c++;
 				}
 		}
@@ -78,6 +80,27 @@ public class Plateau {
         return this.carteCachee;
     }
 
+
+
+	public Case rechercheCase(int x, int y) {
+		int c= 0;
+		while(this.cases[c].getCoordX()!=x & this.cases[c].getCoordY()!=y){
+			if(c==15) {
+			System.out.println("[RechercheCase]:Aucune case ne possède ces coordonnées");
+			return null;//et break?
+		}else c++;
+		}return this.cases[c];
+	}
+	
+	public Case rechercheCase2(int x, int y) {
+		for(int c=0; c<15; c++) {
+			if(this.cases[c].getCoordX()==x & this.cases[c].getCoordY()==y) {
+				return this.cases[c];
+			}
+		}
+		return null;
+	}
+	
 }
 
 /*dans jouerTour:
