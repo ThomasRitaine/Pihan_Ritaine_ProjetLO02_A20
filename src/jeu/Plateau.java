@@ -13,7 +13,7 @@ public class Plateau {
     private Case[] cases = new Case[15];
     private Carte carteCachee;
     private FormesPlateau forme;
-    Carte CASE_VIDE=null;
+    
     
 
     
@@ -44,21 +44,21 @@ public class Plateau {
 					this.cases[c].setCoordY(i);
 					c++;
 				}
-		}
+			}
 			//en laissant la case[4] libre pour une carte même si à la fin de la manche une case sera vide
 			
-			cases[1].setCarte(CASE_VIDE);
-			cases[2].setCarte(CASE_VIDE);
-			cases[3].setCarte(CASE_VIDE);
-			cases[5].setCarte(CASE_VIDE);
-			cases[6].setCarte(CASE_VIDE);
-			cases[7].setCarte(CASE_VIDE);
-			cases[8].setCarte(CASE_VIDE);
-			cases[9].setCarte(CASE_VIDE);
-			cases[13].setCarte(CASE_VIDE);
-			cases[14].setCarte(CASE_VIDE);
-			cases[15].setCarte(CASE_VIDE);
-			cases[21].setCarte(CASE_VIDE);
+			cases[1].setInterdite();
+			cases[2].setInterdite();
+			cases[3].setInterdite();
+			cases[5].setInterdite();
+			cases[6].setInterdite();
+			cases[7].setInterdite();
+			cases[8].setInterdite();
+			cases[9].setInterdite();
+			cases[13].setInterdite();
+			cases[14].setInterdite();
+			cases[15].setInterdite();
+			cases[21].setInterdite();
 			
 		}
 	
@@ -72,11 +72,11 @@ public class Plateau {
     }
     
     
-    void setCarteCachee(Carte value) {
+    public void setCarteCachee(Carte value) {
         this.carteCachee = value;
     }
 
-    Carte getCarteCachee() {
+    public Carte getCarteCachee() {
         return this.carteCachee;
     }
 

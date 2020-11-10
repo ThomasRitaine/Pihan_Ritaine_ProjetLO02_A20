@@ -54,7 +54,7 @@ public class Partie {
     }
 
     public void mancheSuivante() {
-    }
+    } 
 
     public void afficherScores() {
     }
