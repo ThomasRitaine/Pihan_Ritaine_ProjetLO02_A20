@@ -15,6 +15,8 @@ import jeu.Plateau.FormesPlateau;
 public class Parametre {
 	
 //	ATTRIBUTS
+	
+	
     private int nbJoueur;
     private int nbJoueurHumain;
     private int nbJoueurIA;

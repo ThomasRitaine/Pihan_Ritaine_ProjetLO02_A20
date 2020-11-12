@@ -42,6 +42,10 @@ public class Case {
    }
 
    boolean isVide() {
+	   /*	Commentaires du petit geek qui fait le projet avec toi :
+		
+		1)	1 seul return par fonction
+	    */
         if(this.getCarte()==null) {
      	   return true;
         }else return false;
@@ -49,6 +53,12 @@ public class Case {
    
     // fonction dépendante de la fonction rechercheCase dans Plateau
    public boolean contientCarte(Plateau p, int x, int y) {
+	   
+	   /*	Commentaires du petit geek qui fait le projet avec toi :
+		
+		1)	A quoi sert cette fonction ? On en a déjà une dans la classe plateau qui fait la même chose
+	    */
+	   
 		boolean resultat = false;
 		Case caseTrouvee = p.rechercheCase(x, y);
 		if (caseTrouvee != null) {
@@ -80,6 +90,14 @@ public class Case {
 	}
     
     public boolean isCaseAdjacente(Plateau p) {
+    	
+    	/*	Commentaires du petit geek qui fait le projet avec toi :
+		
+		1)	Les coordX et coordY ne sont pas initialisées.
+			Il faut que tu utilises this.coordX pour accéder aux coord de la case sur
+			laquelle tu applique la méthode.
+	    */
+    	
     	boolean resultat = false;
     	if(contientCarte(p,coordX+1,coordY) || contientCarte(p,coordX,coordY+1) ||contientCarte(p,coordX-1,coordY)||contientCarte(p,coordX,coordY-1)) {
     		resultat = true;
