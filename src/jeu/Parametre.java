@@ -1,12 +1,20 @@
 package jeu;
 
 import java.util.Scanner;
-
 import jeu.Plateau.FormesPlateau;
 
+
+/**
+ * Parametre est la classe représentant les paramètres d'une partie.
+ * On peut la modifier au début de la partie, elle sert à créer la partie.
+ * Tous les algorithmes de la partie consultent les paramètres.
+ * 
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ */
 public class Parametre {
 	
-//	Attributs
+//	ATTRIBUTS
     private int nbJoueur;
     private int nbJoueurHumain;
     private int nbJoueurIA;

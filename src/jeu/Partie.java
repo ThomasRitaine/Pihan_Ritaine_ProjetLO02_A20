@@ -44,7 +44,7 @@ public class Partie {
 
     
 //	Méthodes
-    public void joueurPartie() {
+    public void jouerPartie() {
     	//	Pour chacune des manches
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
 			this.manches[this.mancheActuelle] = new Manche(this);
@@ -86,15 +86,16 @@ public class Partie {
     public static void main(String[] args) {
     	System.out.println("---  Bienvenue dans le jeu Shape Up !  ---\n\n");
     	
-    	Parametre parametre = new Parametre();
-    	parametre.parametrerPartie();
+    	//	Demande de paramètres à l'utilisateur
+    	//Parametre parametre = new Parametre();
+    	//parametre.parametrerPartie();
     	
     	//	Paramétrage rapide, sans passer par le formulaire
-    	//String[] noms = {"Pierre", "Juliette", "Ordi_1"};
-    	//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 4);
+    	String[] noms = {"Pierre", "Juliette", "Ordi_1"};
+    	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 4);
     	
     	Partie maPartie = new Partie(parametre);
-    	maPartie.joueurPartie();
+    	maPartie.jouerPartie();
     	
     }
 

@@ -4,12 +4,9 @@ package jeu;
 public class Case {
 
 //Attributs
-   private Carte carte;//si carte value = null alors case vide   
-   
+   private Carte carte;//si carte value = null alors case vide
    private int coordX;
-
    private int coordY;
-   
    private boolean interdite = false;   
    
  //Methodes get et set   

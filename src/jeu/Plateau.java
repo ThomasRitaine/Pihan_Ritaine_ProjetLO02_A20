@@ -23,8 +23,8 @@ public class Plateau {
 			int c = 0;
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 5; j++) {
-					this.cases[c] = new Case();
-					this.cases[c].setCoordX(j);
+					this.cases[c] = new Case();			//	Tu peux mettre les coordonnées dans le constructeur,
+					this.cases[c].setCoordX(j);			//	Ca serait plus lisible et plus modulable
 					this.cases[c].setCoordY(i);
 					c++;
 				}
@@ -83,6 +83,21 @@ public class Plateau {
 	}
 
 	public Case rechercheCase(int x, int y) {//il faut controler les entrees pour controler while
+		
+		/*	Commentaires du petit geek qui fait le projet avec toi :
+			
+			1)	Si on cherche une case, on va sortir du while dès que soit le x, soit le y coincident.
+				Il faut remplacer le "&&" de ton expression par un "||"
+				si tu veux sortir du while quand tu trouves une case avec le même x et le même y
+				
+			2)	Si on cherche la première case : this.cases[0], on ne va pas rentrer dans le while
+				et ca va retourner la valeur null.
+				
+			3) 	Je te conseille de faire un booléen "caseTrouvee" et une case "caseCherchee"
+				Comme ca, tu ne controlles que la valeur de caseTrouvee dans ton while, et tu
+				fais un if à la fin de ton while où tu checkes si la case coincide
+		
+		*/
 		Case caseTrouvee=null;
 		int c = 0;
 		while (this.cases[c].getCoordX() != x & this.cases[c].getCoordY() != y) {
@@ -98,6 +113,7 @@ public class Plateau {
 	}
 
 	public Case rechercheCase2(int x, int y) {
+		//	Celle d'au dessus est meilleure, on peut enlever celle-ci ;)
 		Case caseTrouvee = null;
 		for (int c = 0; c < cases.length; c++) {
 			if (this.cases[c].getCoordX() == x & this.cases[c].getCoordY() == y) {
