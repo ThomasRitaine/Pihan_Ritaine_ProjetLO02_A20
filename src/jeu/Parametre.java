@@ -7,7 +7,7 @@ import jeu.Plateau.FormesPlateau;
 /**
  * Parametre est la classe représentant les paramètres d'une partie.
  * On peut la modifier au début de la partie, elle sert à créer la partie.
- * Tous les algorithmes de la partie consultent les paramètres.
+ * Un grand nombre des algorithmes de la partie consultent les paramètres.
  * 
  * @author Yaëlle Pihan & Thomas Ritaine
  * @version 1.0
@@ -16,16 +16,81 @@ public class Parametre {
 	
 //	ATTRIBUTS
 	
-	
+	/**
+     * Le nombre de joueurs dans la partie, humains et IA confondus.
+     * 
+     * @see Parametre#setNbJoueur(int)
+     * @see Parametre#getNbJoueur()
+     */
     private int nbJoueur;
+    
+    /**
+     * Le nombre de joueurs humains dans la partie.
+     * 
+     * @see Parametre#setNbJoueurHumain(int)
+     * @see Parametre#getNbJoueurHumain()
+     */
     private int nbJoueurHumain;
+    
+    /**
+     * Le nombre de joueurs IA dans la partie.
+     * 
+     * @see Parametre#setNbJoueurIA(int)
+     * @see Parametre#getNbJoueurIA()
+     */
     private int nbJoueurIA;
+    
+    /**
+     * Les noms des joueurs de la partie.
+     * C'est un tableau de 2 à 3 String.
+     * 
+     * @see Parametre#getNomJoueurs(int)
+     */
     private String[] nomsJoueurs = new String[3];
+    
+    /**
+     * La forme du plateau qui sera généré pour chaque manche de la partie.
+     * Sa valeur est un élément de l'énumération FormesPlateau.
+     * 
+     * @see Plateau#FormesPlateau
+     * @see Parametre#setFormePlateau(FormesPlateau)
+     * @see Parametre#getFormePlateau()
+     */
     private FormesPlateau formePlateau;
+    
+    /**
+     * Le nombre de manche qu'il faut jouer avant de calculer les points totaux et mettre fin à la partie.
+     * 
+     * @see Parametre#setNbManche(int)
+     * @see Parametre#getNbManche()
+     */
     private int nbManche;
 
     
-//	Constructeurs
+//	CONSTRUCTEURS
+    
+    /**
+     * Constructeur Parametre.
+     * A la construction d'un objet Parametre, il est possible de passer tous les paramètres qui vont le composer.
+     * 
+     * @param nbJoueur
+     *            Le nombre de joueurs en tout. Ce nombre est entre 2 et 3 inclus.
+     * @param nbJoueurHumain
+     *            Parmi les 2 ou 3 joueurs, nbJoueurHumain représente le nombre d'humains.
+     * @param noms
+     *            Un tableau de String qui contient le noms des 2 ou 3 joueurs.
+     * @param formePlateau
+     *            Un élément de l'énumération FormesPlateau qui correspond à la forme qu'aurons les
+     *            plateaux générés à chaque manche de la partie.
+     * @param nbManche
+     *            Le nombre de manches qui composent la partie. C'est un entier supérieur ou égal à 1.
+     * 
+     * @see Plateau#FormesPlateau
+     * @see Parametre#nbJoueur
+     * @see Parametre#nbJoueurHumain
+     * @see Parametre#formePlateau
+     * @see Parametre#nbManche
+     */
     public Parametre(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, int nbManche) {
     	this.nbJoueur = nbJoueur;
     	this.nbJoueurHumain = nbJoueurHumain;
@@ -47,7 +112,6 @@ public class Parametre {
     public void parametrerPartie() {
     		//	Import des librairies pour lire la console
     	Scanner scanner = new Scanner(System.in);
-    	String textInput;
     	
     	//	Récupération du nombre de joueur
     	System.out.println("-   1. Paramétrons la partie !   -\n");
