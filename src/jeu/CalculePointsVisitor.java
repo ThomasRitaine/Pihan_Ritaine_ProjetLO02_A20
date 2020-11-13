@@ -2,19 +2,21 @@ package jeu;
 
 public class CalculePointsVisitor implements Visitor {
 	
-    private int idJoueur;
+    private Carte carteVictoire;
 
     public int visit(Manche m) {
+		return this.calculerPoints(this.carteVictoire, m.getPlateau());
+    }
+
+    private int calculerPoints(Carte carteVictoire, Plateau plateau) {
+    	
+    	//	To do
+    	
 		return 0;
     }
 
-    private int calculerPoints(int idJoueur, Plateau plateau) {
-		return 0;
-    }
-
-    void setIdJoueur(int value) {
-        
-        this.idJoueur = value;
+    public void setCarteVictoire(Carte carteVictoire) {
+        this.carteVictoire = carteVictoire;
     }
 
 }

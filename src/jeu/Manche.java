@@ -30,8 +30,11 @@ public class Manche implements Visitable {
 			tour++;
 		}
 		
-    	//	Fin de la manche, on supprime la pioche
+    	//	Fin de la manche
+    		//	On supprime la pioche
     	this.supprimerPioche();
+    		//	Puis on calcule les points
+    	this.calculerPts(partieEnCours);
 	}
     
     private void jouerTour(Partie partieEnCours, int tour) {
@@ -53,9 +56,20 @@ public class Manche implements Visitable {
     		//	Ensuite, on indique à la classe Pioche qu'on a supprimé l'élément
     	Pioche.supprime();
 	}
+    
+    private void calculerPts(Partie partieEnCours) {
+    	int points = 0;
+    	Carte carteVictoire;
+    	for (int idJoueur = 0; idJoueur < partieEnCours.getParametre().getNbJoueur(); idJoueur++) {
+    		carteVictoire = partieEnCours.getJoueurParId(idJoueur).getCarteVictoire();
+    		partieEnCours.getCalculateurPts().setCarteVictoire(carteVictoire);
+    		points = this.accept(partieEnCours.getCalculateurPts());
+			partieEnCours.setPointsTotaux(idJoueur, partieEnCours.getMancheActuelle(), points);
+		}
+	}
 
     public int accept(Visitor v) {
-		return 0;
+		return v.visit(this);
     }
 
     Plateau getPlateau() {

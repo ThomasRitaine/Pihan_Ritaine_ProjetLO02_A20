@@ -11,7 +11,7 @@ public class Partie {
     private Manche[] manches = new Manche[10];
     private int mancheActuelle = 0;
     private Parametre parametre;
- 
+    private CalculePointsVisitor calculateurPts;
     
     
 //	Constructeur
@@ -37,7 +37,8 @@ public class Partie {
 		}
 		
 		//	Initialisation des points
-		pointsTotaux = new int[this.parametre.getNbJoueur()][this.parametre.getNbManche()];
+		this.calculateurPts = new CalculePointsVisitor();
+		this.pointsTotaux = new int[this.parametre.getNbJoueur()][this.parametre.getNbManche()];
 	}
     
     
@@ -52,9 +53,7 @@ public class Partie {
 			
 		}
     }
-
-    public void mancheSuivante() {
-    } 
+    
 
     public void afficherScores() {
     }
@@ -77,12 +76,25 @@ public class Partie {
     public Parametre getParametre() {
 		return this.parametre;
     }
-   
+    
+    public CalculePointsVisitor getCalculateurPts() {
+		return this.calculateurPts;
+    }
     
     
-    
-    
-//	Main
+	public void setPointsTotaux(int idJoueur, int manche, int points) {
+		this.pointsTotaux[idJoueur][manche] = points;
+	}
+	
+	public int getMancheActuelle() {
+		return this.mancheActuelle;
+	}
+	
+
+
+
+
+	//	Main
     public static void main(String[] args) {
     	System.out.println("---  Bienvenue dans le jeu Shape Up !  ---\n\n");
     	
