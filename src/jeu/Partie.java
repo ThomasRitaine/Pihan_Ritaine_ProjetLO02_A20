@@ -50,18 +50,23 @@ public class Partie {
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
 			this.manches[this.mancheActuelle] = new Manche(this);
 			this.manches[this.mancheActuelle].jouerManche(this);
-			System.out.println("Fin de la manche " + (this.mancheActuelle+1) + " sur " + this.parametre.getNbManche()+"\n\n");
+			this.afficherScores();
 		}
     }
     
 
     public void afficherScores() {
+    	String nomJoueur;
+    	int points;
+    	
+    	System.out.println("Voici les points totaux :");
+    	for (int idJoueur = 0; idJoueur < this.getParametre().getNbJoueur(); idJoueur++) {
+    		nomJoueur = this.getJoueurParId(idJoueur).getNom();
+    		points = this.getPointsTotaux(idJoueur);
+    		System.out.println(nomJoueur + " possède " + points + " points.");
+    	}
     }
-
-
-    public Manche mancheActuelle() {
-		return this.manches[0];
-    }
+    
     
     public Joueur getJoueurParId(int id) {
     	Joueur joueur;
@@ -84,6 +89,18 @@ public class Partie {
     
 	public void setPointsTotaux(int idJoueur, int manche, int points) {
 		this.pointsTotaux[idJoueur][manche] = points;
+	}
+	
+	public int getPointsManche(int idJoueur, int manche) {
+		return this.pointsTotaux[idJoueur][manche];
+	}
+	
+	public int getPointsTotaux(int idJoueur) {
+		int points = 0;
+		for (int i = 0; i < (this.getMancheActuelle()+1); i++) {
+			points += this.pointsTotaux[idJoueur][i];
+		}
+		return points;
 	}
 	
 	public int getMancheActuelle() {

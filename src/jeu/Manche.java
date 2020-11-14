@@ -42,6 +42,8 @@ public class Manche implements Visitable {
     	this.supprimerPioche();
     		//	Puis on calcule les points
     	this.calculerPts(partieEnCours);
+    		//	Puis on affiche les scores
+    	this.afficherScoresManche(partieEnCours);
 	}
     
     private void jouerTour(Partie partieEnCours, int tour) {
@@ -72,6 +74,26 @@ public class Manche implements Visitable {
     		partieEnCours.getCalculateurPts().setCarteVictoire(carteVictoire);
     		points = this.accept(partieEnCours.getCalculateurPts());
 			partieEnCours.setPointsTotaux(idJoueur, partieEnCours.getMancheActuelle(), points);
+		}
+	}
+    
+    private void afficherScoresManche(Partie partieEnCours) {
+    	String nomJoueur;
+    	int points;
+    	int mancheActuelle = partieEnCours.getMancheActuelle();
+    	
+    	System.out.println("\n---   Fin de la manche " + (mancheActuelle+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
+    	for (int idJoueur = 0; idJoueur < partieEnCours.getParametre().getNbJoueur(); idJoueur++) {
+    		nomJoueur = partieEnCours.getJoueurParId(idJoueur).getNom();
+    		points = partieEnCours.getPointsManche(idJoueur, mancheActuelle);
+    		if(idJoueur == 0) {
+    			System.out.println("Lors de cette manche, " + nomJoueur + " a marqué " + points + " points !");
+    		} else if (idJoueur == 1) {
+    			System.out.println("Quant à " + nomJoueur + ", c'est " + points + " points qui lui reviennent !");
+			} else {
+				System.out.println("Et pour finir, " + nomJoueur + " remporte " + points + " points, bravo !");
+			}
+    		
 		}
 	}
 

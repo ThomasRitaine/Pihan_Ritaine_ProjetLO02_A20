@@ -1,5 +1,7 @@
 package jeu;
 
+import java.util.Random;
+
 public class CalculePointsVisitor implements Visitor {
 	
     private Carte carteVictoire;
@@ -12,7 +14,11 @@ public class CalculePointsVisitor implements Visitor {
     	
     	//	To do
     	
-		return 0;
+    	//	Test, on attribut des points aléatoires
+    	Random r = new Random();
+    	int max = 30;
+    	int min = 2;
+        return r.nextInt((max - min) + 1) + min;
     }
 
     public void setCarteVictoire(Carte carteVictoire) {
