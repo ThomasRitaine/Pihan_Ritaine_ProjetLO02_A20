@@ -125,17 +125,6 @@ public class Plateau {
 
 }
 
-/*
- * dans jouerTour: void poserCarte(Case emplacement, Carte Value) {
- * if(Plateau.peutPoserCarte(emplacement)){ emplacement.setCarte(value); }else {
- * System.out.
- * println("Veuillez choisir une autre case car celle ci contient déjà une carte, ou n'est pas adjacente à une carte déjà posée ou n'est pas inclue dans le plateau invisible"
- * ); }}
- * 
- * void bougerCarte(Case emplacement, Case carteABouger) {
- * this.poserCarte(emplacement, carteABouger.getCarte());
- * carteABouger.setCarte(null); }
- */
 
 /*
  * pour jouer avec un contour de plateau invisible cas du rectangle: il faut

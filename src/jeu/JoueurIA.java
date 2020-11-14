@@ -8,7 +8,7 @@ public class JoueurIA extends Joueur {
 //	Constructeur
     public JoueurIA(int id, String nom) {
 		super(id, nom);
-		this.typeJouer = new jouerIA();
+		this.typeJouer = new JouerIA(this);
 	}
 
     int getNiveauDifficulte() {

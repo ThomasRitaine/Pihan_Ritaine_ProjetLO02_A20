@@ -50,7 +50,7 @@ public class Partie {
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
 			this.manches[this.mancheActuelle] = new Manche(this);
 			this.manches[this.mancheActuelle].jouerManche(this);
-			
+			System.out.println("Fin de la manche " + (this.mancheActuelle+1) + " sur " + this.parametre.getNbManche()+"\n\n");
 		}
     }
     
@@ -104,7 +104,7 @@ public class Partie {
     	
     	//	Paramétrage rapide, sans passer par le formulaire
     	String[] noms = {"Pierre", "Juliette", "Ordi_1"};
-    	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 4);
+    	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 2);
     	
     	Partie maPartie = new Partie(parametre);
     	maPartie.jouerPartie();

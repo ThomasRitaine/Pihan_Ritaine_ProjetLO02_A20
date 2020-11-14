@@ -11,6 +11,13 @@ public class Manche implements Visitable {
 		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau());
 		this.pioche = Pioche.getPioche();
 		this.attribuerCarte(partieEnCours);
+		
+		//	Initialisation des Jouer, pour jouer un tour
+		Joueur joueur = null;
+		for (int i = 0; i < partieEnCours.getParametre().getNbJoueur(); i++) {
+			joueur = partieEnCours.getJoueurParId(i);
+			joueur.getTypeJouer().setPlateau(plateau);
+		}
 	}
     
     
@@ -47,7 +54,7 @@ public class Manche implements Visitable {
 		joueur.setCarteAJouer(cartePiochee);
 		
 			//	Jouer le tour du joueur
-		joueur.typeJouer.jouerTour();
+		joueur.getTypeJouer().jouerTour();
 	}
     
     public void supprimerPioche() {

@@ -1,7 +1,13 @@
 package jeu;
 
-public class jouerIA implements InterfaceNatureJoueur {
+public class JouerIA extends Jouer{
+	
+	public JouerIA(Joueur joueur) {
+		super(joueur);
+	}
+	
     public void jouerTour() {
+    	System.out.println("\nAu tour de l'ordinateur " + this.joueur.getNom());
     }
 
 }

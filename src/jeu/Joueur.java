@@ -7,7 +7,7 @@ public class Joueur {
     protected Carte carteVictoire;
     protected Carte carteAJouer;
     protected int id;
-    protected InterfaceNatureJoueur typeJouer = new jouerHumain();
+    protected Jouer typeJouer = new JouerHumain(this);
 
     
 //	Constructeur
@@ -27,28 +27,32 @@ public class Joueur {
     public void piocherCarte() {
     }
 
-    String getNom() {
+    public String getNom() {
         return this.nom;
     }
     
-    void setCarteVictoire(Carte value) {
+    public void setCarteVictoire(Carte value) {
         this.carteVictoire = value;
     }
 
-    Carte getCarteVictoire() {
+    public Carte getCarteVictoire() {
         return this.carteVictoire;
     }
 
-    void setCarteAJouer(Carte value) {
+    public void setCarteAJouer(Carte value) {
         this.carteAJouer = value;
     }
 
-    Carte getCarteAJouer() {
+    public Carte getCarteAJouer() {
         return this.carteAJouer;
     }
 
-    int getId() {
+    public int getId() {
         return this.id;
+    }
+    
+    public Jouer getTypeJouer() {
+    	return this.typeJouer;
     }
 
 }

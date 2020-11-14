@@ -37,9 +37,9 @@ public class Carte {
 		sb.append(this.couleur.toString());
 		sb.append(" ");
 		if (this.remplie) {
-			sb.append("Remplie");
+			sb.append("REMPLIE");
 		} else {
-			sb.append("Vide");
+			sb.append("VIDE");
 		}
 		return sb.toString();
     } 
