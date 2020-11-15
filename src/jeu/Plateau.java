@@ -23,7 +23,7 @@ public class Plateau {
 			int c = 0;
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 5; j++) {
-					this.cases[c] = new Case();			//	Tu peux mettre les coordonnées dans le constructeur,
+					this.cases[c] = new Case();			//	Tu peux mettre les coordonnées dans le constructeur de Case,
 					this.cases[c].setCoordX(j);			//	Ca serait plus lisible et plus modulable
 					this.cases[c].setCoordY(i);
 					c++;
@@ -121,6 +121,28 @@ public class Plateau {
 			}
 		}
 		return caseTrouvee;
+	}
+	
+	
+	//	Cette fonction arrive avant de bouger une carte (qui est fait dans Jouer),
+	//	elle sert à faire "disparaître" la carte de la case le temps 
+	public boolean bougerCarte(Case depuis, Case vers) {
+		boolean reussite = true;
+		//	TO DO
+		return reussite;
+	}
+	
+	
+	//	Cette fonction sert à afficher le plateau dans la console pour choisir une case à jouer avec ses coordonnées
+	//	L'idéal serait un tableau avec les X et les Y, et dans chaque case, on met soit un "/" si il n'y a pas de carte
+	//	soit un code du genre "RVV" si il y a une carte Ronde, Verte et Vide.
+	//	Ce string est généré par la fonction getCode() d'une carte.
+	public void afficher() {
+		//	TO DO
+		
+			//	En dessous : test, tu peux supprimer
+		Carte testCarte = new Carte(false, Carte.FormesCarte.TRIANGLE, Carte.CouleursCarte.ROUGE);
+		System.out.println(testCarte.getCode());
 	}
 
 }

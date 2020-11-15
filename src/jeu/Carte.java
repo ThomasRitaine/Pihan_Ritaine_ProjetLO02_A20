@@ -42,6 +42,18 @@ public class Carte {
 			sb.append("VIDE");
 		}
 		return sb.toString();
+    }
+    
+    public String getCode() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(String.valueOf(this.forme.toString().charAt(0)));
+		sb.append(String.valueOf(this.couleur.toString().charAt(0)));
+		if (this.remplie) {
+			sb.append("R");
+		} else {
+			sb.append("V");
+		}
+		return sb.toString();
     } 
     
 

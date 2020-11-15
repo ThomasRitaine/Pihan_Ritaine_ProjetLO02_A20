@@ -126,7 +126,7 @@ public class Parametre {
     	this.nbJoueurIA = this.nbJoueur - this.nbJoueurHumain;
     	System.out.println("\nIl y a donc " + this.nbJoueurIA + " joueur(s) IA.");
     	
-    	//	A faire : récupération des noms des joueurs
+    	//	Récupération des noms des joueurs
     	scanner.nextLine();
     	for (int i = 0; i < this.nbJoueur; i++) {
 			if (i < this.nbJoueurHumain) {

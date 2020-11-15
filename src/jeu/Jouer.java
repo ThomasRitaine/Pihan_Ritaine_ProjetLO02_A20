@@ -9,23 +9,25 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 		this.joueur = joueur;
 	}
 	
-	protected boolean poserCarte(Case emplacement) {
+	protected boolean poserCarte(int coordX, int coordY) {
 		boolean reussite = true;
-		if(plateau.peutPoserCarte(emplacement)){
+		Case emplacement = this.plateau.rechercheCase(coordX, coordY);
+		if(this.plateau.peutPoserCarte(emplacement)) {
 			//	On met la carte du joueur sur la case
-			emplacement.setCarte(joueur.getCarteAJouer());
+			emplacement.setCarte(this.joueur.getCarteAJouer());
 			//	Puis on supprime la carte à jouer du joueur
-			joueur.setCarteAJouer(null);
+			this.joueur.setCarteAJouer(null);
    	 	} else {
-   	 		System.out.println("Veuillez choisir une autre case car celle ci contient déjà une carte, ou n'est pas adjacente à une carte déjà posée ou n'est pas inclue dans le plateau invisible");
    	 		reussite = false;
    	 	}
 		return reussite;
 	}
 	
-	void bougerCarte(Case depuis, Case vers) {
-		//this.poserCarte(emplacement, carteABouger.getCarte());
-		depuis.setCarte(null);
+	protected boolean bougerCarte(int coordX1, int coordY1, int coordX2, int coordY2) {
+		Case depuis = this.plateau.rechercheCase(coordX1, coordY1);
+		Case vers = this.plateau.rechercheCase(coordX2, coordY2);
+		boolean reussite = this.plateau.bougerCarte(depuis, vers);
+		return reussite;
 	}
 	
 	
