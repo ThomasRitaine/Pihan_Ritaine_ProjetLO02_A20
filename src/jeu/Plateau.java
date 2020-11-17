@@ -1,5 +1,5 @@
-import java.util.*;
 package jeu;
+import java.util.*;
 
 public class Plateau {
 
@@ -62,8 +62,25 @@ public class Plateau {
 	}
 
 //	Méthodes
+	
+	//permet de savoir quand la premiere carte est posée
+	public boolean isVide() {
+		boolean resultat =false;
+		int i = 0;
+		while (i<this.cases.size() && this.cases.get(i).isVide()) {
+			if(i==this.cases.size()-1) {
+				resultat = true;
+			}
+			i++;
+		}
+		return resultat;
+	}
+	
 	public boolean peutPoserCarte(Case emplacement) {
 		boolean resultat=false;
+		if(this.isVide()) {
+			resultat=true;
+		}
 		if (emplacement.isVide() && emplacement.isCaseAdjacente(this) /* & emplacement.isCaseDansFormePlateau() */) {
 			resultat = true;
 		} 
@@ -78,35 +95,32 @@ public class Plateau {
 		return this.carteCachee;
 	}
 
-	public Case rechercheCase(int x, int y) {//il faut controler les entrees pour controler while
-		
-		/*	Commentaires du petit geek qui fait le projet avec toi :
-			
-			1)	Si on cherche une case, on va sortir du while dès que soit le x, soit le y coincident.
-				Il faut remplacer le "&&" de ton expression par un "||"
-				si tu veux sortir du while quand tu trouves une case avec le même x et le même y
-				
-			2)	Si on cherche la première case : this.cases[0], on ne va pas rentrer dans le while
-				et ca va retourner la valeur null.
-				
-			3) 	Je te conseille de faire un booléen "caseTrouvee" et une case "caseCherchee"
-				Comme ca, tu ne controlles que la valeur de caseTrouvee dans ton while, et tu
-				fais un if à la fin de ton while où tu checkes si la case coincide
-		
-		*/
-		Case caseTrouvee=null;
-		int c = 0;
-		while (this.cases[c].getCoordX() != x & this.cases[c].getCoordY() != y) {
-			if (c == 15) {
-				System.out.println("[RechercheCase]:Aucune case ne possède ces coordonnées");				
-			} else {
-				c++;
-			}	
+	public Case rechercheCase(int x, int y) {		
+		Case caseCherchee = null;
+		int i = 0;
+		while ((this.cases.get(i).getCoordX() != x || this.cases.get(i).getCoordY() != y) && i<this.cases.size()) {//i<15
+				if (i == this.cases.size()-1) {//14 = dernière case
+					System.out.println("[RechercheCase]:Aucune case ne possède ces coordonnées");					
+				}
+				i++;
 		}
-		caseTrouvee = this.cases[c];
-		return caseTrouvee;
+		caseCherchee = this.cases.get(i);
+		return caseCherchee;
 	}
+	/*		
 	
+	2)	Si on cherche la première case : this.cases[0], on ne va pas rentrer dans le while
+		et ca va retourner la valeur null.
+		
+			=> Yaya : maintenant si ? 
+		
+	3) 	Je te conseille de faire un booléen "caseTrouvee" et une case "caseCherchee"
+		Comme ca, tu ne controlles que la valeur de caseTrouvee dans ton while, et tu
+		fais un if à la fin de ton while où tu checkes si la case coincide 
+		
+			=> Yaya : Je pense que j'ai trouvé une solution alternative en rajoutant la condition sur le i, non?
+
+*/
 	
 	//	Cette fonction arrive avant de bouger une carte (qui est fait dans Jouer),
 	//	elle sert à faire "disparaître" la carte de la case le temps 
@@ -123,6 +137,8 @@ public class Plateau {
 	//	L'idéal serait un tableau avec les X et les Y, et dans chaque case, on met soit un "/" si il n'y a pas de carte
 	//	soit un code du genre "RVV" si il y a une carte Ronde, Verte et Vide.
 	//	Ce string est généré par la fonction getCode() d'une carte.
+		
+	//		=> OK d'après le test ça a l'air d'être bon, au moins quand le plateau est vide cf main partie j'ai mis * au lieu de /
 	public void afficher() {		
 		StringBuffer sb =new StringBuffer();
 		int i=0;
@@ -133,16 +149,13 @@ public class Plateau {
 			}
 			sb.append('\t');
 			if(!this.cases.get(i).isVide()) {
-				sb.append(this.cases.get(i).getCarte().getCode());	
+				sb.append(this.cases.get(i).getCarte().getCode() );	
 			}else {
 				sb.append('*');
 			}
 			
 			i++;
 		}
-			
-		
-		sb.append();
 		System.out.println(sb);
 		
 			//	En dessous : test, tu peux supprimer

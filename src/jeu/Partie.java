@@ -1,5 +1,7 @@
 package jeu;
 
+import jeu.Carte.CouleursCarte;
+import jeu.Carte.FormesCarte;
 import jeu.Plateau.FormesPlateau;
 
 public class Partie {
@@ -123,6 +125,9 @@ public class Partie {
     	String[] noms = {"Pierre", "Juliette", "Ordi_1"};
     	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 2);
     	
+    	Plateau p = new Plateau(parametre.getFormePlateau());
+    	p.afficher();
+    	Carte c = new Carte(true, "CARRE", "BLEU");
     	Partie maPartie = new Partie(parametre);
     	maPartie.jouerPartie();
     	
