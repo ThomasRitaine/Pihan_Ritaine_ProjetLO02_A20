@@ -1,3 +1,4 @@
+import java.util.*;
 package jeu;
 
 public class Plateau {
@@ -8,9 +9,12 @@ public class Plateau {
 	}
 
 //	Attributs
-	private Case[] cases = new Case[15];
+	private ArrayList<Case> cases = new ArrayList<Case>();
 	private Carte carteCachee;
 	private FormesPlateau forme;
+
+	
+
 
 //	Constructeur
 	public Plateau(FormesPlateau forme) {
@@ -19,47 +23,40 @@ public class Plateau {
 		// Génération des cases du plateau et de 
 		//leurs coordonnées
 		if (forme == FormesPlateau.RECTANGLE) {
-			// on doit générer un rectangle de 3*5
-			int c = 0;
+			// on doit générer un rectangle de 3*5	   
+		      
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 5; j++) {
-					this.cases[c] = new Case();			//	Tu peux mettre les coordonnées dans le constructeur de Case,
-					this.cases[c].setCoordX(j);			//	Ca serait plus lisible et plus modulable
-					this.cases[c].setCoordY(i);
-					c++;
+					this.cases.add(new Case(j,i));					
 				}
 			}
+						
 		} else if (forme == FormesPlateau.TRIANGLE) {
 			// on doit générer un rectangle de 7*4 
 			//pour y intégrer un triangle de 7 cases +
 			// 5 + 3 + 0 ou 1
-			int c = 0;
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 7; j++) {
-					this.cases[c] = new Case();
-					this.cases[c].setCoordX(j);
-					this.cases[c].setCoordY(i);
-					c++;
-				}
+					this.cases.add(new Case(j,i));
+					}
 			}
 			// interdiction des cases autour du triangle
 			// en laissant la case[4] libre pour une 
 			//carte même si à la fin de la manche une
 			// case sera vide
 
-			cases[1].setInterdite();
-			cases[2].setInterdite();
-			cases[3].setInterdite();
-			cases[5].setInterdite();
-			cases[6].setInterdite();
-			cases[7].setInterdite();
-			cases[8].setInterdite();
-			cases[9].setInterdite();
-			cases[13].setInterdite();
-			cases[14].setInterdite();
-			cases[15].setInterdite();
-			cases[21].setInterdite();
-
+			cases.get(1).setInterdite();
+			cases.get(2).setInterdite();
+			cases.get(3).setInterdite();
+			cases.get(5).setInterdite();
+			cases.get(6).setInterdite();
+			cases.get(7).setInterdite();
+			cases.get(8).setInterdite();
+			cases.get(9).setInterdite();
+			cases.get(13).setInterdite();
+			cases.get(14).setInterdite();
+			cases.get(15).setInterdite();
+			cases.get(21).setInterdite();
 		}
 
 	}
@@ -67,8 +64,7 @@ public class Plateau {
 //	Méthodes
 	public boolean peutPoserCarte(Case emplacement) {
 		boolean resultat=false;
-		if (emplacement.isVide() & emplacement.isCaseAdjacente(this) /* & emplacement.isCaseDansFormePlateau() */) {
-			// résonnement pour le test isCaseDansFormePlateau() en bas de page, pas simple...
+		if (emplacement.isVide() && emplacement.isCaseAdjacente(this) /* & emplacement.isCaseDansFormePlateau() */) {
 			resultat = true;
 		} 
 		return resultat;
@@ -102,24 +98,12 @@ public class Plateau {
 		int c = 0;
 		while (this.cases[c].getCoordX() != x & this.cases[c].getCoordY() != y) {
 			if (c == 15) {
-				System.out.println("[RechercheCase]:Aucune case ne possède ces coordonnées");
-				//pour l'instant la boucle ne s'arrête pas si avant c=14 => c++ => c=15 le prg va boucler car la condition ne sera pas vérifiée!
+				System.out.println("[RechercheCase]:Aucune case ne possède ces coordonnées");				
 			} else {
 				c++;
-			}
-			caseTrouvee = this.cases[c];	
+			}	
 		}
-		return caseTrouvee;
-	}
-
-	public Case rechercheCase2(int x, int y) {
-		//	Celle d'au dessus est meilleure, on peut enlever celle-ci ;)
-		Case caseTrouvee = null;
-		for (int c = 0; c < cases.length; c++) {
-			if (this.cases[c].getCoordX() == x & this.cases[c].getCoordY() == y) {
-				caseTrouvee = this.cases[c];
-			}
-		}
+		caseTrouvee = this.cases[c];
 		return caseTrouvee;
 	}
 	
@@ -128,7 +112,9 @@ public class Plateau {
 	//	elle sert à faire "disparaître" la carte de la case le temps 
 	public boolean bougerCarte(Case depuis, Case vers) {
 		boolean reussite = true;
-		//	TO DO
+		Carte carteBougee = depuis.getCarte();
+		depuis.setCarte(null);
+		vers.setCarte(carteBougee);
 		return reussite;
 	}
 	
@@ -137,8 +123,27 @@ public class Plateau {
 	//	L'idéal serait un tableau avec les X et les Y, et dans chaque case, on met soit un "/" si il n'y a pas de carte
 	//	soit un code du genre "RVV" si il y a une carte Ronde, Verte et Vide.
 	//	Ce string est généré par la fonction getCode() d'une carte.
-	public void afficher() {
-		//	TO DO
+	public void afficher() {		
+		StringBuffer sb =new StringBuffer();
+		int i=0;
+		sb.append("Plateau:\n");
+		while(i<this.cases.size()) {
+			if(i%5==0) {
+				sb.append("\n");
+			}
+			sb.append('\t');
+			if(!this.cases.get(i).isVide()) {
+				sb.append(this.cases.get(i).getCarte().getCode());	
+			}else {
+				sb.append('*');
+			}
+			
+			i++;
+		}
+			
+		
+		sb.append();
+		System.out.println(sb);
 		
 			//	En dessous : test, tu peux supprimer
 		Carte testCarte = new Carte(false, Carte.FormesCarte.TRIANGLE, Carte.CouleursCarte.ROUGE);
@@ -148,15 +153,3 @@ public class Plateau {
 }
 
 
-/*
- * pour jouer avec un contour de plateau invisible cas du rectangle: il faut
- * générer plus de cases que les 15 qui vont être remplies par exemple en
- * générant un plateau de 5*5 on aurait alors // Constructeur public
- * Plateau(FormesPlateau forme) { this.forme = forme;
- * 
- * //Génération des cases du plateau et de leurs coordonnées int c=0; for (int
- * i=0; i<5; i++) { for (int j=0; j<5; j++) { this.cases[c] = new Case();
- * cases[c].setCoordX(j); cases[c].setCoordY(i); c++; } }
- * 
- * } il faut ensuite tester isCaseDansFormePlateau()
- */

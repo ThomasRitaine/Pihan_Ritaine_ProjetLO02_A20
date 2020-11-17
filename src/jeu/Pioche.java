@@ -22,9 +22,9 @@ public class Pioche {
     private Pioche() {
     	this.cartes = new LinkedList<Carte>();
 		
-		//	On génère toutes les cartes et on le met dans la pioche
+		//	On génère toutes les cartes et on les met dans la pioche
     	boolean rempli = false;
-    	for (int i = 0; i < 2; i++) {	//	On fait deux fois cette boucle. La première fois, rempli == flase
+    	for (int i = 0; i < 2; i++) {	//	On fait deux fois cette boucle. La première fois, rempli == false
 			if (i==1) rempli = true;	//	Au deuxième passage de la boucle, rempli == true
 			
 			for ( FormesCarte forme : FormesCarte.values()) {
