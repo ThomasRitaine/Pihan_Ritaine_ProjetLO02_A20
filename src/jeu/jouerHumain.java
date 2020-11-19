@@ -82,16 +82,26 @@ public class JouerHumain extends Jouer{
 	            	
 	            case "bouger":
 	            	if (!aBouge) {
-	            		int coordX1 = Integer.parseInt(mots[1]);
-	            		int coordY1 = Integer.parseInt(mots[2]);
-	            		int coordX2 = Integer.parseInt(mots[3]);
-	            		int coordY2 = Integer.parseInt(mots[4]);
-	            		aBouge = this.bougerCarte(coordX1, coordY1, coordX2, coordY2);
-	            		if (aBouge) {
-	            			System.out.println("La carte de la case ( " + coordX1 + " ; " + coordY1 + " ) a bien été bougée sur la case ( " + coordX2 + " ; " + coordY2 + " ) !" );
+	            		if (mots.length == 5) {
+		            		
+	            			try {
+	            				int coordX1 = Integer.parseInt(mots[1]);
+	            				int coordY1 = Integer.parseInt(mots[2]);
+	            				int coordX2 = Integer.parseInt(mots[3]);
+	            				int coordY2 = Integer.parseInt(mots[4]);
+			            		aBouge = this.bougerCarte(coordX1, coordY1, coordX2, coordY2);
+			            		if (aBouge) {
+			            			System.out.println("La carte de la case ( " + coordX1 + " ; " + coordY1 + " ) a bien été bougée sur la case ( " + coordX2 + " ; " + coordY2 + " ) !" );
+								} else {
+									System.out.println("Erreur lors du déplacement de la carte.");
+									System.out.println("Il y a peut-être déjà une carte sur la case ciblée, ou bien elle n'est pas adjacente à une case contenant une carte, ou alors il n'y a pas de carte sur la première case.");
+								}
+							}
+	            			catch (NumberFormatException e) {
+	            				System.out.println("Les coordonnées doivent être des nombres entiers.");
+							}
 						} else {
-							System.out.println("Erreur lors du déplacement de la carte.");
-							System.out.println("Il y a peut-être déjà une carte sur la case ciblée, ou bien elle n'est pas adjacente à une case contenant une carte, ou alors il n'y a pas de carte sur la première case.");
+							System.out.println("Il faut spécifier les coordonnées des deux cases, rien de plus.");
 						}
 					} else {
 						System.out.println("Vous avez déjà bougé une carte !");
