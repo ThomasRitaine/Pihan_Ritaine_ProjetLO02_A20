@@ -31,6 +31,7 @@ public class Manche implements Visitable {
 	}
     
     public void jouerManche(Partie partieEnCours) {
+    	System.out.println("\n\n---   Bébut de la manche " + (partieEnCours.getMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
     	int tour = 0;
     	while (!this.pioche.estVide()) {
 			this.jouerTour(partieEnCours, tour);

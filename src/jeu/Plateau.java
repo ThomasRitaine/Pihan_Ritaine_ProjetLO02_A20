@@ -189,7 +189,7 @@ public class Plateau {
 	public void afficher() {		
 		StringBuffer sb =new StringBuffer();
 		int i=0;
-		sb.append("Plateau:\n");
+		sb.append("Voici le plateau :\n");
 		while(i<this.cases.size()) {
 			if(i%5==0) {
 				sb.append("\n");
@@ -198,7 +198,7 @@ public class Plateau {
 			if(!this.cases.get(i).isVide()) {
 				sb.append(this.cases.get(i).getCarte().getCode() );	
 			}else {
-				sb.append('*');
+				sb.append(" *");
 			}
 			
 			i++;

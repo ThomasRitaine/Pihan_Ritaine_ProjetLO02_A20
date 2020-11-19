@@ -1,7 +1,5 @@
 package jeu;
 
-import java.util.Scanner;
-
 public class JouerHumain extends Jouer{
 	
 	public JouerHumain(Joueur joueur) {
@@ -9,35 +7,39 @@ public class JouerHumain extends Jouer{
 	}
 	
     public void jouerTour() {
-    	System.out.println("\nAu tour de " + this.joueur.getNom());
-    	System.out.println("Votre carte de victoire est " + this.joueur.getCarteVictoire().toString());
-    	System.out.println("La carte à jouer est " + this.joueur.getCarteAJouer().toString());
+    	System.out.println("\nAu tour de " + this.joueur.getNom() + ".\n");
+    	System.out.println("Votre carte de victoire est " + this.joueur.getCarteVictoire().toString() + ".");
+    	System.out.println("La carte à jouer est " + this.joueur.getCarteAJouer().toString() + ".");
+    	System.out.println('\n');
+    	this.plateau.afficher();
     	
     	//	Interface en ligne de commande
     	boolean finTour = false;
     	boolean aPoseCarte = false;
     	boolean aBouge = false;
-    	Scanner scanner = new Scanner(System.in);
+    	
     	while (!finTour) {
-			
+    		
+    		System.out.println('\n');
     		System.out.println("Saisissez une commande.\n\"aide\" pour avoir la liste des commandes.");
         	
         	String commande;	//	Sert à récupérer la commande
         	String[] mots;		//	Sert à contenir les mots
-        	commande = scanner.nextLine();
+        	commande = Input.scanner.nextLine();
+        	System.out.println('\n');
         	mots = commande.split(" ");
         	
         	switch (mots[0]) {
         	
 	            case "aide":
 	            	System.out.println("Liste des commandes :");
-	        		System.out.println("aide => Affiche la liste des commandes et leur fonction.");
-	        		System.out.println("fin => Met fin au tour si vous avez posé votre carte.");
-	        		System.out.println("victoire => Affiche votre carte de victoire. (Non, cette commande ne vous fait pas gagner ;) )");
-	        		System.out.println("carte => Affiche la carte à poser sur le plateau.");
-	        		System.out.println("poser X Y => Pose la carte sur la case de coordonnées X et Y du plateau.");
-	        		System.out.println("bouger X1 Y1 X2 Y2 => Bouge la carte qui est sur la case avec les coordonnées X1 et Y1, vers la case qui a pour coordonnées X2 et Y2.");
-	        		System.out.println("plateau => Affiche le plateau avec les coordonnées des cases et leur contenu.");
+	        		System.out.println("\taide\t=>\tAffiche la liste des commandes et leur fonction.");
+	        		System.out.println("\tfin\t=>\tMet fin au tour si vous avez posé votre carte.");
+	        		System.out.println("\tvictoire\t=>\tAffiche votre carte de victoire. (Non, cette commande ne vous fait pas gagner ;) )");
+	        		System.out.println("\tcarte\t=>\tAffiche la carte à poser sur le plateau.");
+	        		System.out.println("\tposer X Y\t=>\tPose la carte sur la case de coordonnées X et Y du plateau.");
+	        		System.out.println("\tbouger X1 Y1 X2 Y2\t=>\tBouge la carte qui est sur la case avec les coordonnées X1 et Y1, vers la case qui a pour coordonnées X2 et Y2.");
+	        		System.out.println("\tplateau\t=>\tAffiche le plateau avec les coordonnées des cases et leur contenu.");
 	        		break;
 	            	
 	            case "fin":
@@ -111,9 +113,6 @@ public class JouerHumain extends Jouer{
 			}
         	
 		}
-    	
-    	//	Fin de l'interface en ligne de commande, on ferme le scanner
-    	scanner.close();
     	
     }
     

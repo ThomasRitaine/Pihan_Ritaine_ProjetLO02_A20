@@ -53,9 +53,9 @@ public class Case {
 		boolean isVide = false;
 		if (this.getCarte() == null) {
 			isVide = true;
-			System.out.println("[isVide] : oui");
+			//System.out.println("[isVide] : oui");
 		}else {
-			System.out.println("[isVide] : non");
+			//System.out.println("[isVide] : non");
 		}
 		return isVide;
 	}

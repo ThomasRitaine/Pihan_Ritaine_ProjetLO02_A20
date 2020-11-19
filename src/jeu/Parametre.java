@@ -1,6 +1,5 @@
 package jeu;
 
-import java.util.Scanner;
 import jeu.Plateau.FormesPlateau;
 
 
@@ -111,23 +110,23 @@ public class Parametre {
 //	Méthodes
     public void parametrerPartie() {
     		//	Import des librairies pour lire la console
-    	Scanner scanner = new Scanner(System.in);
+    	//Scanner scanner = new Scanner(System.in);
     	
     	//	Récupération du nombre de joueur
     	System.out.println("-   1. Paramétrons la partie !   -\n");
-    	System.out.println("Entrez le nombre de joueur (Humain + IA <= 3) : ");
-    	this.nbJoueur = scanner.nextInt();
+    	System.out.println("Entrez le nombre de joueur, Humain et IA compris. Entre 2 et 3.");
+    	this.nbJoueur = Input.scanner.nextInt();
     	
     	//	Récupération du nombre de joueur humain
     	System.out.println("\nParmi ces " + this.nbJoueur + " joueurs, combien sont humains ?");
-    	this.nbJoueurHumain = scanner.nextInt();
+    	this.nbJoueurHumain = Input.scanner.nextInt();
     	
     	//	Calcul et confirmation du nombre de joueur IA
     	this.nbJoueurIA = this.nbJoueur - this.nbJoueurHumain;
     	System.out.println("\nIl y a donc " + this.nbJoueurIA + " joueur(s) IA.");
     	
     	//	Récupération des noms des joueurs
-    	scanner.nextLine();
+    	Input.scanner.nextLine();
     	for (int i = 0; i < this.nbJoueur; i++) {
 			if (i < this.nbJoueurHumain) {
 				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un humain)");
@@ -136,7 +135,7 @@ public class Parametre {
 				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un ordinateur)");
 				//this.nomsJoueurs[i] = console.readLine("\nQuel est le nom du joueur n°" + i + " ? (C'est un ordinateur)\n");
 			}
-			this.nomsJoueurs[i] = scanner.nextLine();
+			this.nomsJoueurs[i] = Input.scanner.nextLine();
 			
 		}
     	
@@ -145,10 +144,10 @@ public class Parametre {
     	int i = 0;
     	for ( FormesPlateau forme : FormesPlateau.values()) {
     		i++;
-    		System.out.println(i + ") " + forme);
+    		System.out.println("\t" + i + ") " + forme);
     	}
     	System.out.println("Choisissez un numéro.");
-    	int plateauChoisi = scanner.nextInt();
+    	int plateauChoisi = Input.scanner.nextInt();
     	i = 0;
     	for ( FormesPlateau forme : FormesPlateau.values()) {
     		i++;
@@ -159,12 +158,10 @@ public class Parametre {
     	
     	//	Choix du nombre de manche
     	System.out.println("\nEt pour finir, combien de manche voulez-vous jouer ?");
-    	this.nbManche = scanner.nextInt();
+    	this.nbManche = Input.scanner.nextInt();
     	
-    	//	On ferme la lecture
-    	scanner.close();
-    	
-    	this.resumerParametre();
+    	Input.scanner.nextLine();
+    	//this.resumerParametre();
 	}
     
     public void resumerParametre() {
