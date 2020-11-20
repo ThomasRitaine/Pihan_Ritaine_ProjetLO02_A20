@@ -47,7 +47,8 @@ public class Case {
 		this.interdite = true;
 	}
 
-	// Methodes
+	// Methodes	
+	
 	// correction du return
 	boolean isVide() {
 		boolean isVide = false;

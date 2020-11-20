@@ -12,22 +12,24 @@ public class Plateau {
 	private ArrayList<Case> cases = new ArrayList<Case>();
 	private Carte carteCachee;
 	private FormesPlateau forme;
-
+	private int dimXRectangle = 5;
+	private int dimYRectangle = 3;
+	private int dimXTriangle = 7;
+	private int dimYTriangle = 4;
+	//private int dimXRond;
+	//private int dimYRond;
 	
-
-
 //	Constructeur
 	public Plateau(FormesPlateau forme) {
 		this.forme = forme;
-
 		// Génération des cases du plateau et de 
 		//leurs coordonnées
 		if (forme == FormesPlateau.RECTANGLE) {
 			// on doit générer un rectangle de 3*5	   
 		      
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 5; j++) {
-					this.cases.add(new Case(j,i));					
+			for (int y = 0; y < dimYRectangle; y++) {
+				for (int x = 0; x < dimXRectangle; x++) {
+					this.cases.add(new Case(x,y));					
 				}
 			}
 						
@@ -35,9 +37,9 @@ public class Plateau {
 			// on doit générer un rectangle de 7*4 
 			//pour y intégrer un triangle de 7 cases +
 			// 5 + 3 + 0 ou 1
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 7; j++) {
-					this.cases.add(new Case(j,i));
+			for (int y = 0; y < dimYTriangle; y++) {
+				for (int x = 0; x < dimXTriangle; x++) {
+					this.cases.add(new Case(x,y));
 					}
 			}
 			// interdiction des cases autour du triangle
@@ -61,48 +63,7 @@ public class Plateau {
 
 	}
 
-//	Méthodes
-	
-	//permet de savoir quand la premiere carte est posée
-	public boolean isVide() {
-		/*	Commentaires du Thomas :
-				
-				1.	Tu devrais plutôt utiliser une boucle for, puisque tu sais à l'avance que tu vas parcourir
-					les 15 cases du tableau.
-					
-				2.	Je te conseille de nommer tes variables avec ce qu'elles font. Par exemple, remplacer le
-					booléen "résultat" par "vide" rendrait le code plus compréhensible.
-					
-				3.	A chaque itération, tu peux checker si la case est vide. Pas besoin de sortir de la boucle.
-					Tu peux faire un truc comme :
-					
-						for (i = 0;  i< this.cases.size(); i++) {
-							if( ! this.cases.get(i).isVide()) {
-								vide = false;
-							}
-						}
-		*/
-		boolean resultat =false;
-		int i = 0;
-		while (i<this.cases.size() && this.cases.get(i).isVide()) {
-			if(i==this.cases.size()-1) {
-				resultat = true;
-			}
-			i++;
-		}
-		return resultat;
-	}
-	
-	public boolean peutPoserCarte(Case emplacement) {
-		boolean resultat=false;
-		if(this.isVide()) {
-			resultat=true;
-		}
-		if (emplacement.isVide() && emplacement.isCaseAdjacente(this) /* & emplacement.isCaseDansFormePlateau() */) {
-			resultat = true;
-		} 
-		return resultat;
-	}
+//get et set
 	
 	public void setCarteCachee(Carte value) {
 		this.carteCachee = value;
@@ -111,9 +72,46 @@ public class Plateau {
 	public Carte getCarteCachee() {
 		return this.carteCachee;
 	}
+	public ArrayList<Case> getCases(){
+		return this.cases;
+	}
+
+//	Méthodes
+	
+	//permet de savoir quand la premiere carte est posée
+	public boolean isVide() {
+		//Version for
+		boolean vide = true;
+		for (int i = 0;  i< this.cases.size(); i++) {
+			if( ! this.cases.get(i).isVide()) {
+					vide = false;
+			}
+		}
+		return vide;
+	}
+		//Version While			
+		/*boolean vide =false;
+			int i = 0;
+			while (i<this.cases.size() && this.cases.get(i).isVide()) {
+				if(i==this.cases.size()-1) {
+					vide = true;
+				}
+				i++;
+			}
+			return vide;}
+		*/
+			
+	
+	public boolean peutPoserCarte(Case emplacement) {
+		boolean peutPoserCarte=false;
+		if(this.isVide()||(emplacement.isVide() && emplacement.isCaseAdjacente(this) /* & emplacement.isCaseDansFormePlateau() */)) {
+			peutPoserCarte=true;			
+		}		
+		return peutPoserCarte;
+	}	
 
 	public Case rechercheCase(int x, int y) {		
-		Case caseCherchee = null;
+		/*Case caseCherchee = null;
 		int i = 0;
 		while ((this.cases.get(i).getCoordX() != x || this.cases.get(i).getCoordY() != y) && i<this.cases.size()) {//i<15
 			if (i == this.cases.size()-1) {//14 = dernière case
@@ -123,6 +121,19 @@ public class Plateau {
 		}
 		caseCherchee = this.cases.get(i);
 		return caseCherchee;
+		*/
+		Case caseCherchee = null;
+		boolean caseTrouvee = false;
+		Iterator<Case> it = cases.iterator();		
+		while(it.hasNext()&& caseTrouvee == false) {
+			Case i = it.next();
+			if(i.getCoordX() == x && i.getCoordY() == y) {//i ou it à voir
+				caseTrouvee = true;
+				caseCherchee = i;
+			}
+			}
+		return caseCherchee;
+		
 	}
 	/*		
 	
@@ -144,37 +155,36 @@ public class Plateau {
 						Test ton code et tu verras ce qui fonctionne et ne fonctionne pas.
 
 */
-	
-	
-	
-	
-	/*	Commentaires du Thomas :
-	
-	1.	Il faut tester que tu puisses mettre la carte sur la case "vers". Tu peux utiliser ta fonction peutPoserCarte
-		
-	2.	Quand tu bouges une carte, elle ne se trouve plus sur la case d'avant. Donc avant de regarder si tu peux poser
-		ta carte sur la case "vers", il faut enlever la carte de la case "depuis".
-		Mais attention, si une erreur se produit, il faut remettre la carte sur la case "depuis" et mettre reussite
-		sur false.
-		
-	3.	Tu peux aussi faire des vérifications comme "Y a-t-il une carte sur la case "depuis" ? "
+	/*
+	 * Dans cette fonction : 
+	 * - on vérifie si la carte a bouger existe
+	 * - on supprime la carte à bouger de sa case (depuis)
+	 * - on vérifie si la case où la carte sera déplacée est vide
+	 * - on pose ou non la carte dans cette nouvelle case (vers)
+	 * - on renvoie un boolean indiquant si la carte a pu être bougée
+	 * 	
 	 */
 	public boolean bougerCarte(Case depuis, Case vers) {
-		boolean reussite = true;
-		Carte carteBougee = depuis.getCarte();
-		depuis.setCarte(null);
-		vers.setCarte(carteBougee);
-		return reussite;
+		boolean peutBougerCarte = true;
+		if(!depuis.isVide()) {
+			Carte carteABougee = depuis.getCarte();
+			depuis.setCarte(null);
+			if(this.peutPoserCarte(vers)) {			
+				vers.setCarte(carteABougee);
+			}else {
+				peutBougerCarte = false;
+				depuis.setCarte(carteABougee);
+				System.out.println("Il y a une carte sur la case sélectionnée");//il faudrait redemander si jamais réussite =false 
+			}
+		}else {
+			peutBougerCarte=false;
+			System.out.println("Il n'y a pas de carte sur la case sélectionnée");
+		}
+		return peutBougerCarte;
 	}
 	
 	
-	/*	Commentaires du Thomas :
-	
-	1.	Wouaaah ! C'est vraiment bien fait, bravo !
-		En plus l'algorithme est bien organisé !
-		
-	2.	Est-ce que tu pourrais rajouter une rangée avec X, et une avec les Y ?
-		Je vois bien un truc comme ca, tu en penses quoi ?
+	/*	Pour l'instant je ne sais pas comment afficher les axes c'est en réflexion
 		
 		\ X		1		2		3		4		5
 		Y		
@@ -183,28 +193,39 @@ public class Plateau {
 		3				*		*				*
 		4		*		*		*				*
 	
-	3.	Il faudra aussi faire l'affichage pour les autres plateaux.
+		=> faire l'affichage pour les autres plateaux.
 		
 	 */
 	public void afficher() {		
 		StringBuffer sb =new StringBuffer();
 		int i=0;
 		sb.append("Voici le plateau :\n");
-		while(i<this.cases.size()) {
-			if(i%5==0) {
-				sb.append("\n");
+		switch(this.forme) {
+		case RECTANGLE :
+			while(i<this.cases.size()) {
+				if(i%5==0) {
+					sb.append("\n");
+				}
+				sb.append('\t');
+				if(!this.cases.get(i).isVide()) {
+					sb.append(this.cases.get(i).getCarte().getCode() );	
+				}else {
+					sb.append(" *");
+				}
+				
+				i++;
 			}
-			sb.append('\t');
-			if(!this.cases.get(i).isVide()) {
-				sb.append(this.cases.get(i).getCarte().getCode() );	
-			}else {
-				sb.append(" *");
-			}
+			break;
+		case TRIANGLE: 
+			break;
 			
-			i++;
+		case ROND:
+			break;
+			
 		}
 		System.out.println(sb);
-	}
+		}
+		
 
 }
 
