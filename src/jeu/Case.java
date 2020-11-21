@@ -39,6 +39,11 @@ public class Case {
 		return vide;
 	}
 	
+	boolean estInterdite() {
+		boolean interdite = this.getInterdite();
+		return interdite;
+	}
+	
 	
 	
 
