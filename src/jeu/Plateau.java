@@ -18,6 +18,7 @@ public class Plateau {
 	private int dimYTriangle = 4;
 	//private int dimXRond;
 	//private int dimYRond;
+	//faire un tableau enregistrant toutes les dimensions?
 	
 //	Constructeur
 	public Plateau(FormesPlateau forme) {
@@ -64,6 +65,18 @@ public class Plateau {
 	}
 
 //get et set
+	public int getdimXRectangle() {
+		return this.dimXRectangle;
+	}
+	public int getdimYRectangle() {
+		return this.dimYRectangle;
+	}
+	public int getdimXTriangle() {
+		return this.dimXTriangle;
+	}
+	public int getdimYTriangle() {
+		return this.dimYTriangle;
+	}
 	
 	public void setCarteCachee(Carte value) {
 		this.carteCachee = value;
@@ -130,6 +143,8 @@ public class Plateau {
 			if(i.getCoordX() == x && i.getCoordY() == y) {//i ou it à voir
 				caseTrouvee = true;
 				caseCherchee = i;
+			}else {
+				System.out.println("[RechercheCase]:"+ it);
 			}
 			}
 		return caseCherchee;
