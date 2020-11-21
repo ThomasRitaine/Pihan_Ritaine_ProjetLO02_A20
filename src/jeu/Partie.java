@@ -122,7 +122,7 @@ public class Partie {
     	//parametre.parametrerPartie();
     	
     	//	Paramétrage rapide, sans passer par le formulaire
-    	String[] noms = {"Pierre", "Juliette", "Léa"};
+    	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
     	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 2);
     	Partie maPartie = new Partie(parametre);
     	/*Manche mancheTest = new Manche(maPartie);

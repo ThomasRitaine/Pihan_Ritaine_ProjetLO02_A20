@@ -89,7 +89,7 @@ public class JouerHumain extends Jouer{
 	            				int coordY1 = Integer.parseInt(mots[2]);
 	            				int coordX2 = Integer.parseInt(mots[3]);
 	            				int coordY2 = Integer.parseInt(mots[4]);
-			            		aBouge = this.bougerCarte(coordX1, coordY1, coordX2, coordY2);
+			            		aBouge = this.plateau.bougerCarte(coordX1, coordY1, coordX2, coordY2);
 			            		if (aBouge) {
 			            			System.out.println("La carte de la case ( " + coordX1 + " ; " + coordY1 + " ) a bien été bougée sur la case ( " + coordX2 + " ; " + coordY2 + " ) !" );
 								} else {
@@ -100,7 +100,7 @@ public class JouerHumain extends Jouer{
 	            			catch (NumberFormatException e) {
 	            				System.out.println("Les coordonnées doivent être des nombres entiers.");
 							}
-						} else {
+	            		} else {
 							System.out.println("Il faut spécifier les coordonnées des deux cases, rien de plus.");
 						}
 					} else {

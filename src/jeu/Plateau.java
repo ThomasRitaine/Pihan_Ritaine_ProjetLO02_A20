@@ -1,8 +1,6 @@
 package jeu;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Plateau {
 
@@ -74,9 +72,6 @@ public class Plateau {
 	public Carte getCarteCachee() {
 		return this.carteCachee;
 	}
-	public HashMap<String,Case> getCases(){
-		return this.cases;
-	}
 
 //	Méthodes
 	
@@ -91,28 +86,34 @@ public class Plateau {
 		return vide;
 	}
 	
-	public boolean peutPoserCarte(int x, int y) {
-		String coord = Plateau.getKey(x, y);
-		Case emplacement = this.cases.get(coord);
+	public boolean peutPoserCarte(Case emplacement) {
 		
 		boolean peutPoserCarte=false;
-		if( this.estVide() || (emplacement.estVide() && this.estAdjacente(x, y))) {
-			peutPoserCarte=true;			
+		int[] coord = this.getCoord(emplacement);
+		if( this.estVide() || (emplacement.estVide() && this.estAdjacente(coord[0], coord[1]))) {
+			peutPoserCarte=true;
 		}		
 		return peutPoserCarte;
 	}
 	
-
+	//	Cette méthode sert à savoir si une case de coord x, y est adjacente a une case qui a une carte
 	public boolean estAdjacente(int x, int y) {
 		boolean estAdjacente = false;
 		
-		//	On récupère les cases. H = Haut, B = Bas, G = Gauche, D = Droit
-		Case emplacementH = this.cases.get(Plateau.getKey(x, y+1));
-		Case emplacementB = this.cases.get(Plateau.getKey(x, y-1));
-		Case emplacementG = this.cases.get(Plateau.getKey(x-1, y));
-		Case emplacementD = this.cases.get(Plateau.getKey(x+1, y));
+		//	On récupère les cases adjacentes
+		Case[] adjacentes = {null,null,null,null};
+		adjacentes[0] = this.getCase(x, y+1);
+		adjacentes[1] = this.getCase(x, y-1);
+		adjacentes[2] = this.getCase(x-1, y);
+		adjacentes[3] = this.getCase(x+1, y);
 		
-		estAdjacente = (emplacementH.getCarte() != null) || (emplacementB.getCarte() != null) || (emplacementG.getCarte() != null) || (emplacementD.getCarte() != null);
+		for (int i = 0; i < 4; i++) {
+			if (adjacentes[i] != null) {
+				if (!adjacentes[i].estVide()) {
+					estAdjacente = true;
+				}
+			}
+		}
 		
 		return estAdjacente;
 	}
@@ -121,28 +122,9 @@ public class Plateau {
 		String coord = Plateau.getKey(x, y);
 		return this.cases.get(coord);
 	}
-	/*		
-	
-	2)	Si on cherche la première case : this.cases[0], on ne va pas rentrer dans le while
-		et ca va retourner la valeur null.
-		
-			=> Yaya : maintenant si ? 
-			=> Thomas : A toi de trouver un moyen de le tester ;)
-						(mais indique bien avec des commentaires tes blocs de test)
-			
-		
-	3) 	Je te conseille de faire un booléen "caseTrouvee" et une case "caseCherchee"
-		Comme ca, tu ne controlles que la valeur de caseTrouvee dans ton while, et tu
-		fais un if à la fin de ton while où tu checkes si la case coincide 
-		
-			=> Yaya : Je pense que j'ai trouvé une solution alternative en rajoutant la condition sur le i, non?
-			=> Thomas :	Tu vas avoir un problème si tu ne trouves pas la case. Tu vas faire get(16) et ca va faire
-						une erreur.
-						Test ton code et tu verras ce qui fonctionne et ne fonctionne pas.
 
-*/
 	/*
-	 * Dans cette fonction : 
+	 * Dans cette méthode : 
 	 * - on vérifie si la carte a bouger existe
 	 * - on supprime la carte à bouger de sa case (depuis)
 	 * - on vérifie si la case où la carte sera déplacée est vide
@@ -150,34 +132,28 @@ public class Plateau {
 	 * - on renvoie un boolean indiquant si la carte a pu être bougée
 	 * 	
 	 */
-	public boolean bougerCarte(Case depuis, Case vers) {
+	public boolean bougerCarte(int x1, int y1, int x2, int y2) {
+		Case depuis = this.getCase(x1, y1);
+		Case vers = this.getCase(x2, y2);
 		boolean peutBougerCarte = true;
+		
 		if(!depuis.estVide()) {
 			Carte carteABougee = depuis.getCarte();
 			depuis.setCarte(null);
 			if(this.peutPoserCarte(vers)) {			
 				vers.setCarte(carteABougee);
-			}else {
+			} else {
 				peutBougerCarte = false;
 				depuis.setCarte(carteABougee);
-				System.out.println("Il y a une carte sur la case sélectionnée");//il faudrait redemander si jamais réussite =false 
 			}
-		}else {
+		} else {
 			peutBougerCarte=false;
-			System.out.println("Il n'y a pas de carte sur la case sélectionnée");
 		}
 		return peutBougerCarte;
 	}
 	
 	
 	/*	Pour l'instant je ne sais pas comment afficher les axes c'est en réflexion
-		
-		\ X		1		2		3		4		5
-		Y		
-		1		*		TKT		MDR		*		*
-		2		*		*		LOL		TGV		*
-		3				*		*				*
-		4		*		*		*				*
 		
 				
 		4	|	*		TKT		MDR		*		*
@@ -186,30 +162,42 @@ public class Plateau {
 		1	|	*		*		*				*
 		Y	|_____________________________________
 		   X	1		2		3		4		5
-	
-		=> faire l'affichage pour les autres plateaux.
 		
 	 */
 	public void afficher() {		
 		StringBuffer sb =new StringBuffer();
-		int i=0;
 		sb.append("Voici le plateau :\n");
+		
 		switch(this.forme) {
+		
 		case RECTANGLE :
-			while(i<this.cases.size()) {
-				if(i%5==0) {
-					sb.append("\n");
-				}
+			int ligne = 3;
+			Case emplacement;
+			for (int i = 0; i < 15; i++) {
 				sb.append('\t');
-				if(!this.cases.get(i).estVide()) {
-					sb.append(this.cases.get(i).getCarte().getCode() );	
-				}else {
-					sb.append(" *");
+				
+				if(i%5==0) {
+					if (i!=0) {
+						ligne--;
+					}
+					sb.append("\n");
+					sb.append(ligne + "  |\t");
 				}
 				
-				i++;
+				emplacement = this.getCase((i%5)+1, ligne);
+				if(!emplacement.estVide()) {
+					sb.append(emplacement.getCarte().getCode() );	
+				} else {
+					sb.append(" *");
+				}
 			}
+			sb.append('\n');
+			sb.append("Y  |_______________________________________");
+			sb.append('\n');
+			sb.append(" X\t 1\t 2\t 3\t 4\t 5");
+			
 			break;
+			
 		case TRIANGLE: 
 			break;
 			
@@ -218,6 +206,17 @@ public class Plateau {
 			
 		}
 		System.out.println(sb);
+	}
+	
+	public int[] getCoord(Case emplacement) {
+		int[] coord = {0,0};
+		for(String coordStr : this.cases.keySet()) {
+			if (this.cases.get(coordStr).equals(emplacement)) {
+				coord[0] = Integer.parseInt(coordStr.split(";")[0]);
+				coord[1] = Integer.parseInt(coordStr.split(";")[1]);
+			}
+        }
+		return coord;
 	}
 	
 	public static String getKey(int x, int y) {

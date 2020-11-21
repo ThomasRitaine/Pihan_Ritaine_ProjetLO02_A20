@@ -22,12 +22,12 @@ public class CalculePointsVisitor implements Visitor {
     	int compteurLigneEstRemplie = 0;
     	HashMap<Integer,Integer> NbPointsParLigne = new HashMap<Integer, Integer>();
     	
-    	for(int y=0; y<plateau.getdimYRectangle(); y++) {
+    	for(int y=0; y<=4; y++) {
     		estContinu=false;
     		nbCaseLigneCouleur =1;
-    		for(int x=0; x< plateau.getdimXRectangle(); x++) {
-    			if(!plateau.getCases().get(x).isVide() && 
-    				plateau.getCases().get(x).getCarte().getCouleur().equals(carteVictoire.getCouleur())) {
+    		for(int x=0; x<=5; x++) {
+    			if(!plateau.getCase(x, y).estVide() && 
+    				plateau.getCase(x, y).getCarte().getCouleur().equals(carteVictoire.getCouleur())) {
     				if(estContinu==false) {
         				estContinu=true;
         			}else {
