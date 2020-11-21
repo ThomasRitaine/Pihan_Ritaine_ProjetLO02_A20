@@ -1,7 +1,6 @@
 package jeu;
-import java.util.*;
+
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -9,32 +8,27 @@ public class Plateau {
 
 //	Enumération
 	public enum FormesPlateau {
-		RECTANGLE, ROND, TRIANGLE;
+		RECTANGLE,
+		ROND,
+		TRIANGLE;
 	}
 
 //	Attributs
 	private HashMap<String,Case> cases = new HashMap<String,Case>();
 	private Carte carteCachee;
 	private FormesPlateau forme;
-	private int dimXRectangle = 5;
-	private int dimYRectangle = 3;
-	private int dimXTriangle = 7;
-	private int dimYTriangle = 4;
-	//private int dimXRond;
-	//private int dimYRond;
-	//faire un tableau enregistrant toutes les dimensions?
 	
 //	Constructeur
 	public Plateau(FormesPlateau forme) {
 		this.forme = forme;
-		// Génération des cases du plateau et de 
-		//leurs coordonnées
-		if (forme == FormesPlateau.RECTANGLE) {
-			// on doit générer un rectangle de 3*5	   
-		      
-			for (int y = 0; y < dimYRectangle; y++) {
-				for (int x = 0; x < dimXRectangle; x++) {
-					this.cases.put(x + ";" + y,new Case());					
+		// Génération des cases du plateau et de leurs coordonnées
+		String coord;
+		if (this.forme == FormesPlateau.RECTANGLE) {
+			// on doit générer un rectangle de 3*5
+			for (int y = 1; y <= 3; y++) {
+				for (int x = 1; x <= 5; x++) {
+					coord = Plateau.getKey(x, y);
+					this.cases.put(coord,new Case());					
 				}
 			}
 						
@@ -42,10 +36,11 @@ public class Plateau {
 			// on doit générer un rectangle de 7*4 
 			//pour y intégrer un triangle de 7 cases +
 			// 5 + 3 + 0 ou 1
-			for (int y = 0; y < dimYTriangle; y++) {
-				for (int x = 0; x < dimXTriangle; x++) {
-					this.cases.put(x + ";" + y,new Case());
-					}
+			for (int y = 0; y <= 4; y++) {
+				for (int x = 0; x <= 7; x++) {
+					coord = Plateau.getKey(x, y);
+					this.cases.put(coord,new Case());
+				}
 			}
 			// interdiction des cases autour du triangle
 			// en laissant la case[4] libre pour une 
@@ -71,18 +66,6 @@ public class Plateau {
 	}
 
 //get et set
-	public int getdimXRectangle() {
-		return this.dimXRectangle;
-	}
-	public int getdimYRectangle() {
-		return this.dimYRectangle;
-	}
-	public int getdimXTriangle() {
-		return this.dimXTriangle;
-	}
-	public int getdimYTriangle() {
-		return this.dimYTriangle;
-	}
 	
 	public void setCarteCachee(Carte value) {
 		this.carteCachee = value;
@@ -97,62 +80,46 @@ public class Plateau {
 
 //	Méthodes
 	
-	//permet de savoir quand la premiere carte est posée
-	public boolean isVide() {
-		/*Version for
+	//	Renvoit vrai si le plateau est vide => aucune carte n'est posée
+	public boolean estVide() {
 		boolean vide = true;
-		for (int i = 0;  i< this.cases.size(); i++) {
-			if( ! this.cases.get(i).isVide()) {
-					vide = false;
+		for(String coord : this.cases.keySet()){
+			if (!this.cases.get(coord).estVide()) {
+				vide = false;
 			}
-		}
+        }
 		return vide;
-	}*/
-		
-	boolean vide = true;
-	Iterator<Entry<String,Case>> it = cases.entrySet().iterator();
-	while(it.hasNext()) {
-		Map.Entry mapentry = (Map.Entry) it.next();
-		if(!mapentry.getValue().isVide()) {//je comprends pas pourquoi il me refuse le isvide...
-			
-		}
-		
-	}}
+	}
 	
-	public boolean peutPoserCarte(Case emplacement) {
+	public boolean peutPoserCarte(int x, int y) {
+		String coord = Plateau.getKey(x, y);
+		Case emplacement = this.cases.get(coord);
+		
 		boolean peutPoserCarte=false;
-		if(this.isVide()||(emplacement.isVide() && emplacement.isCaseAdjacente(this) /* & emplacement.isCaseDansFormePlateau() */)) {
+		if( this.estVide() || (emplacement.estVide() && this.estAdjacente(x, y))) {
 			peutPoserCarte=true;			
 		}		
 		return peutPoserCarte;
-	}	
+	}
+	
 
-	public Case rechercheCase(int x, int y) {		
-		/*Case caseCherchee = null;
-		int i = 0;
-		while ((this.cases.get(i).getCoordX() != x || this.cases.get(i).getCoordY() != y) && i<this.cases.size()) {//i<15
-			if (i == this.cases.size()-1) {//14 = dernière case
-				System.out.println("[RechercheCase]:Aucune case ne possède ces coordonnées");					
-			}
-			i++;
-		}
-		caseCherchee = this.cases.get(i);
-		return caseCherchee;
-		*/
-		Case caseCherchee = null;
-		boolean caseTrouvee = false;
-		Iterator<Case> it = cases.iterator();		
-		while(it.hasNext()&& caseTrouvee == false) {
-			Case i = it.next();
-			if(i.getCoordX() == x && i.getCoordY() == y) {//i ou it à voir
-				caseTrouvee = true;
-				caseCherchee = i;
-			}else {
-				System.out.println("[RechercheCase]:"+ it);
-			}
-			}
-		return caseCherchee;
+	public boolean estAdjacente(int x, int y) {
+		boolean estAdjacente = false;
 		
+		//	On récupère les cases. H = Haut, B = Bas, G = Gauche, D = Droit
+		Case emplacementH = this.cases.get(Plateau.getKey(x, y+1));
+		Case emplacementB = this.cases.get(Plateau.getKey(x, y-1));
+		Case emplacementG = this.cases.get(Plateau.getKey(x-1, y));
+		Case emplacementD = this.cases.get(Plateau.getKey(x+1, y));
+		
+		estAdjacente = (emplacementH.getCarte() != null) || (emplacementB.getCarte() != null) || (emplacementG.getCarte() != null) || (emplacementD.getCarte() != null);
+		
+		return estAdjacente;
+	}
+
+	public Case getCase(int x, int y) {		
+		String coord = Plateau.getKey(x, y);
+		return this.cases.get(coord);
 	}
 	/*		
 	
@@ -185,7 +152,7 @@ public class Plateau {
 	 */
 	public boolean bougerCarte(Case depuis, Case vers) {
 		boolean peutBougerCarte = true;
-		if(!depuis.isVide()) {
+		if(!depuis.estVide()) {
 			Carte carteABougee = depuis.getCarte();
 			depuis.setCarte(null);
 			if(this.peutPoserCarte(vers)) {			
@@ -211,6 +178,14 @@ public class Plateau {
 		2		*		*		LOL		TGV		*
 		3				*		*				*
 		4		*		*		*				*
+		
+				
+		4	|	*		TKT		MDR		*		*
+		3	|	*		*		LOL		TGV		*
+		2	|			*		*				*
+		1	|	*		*		*				*
+		Y	|_____________________________________
+		   X	1		2		3		4		5
 	
 		=> faire l'affichage pour les autres plateaux.
 		
@@ -226,7 +201,7 @@ public class Plateau {
 					sb.append("\n");
 				}
 				sb.append('\t');
-				if(!this.cases.get(i).isVide()) {
+				if(!this.cases.get(i).estVide()) {
 					sb.append(this.cases.get(i).getCarte().getCode() );	
 				}else {
 					sb.append(" *");
@@ -243,8 +218,11 @@ public class Plateau {
 			
 		}
 		System.out.println(sb);
-		}
-		
+	}
+	
+	public static String getKey(int x, int y) {
+		return x + ";" + y;
+	}
 
 }
 

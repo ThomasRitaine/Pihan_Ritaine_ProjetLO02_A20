@@ -30,18 +30,19 @@ public class Case {
 
 	// Methodes	
 	
-	// correction du return
-	boolean isVide() {
-		boolean isVide = false;
-		if (this.getCarte() == null) {
-			isVide = true;
-			//System.out.println("[isVide] : oui");
-		}else {
-			//System.out.println("[isVide] : non");
-		}
-		return isVide;
-	}
 
+	boolean estVide() {
+		boolean vide = false;
+		if (this.getCarte() == null) {
+			vide = true;
+		}
+		return vide;
+	}
+	
+	
+	
+
+	/*
 	public boolean isCaseAdjacente(Plateau p) {
 		boolean resultat = false;
 		if (!p.rechercheCase(this.coordX + 1, this.coordY).isVide()
@@ -55,7 +56,7 @@ public class Case {
 			System.out.println("Vous ne pouvez pas poser de carte ici pour le moment.");
 		}
 		return resultat;
-	}
+	}*/
 	// à développer que si l'on sait comment implémenter un plateau mobile
 	/*
 	 * public boolean isCaseDansPlateau() {
