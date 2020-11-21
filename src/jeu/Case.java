@@ -4,33 +4,14 @@ public class Case {
 
 //Attributs
 	private Carte carte;// si carte value = null alors case vide
-	private int coordX;
-	private int coordY;
-	private boolean interdite = false;// Question de Yaya : est ce qu'on passe ça dans le constructeur de case?
 
-//Constructeur
-	public Case(int x, int y) {
-		this.coordX = x;
-		this.coordY = y;
+	private boolean interdite;// Question de Yaya : est ce qu'on passe ça dans le constructeur de case?
+
+
+	public Case() {
+		this.setCarte(null);
+		this.interdite=false;
 	}
-
-	// Methodes get et set
-	public int getCoordX() {
-		return this.coordX;
-	}
-
-	public void setCoordX(int x) {
-		this.coordX = x;
-	}
-
-	public int getCoordY() {
-		return this.coordY;
-	}
-
-	public void setCoordY(int y) {
-		this.coordY = y;
-	}
-
 	public Carte getCarte() {
 		return this.carte;
 	}

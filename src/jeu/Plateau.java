@@ -1,5 +1,9 @@
 package jeu;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Plateau {
 
@@ -9,7 +13,7 @@ public class Plateau {
 	}
 
 //	Attributs
-	private ArrayList<Case> cases = new ArrayList<Case>();
+	private HashMap<String,Case> cases = new HashMap<String,Case>();
 	private Carte carteCachee;
 	private FormesPlateau forme;
 	private int dimXRectangle = 5;
@@ -30,7 +34,7 @@ public class Plateau {
 		      
 			for (int y = 0; y < dimYRectangle; y++) {
 				for (int x = 0; x < dimXRectangle; x++) {
-					this.cases.add(new Case(x,y));					
+					this.cases.put(x + ";" + y,new Case());					
 				}
 			}
 						
@@ -40,7 +44,7 @@ public class Plateau {
 			// 5 + 3 + 0 ou 1
 			for (int y = 0; y < dimYTriangle; y++) {
 				for (int x = 0; x < dimXTriangle; x++) {
-					this.cases.add(new Case(x,y));
+					this.cases.put(x + ";" + y,new Case());
 					}
 			}
 			// interdiction des cases autour du triangle
@@ -48,6 +52,8 @@ public class Plateau {
 			//carte même si à la fin de la manche une
 			// case sera vide
 
+			this.cases.get("0;0").setInterdite();
+			/* Je ferai le triangle après pour l'instant priorité rectangle =)
 			cases.get(1).setInterdite();
 			cases.get(2).setInterdite();
 			cases.get(3).setInterdite();
@@ -59,7 +65,7 @@ public class Plateau {
 			cases.get(13).setInterdite();
 			cases.get(14).setInterdite();
 			cases.get(15).setInterdite();
-			cases.get(21).setInterdite();
+			cases.get(21).setInterdite();*/
 		}
 
 	}
@@ -85,7 +91,7 @@ public class Plateau {
 	public Carte getCarteCachee() {
 		return this.carteCachee;
 	}
-	public ArrayList<Case> getCases(){
+	public HashMap<String,Case> getCases(){
 		return this.cases;
 	}
 
@@ -93,7 +99,7 @@ public class Plateau {
 	
 	//permet de savoir quand la premiere carte est posée
 	public boolean isVide() {
-		//Version for
+		/*Version for
 		boolean vide = true;
 		for (int i = 0;  i< this.cases.size(); i++) {
 			if( ! this.cases.get(i).isVide()) {
@@ -101,19 +107,17 @@ public class Plateau {
 			}
 		}
 		return vide;
-	}
-		//Version While			
-		/*boolean vide =false;
-			int i = 0;
-			while (i<this.cases.size() && this.cases.get(i).isVide()) {
-				if(i==this.cases.size()-1) {
-					vide = true;
-				}
-				i++;
-			}
-			return vide;}
-		*/
+	}*/
+		
+	boolean vide = true;
+	Iterator<Entry<String,Case>> it = cases.entrySet().iterator();
+	while(it.hasNext()) {
+		Map.Entry mapentry = (Map.Entry) it.next();
+		if(!mapentry.getValue().isVide()) {//je comprends pas pourquoi il me refuse le isvide...
 			
+		}
+		
+	}}
 	
 	public boolean peutPoserCarte(Case emplacement) {
 		boolean peutPoserCarte=false;
