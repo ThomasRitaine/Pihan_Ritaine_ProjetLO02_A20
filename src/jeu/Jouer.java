@@ -12,14 +12,19 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 	protected boolean poserCarte(int coordX, int coordY) {
 		boolean reussite = true;
 		Case emplacement = this.plateau.getCase(coordX, coordY);
-		if(this.plateau.peutPoserCarte(emplacement)) {
-			//	On met la carte du joueur sur la case
-			emplacement.setCarte(this.joueur.getCarteAJouer());
-			//	Puis on supprime la carte à jouer du joueur
-			this.joueur.setCarteAJouer(null);
-   	 	} else {
-   	 		reussite = false;
-   	 	}
+		if (emplacement != null) {
+			if(this.plateau.peutPoserCarte(emplacement)) {
+				//	On met la carte du joueur sur la case
+				emplacement.setCarte(this.joueur.getCarteAJouer());
+				//	Puis on supprime la carte à jouer du joueur
+				this.joueur.setCarteAJouer(null);
+	   	 	} else {
+	   	 		reussite = false;
+	   	 	}
+		} else {
+			reussite = false;
+		}
+		
 		return reussite;
 	}
 	

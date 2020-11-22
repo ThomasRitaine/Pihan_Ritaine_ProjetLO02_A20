@@ -34,10 +34,10 @@ public class CalculePointsVisitor implements Visitor {
 				nbCaseLigneCouleur = 1;
 				for (int x = 0; x < const2; x++) {
 					if ( k == 0 
-							&& !plateau.getCase(x, y).estInterdite() && !plateau.getCase(x, y).estVide()
+							&& (plateau.getCase(x, y) != null) && !plateau.getCase(x, y).estVide()
 							&& plateau.getCase(x, y).getCarte().getCouleur().equals(carteVictoire.getCouleur())
 					   ||k == 1 
-					        && !plateau.getCase(y, x).estInterdite() && !plateau.getCase(y, x).estVide()
+					        && (plateau.getCase(x, y) != null) && !plateau.getCase(y, x).estVide()
 							&& plateau.getCase(y, x).getCarte().getCouleur().equals(carteVictoire.getCouleur())) {
 						if (estContinu == false) {
 							estContinu = true;
@@ -70,11 +70,11 @@ public class CalculePointsVisitor implements Visitor {
 				nbCaseLigneForme = 1;
 				for (int x = 0; x < const2; x++) {
 					if ( k == 0 
-							&& !plateau.getCase(x, y).estInterdite() 
+							&& (plateau.getCase(x, y) != null) 
 							&& !plateau.getCase(x, y).estVide()
 							&& plateau.getCase(x, y).getCarte().getForme().equals(carteVictoire.getForme())
 					   ||k == 1 
-					        && !plateau.getCase(y, x).estInterdite() && !plateau.getCase(y, x).estVide()
+					        && (plateau.getCase(x, y) != null) && !plateau.getCase(y, x).estVide()
 						    && plateau.getCase(y, x).getCarte().getForme().equals(carteVictoire.getForme())) {
 						if (estContinu == false) {
 							estContinu = true;
@@ -108,12 +108,12 @@ public class CalculePointsVisitor implements Visitor {
 				nbCaseLigneRemplissage = 1;
 				for (int x = 0; x < const2; x++) {
 					if ((  k == 0 
-								&& !plateau.getCase(x, y).estInterdite() 
+								&& (plateau.getCase(x, y) != null) 
 								&& !plateau.getCase(x, y).estVide()							
 								&& (plateau.getCase(x, y).getCarte().estRemplie() && carteVictoire.estRemplie()
 											|| !plateau.getCase(x, y).getCarte().estRemplie() && !carteVictoire.estRemplie()))
 						||(k == 1 
-							    && !plateau.getCase(y, x).estInterdite() && !plateau.getCase(y, x).estVide()
+							    && (plateau.getCase(x, y) != null) && !plateau.getCase(y, x).estVide()
 							    && (plateau.getCase(x, y).getCarte().estRemplie() && carteVictoire.estRemplie()
 											|| !plateau.getCase(x, y).getCarte().estRemplie() && !carteVictoire.estRemplie()))) {
 						if (estContinu == false) {

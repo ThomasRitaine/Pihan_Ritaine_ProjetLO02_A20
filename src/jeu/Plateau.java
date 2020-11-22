@@ -130,18 +130,23 @@ public class Plateau {
 		Case vers = this.getCase(x2, y2);
 		boolean peutBougerCarte = true;
 		
-		if(!depuis.estVide()) {
-			Carte carteABougee = depuis.getCarte();
-			depuis.setCarte(null);
-			if(this.peutPoserCarte(vers)) {			
-				vers.setCarte(carteABougee);
+		if (depuis != null && vers != null) {
+			if(!depuis.estVide()) {
+				Carte carteABougee = depuis.getCarte();
+				depuis.setCarte(null);
+				if(this.peutPoserCarte(vers)) {			
+					vers.setCarte(carteABougee);
+				} else {
+					peutBougerCarte = false;
+					depuis.setCarte(carteABougee);
+				}
 			} else {
-				peutBougerCarte = false;
-				depuis.setCarte(carteABougee);
+				peutBougerCarte=false;
 			}
 		} else {
 			peutBougerCarte=false;
 		}
+		
 		return peutBougerCarte;
 	}
 	
