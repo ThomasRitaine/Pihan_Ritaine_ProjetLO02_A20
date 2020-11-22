@@ -28,18 +28,30 @@ public class Plateau {
 					coord = Plateau.getKey(x, y);
 					this.cases.put(coord,new Case());					
 				}
-			}
-						
-		} else if (forme == FormesPlateau.TRIANGLE) {
-			// on doit générer un rectangle de 7*4 
-			//pour y intégrer un triangle de 7 cases +
-			// 5 + 3 + 0 ou 1
-			for (int y = 1; y <= 3; y++) {
-				for (int x = y; x <= (6-y); x++) {
+			}		
+		}
+		else if (forme == FormesPlateau.TRIANGLE) {
+			//	Un triangle de 7 + 5 + 3 + 1
+			for (int y = 1; y <= 4; y++) {
+				for (int x = y; x <= (8-y); x++) {
 					coord = Plateau.getKey(x, y);
 					this.cases.put(coord,new Case());
 				}
 			}
+		}
+		else if (forme == FormesPlateau.ROND) {
+			//	Un rond, dans un rectangle de 4*5 sans les coins
+			for (int y = 1; y <= 5; y++) {
+				for (int x = 1; x <= 4; x++) {
+					coord = Plateau.getKey(x, y);
+					this.cases.put(coord,new Case());
+				}
+			}
+			//	On enlève les cases des coins pour faire la forme du rond
+			this.cases.remove("1;1");
+			this.cases.remove("1;5");
+			this.cases.remove("4;1");
+			this.cases.remove("4;5");
 		}
 
 	}
@@ -193,9 +205,9 @@ public class Plateau {
 		}
 		
 		//	On affiche l'axe des x
-		tableau.append("Y  |____");
+		tableau.append("Y  |");
 		for (int x = 0; x < xMax; x++) {
-			tableau.append("_______");
+			tableau.append("________");
 		}
 		tableau.append('\n');
 		tableau.append(" X\t");
