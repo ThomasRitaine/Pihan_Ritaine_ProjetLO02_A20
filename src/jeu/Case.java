@@ -5,12 +5,9 @@ public class Case {
 //Attributs
 	private Carte carte;// si carte value = null alors case vide
 
-	private boolean interdite;// Question de Yaya : est ce qu'on passe ça dans le constructeur de case?
-
 
 	public Case() {
 		this.setCarte(null);
-		this.interdite=false;
 	}
 	public Carte getCarte() {
 		return this.carte;
@@ -18,14 +15,6 @@ public class Case {
 
 	public void setCarte(Carte value) {
 		this.carte = value;
-	}
-
-	public boolean getInterdite() {
-		return this.interdite;
-	}
-
-	public void setInterdite() {
-		this.interdite = true;
 	}
 
 	// Methodes	
@@ -37,11 +26,6 @@ public class Case {
 			vide = true;
 		}
 		return vide;
-	}
-	
-	boolean estInterdite() {
-		boolean interdite = this.getInterdite();
-		return interdite;
 	}
 	
 	

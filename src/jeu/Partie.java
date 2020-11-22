@@ -125,9 +125,7 @@ public class Partie {
     	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
     	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, 2);
     	Partie maPartie = new Partie(parametre);
-    	/*Manche mancheTest = new Manche(maPartie);
-    	mancheTest.getPlateau().afficher();
-    	System.out.println(mancheTest.getPlateau().rechercheCase(0, 0));*/
+    	
     	maPartie.jouerPartie();
     	AsciiArt.thanks();
     }

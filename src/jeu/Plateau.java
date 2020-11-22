@@ -34,31 +34,12 @@ public class Plateau {
 			// on doit générer un rectangle de 7*4 
 			//pour y intégrer un triangle de 7 cases +
 			// 5 + 3 + 0 ou 1
-			for (int y = 0; y <= 4; y++) {
-				for (int x = 0; x <= 7; x++) {
+			for (int y = 1; y <= 3; y++) {
+				for (int x = y; x <= (6-y); x++) {
 					coord = Plateau.getKey(x, y);
 					this.cases.put(coord,new Case());
 				}
 			}
-			// interdiction des cases autour du triangle
-			// en laissant la case[4] libre pour une 
-			//carte même si à la fin de la manche une
-			// case sera vide
-
-			this.cases.get("0;0").setInterdite();
-			/* Je ferai le triangle après pour l'instant priorité rectangle =)
-			cases.get(1).setInterdite();
-			cases.get(2).setInterdite();
-			cases.get(3).setInterdite();
-			cases.get(5).setInterdite();
-			cases.get(6).setInterdite();
-			cases.get(7).setInterdite();
-			cases.get(8).setInterdite();
-			cases.get(9).setInterdite();
-			cases.get(13).setInterdite();
-			cases.get(14).setInterdite();
-			cases.get(15).setInterdite();
-			cases.get(21).setInterdite();*/
 		}
 
 	}
@@ -153,7 +134,7 @@ public class Plateau {
 	}
 	
 	
-	/*	Pour l'instant je ne sais pas comment afficher les axes c'est en réflexion
+	/*	Affichage pour le rectangle
 		
 				
 		4	|	*		TKT		MDR		*		*
@@ -164,49 +145,67 @@ public class Plateau {
 		   X	1		2		3		4		5
 		
 	 */
-	public void afficher() {		
-		StringBuffer sb =new StringBuffer();
-		sb.append("Voici le plateau :\n");
+	public void afficher() {
 		
-		switch(this.forme) {
+		//	Déclaration des variables
+		StringBuffer tableau = new StringBuffer();
+		StringBuffer ligne = new StringBuffer();
+		Case emplacement;
+		boolean ligneVide;
+		int xMax = 0;
 		
-		case RECTANGLE :
-			int ligne = 3;
-			Case emplacement;
-			for (int i = 0; i < 15; i++) {
-				sb.append('\t');
-				
-				if(i%5==0) {
-					if (i!=0) {
-						ligne--;
+		tableau.append("Voici le plateau :\n\n");
+	
+		for (int y = 10; y > 0; y--) {
+			ligneVide = true;
+			//	On supprime ce que le buffer contient
+			ligne.delete(0, ligne.length());
+			
+			//	On ajoute le numéro de la ligne
+			ligne.append(y + "  |\t");
+			
+			for (int x = 1; x < 10; x++) {
+				emplacement = this.getCase(x, y);
+				if (emplacement != null) {
+					//	On indique que la ligne n'est pas vide puisqu'elle comporte au moins une case
+					ligneVide = false;
+					if(!emplacement.estVide()) {
+						ligne.append(emplacement.getCarte().getCode() );	
+					} else {
+						ligne.append(" *");
 					}
-					sb.append("\n");
-					sb.append(ligne + "  |\t");
+					
+					//	On met à jour le xMax
+					if (x>xMax) {
+						xMax = x;
+					}
 				}
-				
-				emplacement = this.getCase((i%5)+1, ligne);
-				if(!emplacement.estVide()) {
-					sb.append(emplacement.getCarte().getCode() );	
-				} else {
-					sb.append(" *");
-				}
+				ligne.append('\t');
 			}
-			sb.append('\n');
-			sb.append("Y  |_______________________________________");
-			sb.append('\n');
-			sb.append(" X\t 1\t 2\t 3\t 4\t 5");
 			
-			break;
+			//	Fin de la ligne, on retourne à la ligne
+			ligne.append('\n');
 			
-		case TRIANGLE: 
-			break;
-			
-		case ROND:
-			break;
-			
+			//	Si la ligne n'est pas vide, on l'affiche dans le tableau
+			if (!ligneVide) {
+				tableau.append(ligne.toString());
+			}
 		}
-		System.out.println(sb);
+		
+		//	On affiche l'axe des x
+		tableau.append("Y  |____");
+		for (int x = 0; x < xMax; x++) {
+			tableau.append("_______");
+		}
+		tableau.append('\n');
+		tableau.append(" X\t");
+		for (int x = 1; x <= xMax; x++) {
+			tableau.append(" " +x+"\t");
+		}
+			
+		System.out.println(tableau);
 	}
+	
 	
 	public int[] getCoord(Case emplacement) {
 		int[] coord = {0,0};
