@@ -1,7 +1,6 @@
 package jeu;
 
-import jeu.Carte.CouleursCarte;
-import jeu.Carte.FormesCarte;
+import jeu.Parametre.ModeJeu;
 import jeu.Plateau.FormesPlateau;
 
 public class Partie {
@@ -28,13 +27,13 @@ public class Partie {
 		
 		if (this.parametre.getNbJoueurHumain() > 0) {
 			for (int i = 0; i < this.parametre.getNbJoueurHumain(); i++) {
-				this.joueurHumain[i] = new Joueur(i, this.parametre.getNomJoueurs(i));
+				this.joueurHumain[i] = new Joueur(i, this.parametre.getNomJoueurs(i), this.parametre.getModeJeu());
 			}
 		}
 		
 		if (this.parametre.getNbJoueurIA() > 0) {
 			for (int i = this.parametre.getNbJoueurHumain(); i < this.parametre.getNbJoueur(); i++) {
-				this.joueurIA[i-this.parametre.getNbJoueurHumain()] = new JoueurIA(i, this.parametre.getNomJoueurs(i));
+				this.joueurIA[i-this.parametre.getNbJoueurHumain()] = new JoueurIA(i, this.parametre.getNomJoueurs(i), this.parametre.getModeJeu());
 			}
 		}
 		
@@ -51,7 +50,7 @@ public class Partie {
     	//	Pour chacune des manches
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
 			this.manches[this.mancheActuelle] = new Manche(this);
-			this.manches[this.mancheActuelle].jouerManche(this);
+			this.manches[this.mancheActuelle].jouerManche();
 			this.afficherScores();
 		}
     }
@@ -123,7 +122,7 @@ public class Partie {
     	
     	//	Paramétrage rapide, sans passer par le formulaire
     	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
-    	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.ROND, 2);
+    	Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.ROND, ModeJeu.AVANCE, 2);
     	Partie maPartie = new Partie(parametre);
     	
     	maPartie.jouerPartie();

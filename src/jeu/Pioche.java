@@ -68,6 +68,10 @@ public class Pioche {
     	return this.cartes.isEmpty();
 	}
     
+    public int nbCarteRestantes() {
+		return this.cartes.size();
+	}
+    
 
 //	Supprimer l'instance de Pioche
     public static void supprime() {

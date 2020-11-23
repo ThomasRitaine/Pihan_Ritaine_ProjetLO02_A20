@@ -13,6 +13,12 @@ import jeu.Plateau.FormesPlateau;
  */
 public class Parametre {
 	
+//	ENUMERATION
+	public enum ModeJeu {
+		NORMAL,
+		AVANCE;
+	}
+	
 //	ATTRIBUTS
 	
 	/**
@@ -64,6 +70,9 @@ public class Parametre {
      * @see Parametre#getNbManche()
      */
     private int nbManche;
+    
+    
+    private ModeJeu modeJeu;
 
     
 //	CONSTRUCTEURS
@@ -81,16 +90,19 @@ public class Parametre {
      * @param formePlateau
      *            Un élément de l'énumération FormesPlateau qui correspond à la forme qu'aurons les
      *            plateaux générés à chaque manche de la partie.
+     * @param modeJeu
+     *            Le mode de jeu choisi.
      * @param nbManche
      *            Le nombre de manches qui composent la partie. C'est un entier supérieur ou égal à 1.
      * 
      * @see Plateau#FormesPlateau
+     * @see Parametre#ModeJeu
      * @see Parametre#nbJoueur
      * @see Parametre#nbJoueurHumain
      * @see Parametre#formePlateau
      * @see Parametre#nbManche
      */
-    public Parametre(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, int nbManche) {
+    public Parametre(int nbJoueur, int nbJoueurHumain, String[] noms, FormesPlateau formePlateau, ModeJeu modeJeu, int nbManche) {
     	this.nbJoueur = nbJoueur;
     	this.nbJoueurHumain = nbJoueurHumain;
     	this.nbJoueurIA = nbJoueur - nbJoueurHumain;
@@ -98,6 +110,7 @@ public class Parametre {
 			this.nomsJoueurs[i] = noms[i];
 		}
     	this.formePlateau = formePlateau;
+    	this.modeJeu = modeJeu;
     	this.nbManche = nbManche;
     	
     	this.resumerParametre();
@@ -109,8 +122,6 @@ public class Parametre {
   
 //	Méthodes
     public void parametrerPartie() {
-    		//	Import des librairies pour lire la console
-    	//Scanner scanner = new Scanner(System.in);
     	
     	//	Récupération du nombre de joueur
     	System.out.println("-   1. Paramétrons la partie !   -\n");
@@ -130,10 +141,8 @@ public class Parametre {
     	for (int i = 0; i < this.nbJoueur; i++) {
 			if (i < this.nbJoueurHumain) {
 				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un humain)");
-				//this.nomsJoueurs[i] = console.readLine("\nQuel est le nom du joueur n°" + i + " ? (C'est un humain)\n");
 			} else {
 				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un ordinateur)");
-				//this.nomsJoueurs[i] = console.readLine("\nQuel est le nom du joueur n°" + i + " ? (C'est un ordinateur)\n");
 			}
 			this.nomsJoueurs[i] = Input.scanner.nextLine();
 			
@@ -147,12 +156,29 @@ public class Parametre {
     		System.out.println("\t" + i + ") " + forme);
     	}
     	System.out.println("Choisissez un numéro.");
-    	int plateauChoisi = Input.scanner.nextInt();
+    	int choix = Input.scanner.nextInt();
     	i = 0;
     	for ( FormesPlateau forme : FormesPlateau.values()) {
     		i++;
-    		if (i == plateauChoisi) {
+    		if (i == choix) {
 				this.formePlateau = forme;
+			}
+    	}
+    	
+    	//	Choix du mode de jeu
+    	System.out.println("\nChoisissez un mode de jeu parmi les suivants : (Entrez le numéro)");
+    	i = 0;
+    	for ( ModeJeu mode : ModeJeu.values()) {
+    		i++;
+    		System.out.println("\t" + i + ") " + mode);
+    	}
+    	System.out.println("Choisissez un numéro.");
+    	choix = Input.scanner.nextInt();
+    	i = 0;
+    	for ( ModeJeu mode : ModeJeu.values()) {
+    		i++;
+    		if (i == choix) {
+				this.modeJeu = mode;
 			}
     	}
     	
@@ -174,6 +200,7 @@ public class Parametre {
     		System.out.println("Le joueur n°" + (i+1) + " se nomme : " + this.nomsJoueurs[i]);
 		}
     	System.out.println("Plateau choisi : " + this.formePlateau);
+    	System.out.println("Mode de jeu choisi : " + this.modeJeu);
     	System.out.println("Nombre de manches : " + this.nbManche);
 	}
     
@@ -208,6 +235,14 @@ public class Parametre {
 
     public FormesPlateau getFormePlateau() {
         return this.formePlateau;
+    }
+    
+    public void setModeJeu(ModeJeu value) {
+        this.modeJeu = value;
+    }
+
+    public ModeJeu getModeJeu() {
+        return this.modeJeu;
     }
 
 	public int getNbManche() {
