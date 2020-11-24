@@ -122,72 +122,176 @@ public class Parametre {
   
 //	Méthodes
     public void parametrerPartie() {
+    	boolean validInput;
+    	
+    	System.out.println("-   1. Paramétrons la partie !   -\n");
     	
     	//	Récupération du nombre de joueur
-    	System.out.println("-   1. Paramétrons la partie !   -\n");
-    	System.out.println("Entrez le nombre de joueur, Humain et IA compris. Entre 2 et 3.");
-    	this.nbJoueur = Input.scanner.nextInt();
+    	do {
+    		validInput = true;
+			try {
+				System.out.println("Entrez le nombre de joueur, Humain et IA compris entre 2 et 3.");
+		    	this.nbJoueur = Input.scanner.nextInt();
+		    	
+		    	if (this.nbJoueur < 2 || this.nbJoueur > 3 ) {
+					throw new Exception();
+				}
+		    	
+			} catch (Exception e) {
+				System.out.println("Saisie incorrecte : Le nombre de joueur doit être un entier compris entre 2 et 3.\n");
+				validInput = false;
+				Input.scanner.nextLine();		//	On vide le buffer
+			}
+		} while (!validInput);
+    	
     	
     	//	Récupération du nombre de joueur humain
-    	System.out.println("\nParmi ces " + this.nbJoueur + " joueurs, combien sont humains ?");
-    	this.nbJoueurHumain = Input.scanner.nextInt();
+    	do {
+    		validInput = true;
+			try {
+				System.out.println("\nParmi ces " + this.nbJoueur + " joueurs, combien sont humains ?");
+		    	this.nbJoueurHumain = Input.scanner.nextInt();
+		    	
+		    	if (this.nbJoueurHumain < 0 || this.nbJoueurHumain > this.nbJoueur ) {
+					throw new Exception();
+				}
+		    	
+			} catch (Exception e) {
+				System.out.println("Saisie incorrecte : Le nombre de joueur humain être un entier compris entre 0 et "+ this.nbJoueur +", le nombre de joueur total.\n");
+				validInput = false;
+				Input.scanner.nextLine();		//	On vide le buffer
+			}
+		} while (!validInput);
+    	
     	
     	//	Calcul et confirmation du nombre de joueur IA
     	this.nbJoueurIA = this.nbJoueur - this.nbJoueurHumain;
     	System.out.println("\nIl y a donc " + this.nbJoueurIA + " joueur(s) IA.");
     	
+    	
     	//	Récupération des noms des joueurs
-    	Input.scanner.nextLine();
+    	Input.scanner.nextLine();		//	On vide le buffer
     	for (int i = 0; i < this.nbJoueur; i++) {
-			if (i < this.nbJoueurHumain) {
-				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un humain)");
-			} else {
-				System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un ordinateur)");
-			}
-			this.nomsJoueurs[i] = Input.scanner.nextLine();
 			
+			//	Récupération et validation
+			do {
+	    		validInput = true;
+				try {
+					if (i < this.nbJoueurHumain) {
+						System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un humain)");
+					} else {
+						System.out.println("\nQuel est le nom du joueur n°" + (i+1) + " ? (C'est un ordinateur)");
+					}
+					this.nomsJoueurs[i] = Input.scanner.nextLine();
+			    	if (this.nomsJoueurs[i].equals("Yaëlle") || this.nomsJoueurs[i].equals("Thomas") ) {
+						throw new Exception();
+					}
+			    	
+				} catch (Exception e) {
+					System.out.println("Saisie incorrecte : Vous ne pouvez pas utiliser les prénoms des grands créateurs : Yaëlle et Thomas.\n");
+					validInput = false;
+				}
+			} while (!validInput);
 		}
     	
+    	
     	// 	Choix de la forme du plateau
-    	System.out.println("\nChoisissez un plateau parmi ceux-ci : (Entrez le numéro)");
-    	int i = 0;
-    	for ( FormesPlateau forme : FormesPlateau.values()) {
-    		i++;
-    		System.out.println("\t" + i + ") " + forme);
-    	}
-    	System.out.println("Choisissez un numéro.");
-    	int choix = Input.scanner.nextInt();
-    	i = 0;
-    	for ( FormesPlateau forme : FormesPlateau.values()) {
-    		i++;
-    		if (i == choix) {
-				this.formePlateau = forme;
+    	do {
+    		validInput = true;
+			try {
+				//	Affichage
+				System.out.println("\nChoisissez un plateau parmi ceux-ci : (Entrez le numéro)");
+		    	int nbPlateau = 0;
+		    	for ( FormesPlateau forme : FormesPlateau.values()) {
+		    		nbPlateau++;
+		    		System.out.println("\t" + nbPlateau + ") " + forme);
+		    	}
+		    	System.out.println("Choisissez un numéro.");
+		    	
+				//	Récupération de l'input
+		    	int choix = Input.scanner.nextInt();
+		    	
+				//	Validation de l'input
+		    	if (choix < 1 || choix > nbPlateau) {
+					throw new Exception();
+				}
+		    	
+		    	//	Ajout de l'input
+		    	nbPlateau = 0;
+		    	for ( FormesPlateau forme : FormesPlateau.values()) {
+		    		nbPlateau++;
+		    		if (nbPlateau == choix) {
+						this.formePlateau = forme;
+					}
+		    	}
+		    	
+			} catch (Exception e) {
+				Input.scanner.nextLine();		//	On vide le buffer
+				System.out.println("Saisie incorrecte : Votre choix doit être un entier donné au dessus.\n");
+				validInput = false;
 			}
-    	}
+		} while (!validInput);
+    	
     	
     	//	Choix du mode de jeu
-    	System.out.println("\nChoisissez un mode de jeu parmi les suivants : (Entrez le numéro)");
-    	i = 0;
-    	for ( ModeJeu mode : ModeJeu.values()) {
-    		i++;
-    		System.out.println("\t" + i + ") " + mode);
-    	}
-    	System.out.println("Choisissez un numéro.");
-    	choix = Input.scanner.nextInt();
-    	i = 0;
-    	for ( ModeJeu mode : ModeJeu.values()) {
-    		i++;
-    		if (i == choix) {
-				this.modeJeu = mode;
+    	do {
+    		validInput = true;
+			try {
+				//	Affichage
+				System.out.println("\nChoisissez un mode de jeu parmi les suivants : (Entrez le numéro)");
+		    	int nbMode = 0;
+		    	for ( ModeJeu mode : ModeJeu.values()) {
+		    		nbMode++;
+		    		System.out.println("\t" + nbMode + ") " + mode);
+		    	}
+		    	System.out.println("Choisissez un numéro.");
+		    	
+				//	Récupération de l'input
+		    	int choix = Input.scanner.nextInt();
+		    	
+				//	Validation de l'input
+		    	if (choix < 1 || choix > nbMode) {
+					throw new Exception();
+				}
+		    	
+		    	//	Ajout de l'input
+		    	nbMode = 0;
+		    	for ( ModeJeu mode : ModeJeu.values()) {
+		    		nbMode++;
+		    		if (nbMode == choix) {
+						this.modeJeu = mode;
+					}
+		    	}
+		    	
+			} catch (Exception e) {
+				Input.scanner.nextLine();		//	On vide le buffer
+				System.out.println("Saisie incorrecte : Votre choix doit être un entier donné au dessus.\n");
+				validInput = false;
 			}
-    	}
+		} while (!validInput);
+    	
     	
     	//	Choix du nombre de manche
-    	System.out.println("\nEt pour finir, combien de manche voulez-vous jouer ?");
-    	this.nbManche = Input.scanner.nextInt();
+    	do {
+    		validInput = true;
+			try {
+				System.out.println("\nEt pour finir, combien de manche voulez-vous jouer ?");
+				this.nbManche = Input.scanner.nextInt();
+		    	
+		    	if (this.nbManche <= 0) {
+					throw new Exception();
+				}
+		    	
+			} catch (Exception e) {
+				System.out.println("Saisie incorrecte : Le nombre de manche doit être un entier supérieur à 0.\n");
+				validInput = false;
+				Input.scanner.nextLine();		//	On vide le buffer
+			}
+		} while (!validInput);
+    	
     	
     	Input.scanner.nextLine();
-    	//this.resumerParametre();
+    	this.resumerParametre();
 	}
     
     public void resumerParametre() {
