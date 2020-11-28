@@ -1,6 +1,9 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Plateau {
 
@@ -169,7 +172,12 @@ public class Plateau {
 			ligne.delete(0, ligne.length());
 			
 			//	On ajoute le numéro de la ligne
-			ligne.append(y + "  |\t");
+			if (y<0) {
+				ligne.append(y + " |\t");
+			}
+			else {
+				ligne.append(y + "  |\t");
+			}
 			
 			for (int x = xMin; x <= xMax; x++) {
 				emplacement = this.getCase(x, y);
@@ -212,25 +220,69 @@ public class Plateau {
 	}
 	
 	
-	//	Cette fonction décale chaque case du tableau par un vecteur (x;y)
+	//	Cette fonction décale chaque case du tableau par un vecteur (x;y) en laissant les cases
+	//	avec un carte là où elles sont. Si la forme du plateau ne peut pas être respectée, renvoit false
 	public boolean decaler(int x, int y) {
 		boolean reussite = true;
 		HashMap<String,Case> casesDecale = new HashMap<String,Case>();
+		Set<String> coordAutorise = new HashSet<String>();
 		int[] coordInt = {0,0};
 		
-		this.cases.forEach((coordStr, emplacement) -> {
+		//	Obtenir les coordonnées des points après le décalage dans le set coordAutorise
+		for (Entry<String, Case> entry : this.cases.entrySet()) {
+			coordInt[0] = this.getCoord(entry.getValue())[0];
+            coordInt[1] = this.getCoord(entry.getValue())[1];
+            
+            coordInt[0] += x;
+            coordInt[1] += y;
+            
+            String newCoordStr = Plateau.getKey(coordInt[0], coordInt[1]);
+            
+            coordAutorise.add(newCoordStr);
+        }
+		
+		//	Vérifier si les cases contenant des cartes peuvent rester aux même coord tout en restant
+		//	dans les cases autorisées
+		for (Entry<String, Case> entry : this.cases.entrySet()) {
 			
-            coordInt[0] = this.getCoord(emplacement)[0];
+			//	Si la case a une carte
+			if(entry.getValue().getCarte() != null) {
+				//	Si les coords ne sont pas autorisées, on annule le décalage
+				if ( !coordAutorise.contains(entry.getKey()) ) {
+					reussite = false;
+				}
+			}
+        }
+		
+		//	Si pas de problème, on lance le décalage
+		for (Entry<String, Case> entry : this.cases.entrySet()) {
+			
+			Case emplacement = entry.getValue();
+				
+			coordInt[0] = this.getCoord(emplacement)[0];
             coordInt[1] = this.getCoord(emplacement)[1];
             
             coordInt[0] += x;
             coordInt[1] += y;
+            
             String newCoordStr = Plateau.getKey(coordInt[0], coordInt[1]);
             
-            casesDecale.put(newCoordStr, emplacement);
-        });
+            // 	Si la case ne contient pas de carte, on la décale
+        	if (emplacement.getCarte() == null) {
+        		if (! casesDecale.containsKey(newCoordStr)) {
+        			casesDecale.put(newCoordStr, emplacement);
+				}
+			}
+			else {	//	Si la case contient une carte, on la laisse et on ajoute une case avec les nouvelles coords
+				casesDecale.put(entry.getKey(), emplacement);
+				casesDecale.put(newCoordStr, new Case());
+			}
+			
+        }
 		
-		this.cases = casesDecale;
+		if (reussite) {
+			this.cases = casesDecale;
+		}
 		
 		return reussite;
 	}
