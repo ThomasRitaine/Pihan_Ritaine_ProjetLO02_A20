@@ -157,33 +157,27 @@ public class Plateau {
 		StringBuffer tableau = new StringBuffer();
 		StringBuffer ligne = new StringBuffer();
 		Case emplacement;
-		boolean ligneVide;
-		int xMax = 0;
+		int xMax = this.getExtremum("xMax");
+		int xMin = this.getExtremum("xMin");
+		int yMax = this.getExtremum("yMax");
+		int yMin = this.getExtremum("yMin");
 		
 		tableau.append("Voici le plateau :\n\n");
 	
-		for (int y = 10; y > 0; y--) {
-			ligneVide = true;
+		for (int y = yMax; y >= yMin; y--) {
 			//	On supprime ce que le buffer contient
 			ligne.delete(0, ligne.length());
 			
 			//	On ajoute le numéro de la ligne
 			ligne.append(y + "  |\t");
 			
-			for (int x = 1; x < 10; x++) {
+			for (int x = xMin; x <= xMax; x++) {
 				emplacement = this.getCase(x, y);
 				if (emplacement != null) {
-					//	On indique que la ligne n'est pas vide puisqu'elle comporte au moins une case
-					ligneVide = false;
 					if(!emplacement.estVide()) {
 						ligne.append(emplacement.getCarte().getCode() );	
 					} else {
 						ligne.append(" *");
-					}
-					
-					//	On met à jour le xMax
-					if (x>xMax) {
-						xMax = x;
 					}
 				}
 				ligne.append('\t');
@@ -191,25 +185,54 @@ public class Plateau {
 			
 			//	Fin de la ligne, on retourne à la ligne
 			ligne.append('\n');
-			
-			//	Si la ligne n'est pas vide, on l'affiche dans le tableau
-			if (!ligneVide) {
-				tableau.append(ligne.toString());
+			ligne.append("   |");
+			ligne.append('\n');
+			if (y!=yMin) {
+				ligne.append("   |");
+				ligne.append('\n');
 			}
+			
+			
+			//	On ajoute la ligne au tableau
+			tableau.append(ligne.toString());
 		}
 		
 		//	On affiche l'axe des x
 		tableau.append("Y  |");
-		for (int x = 0; x < xMax; x++) {
+		for (int x = xMin; x <= xMax; x++) {
 			tableau.append("________");
 		}
 		tableau.append('\n');
 		tableau.append(" X\t");
-		for (int x = 1; x <= xMax; x++) {
+		for (int x = xMin; x <= xMax; x++) {
 			tableau.append(" " +x+"\t");
 		}
 			
 		System.out.println(tableau);
+	}
+	
+	
+	//	Cette fonction décale chaque case du tableau par un vecteur (x;y)
+	public boolean decaler(int x, int y) {
+		boolean reussite = true;
+		HashMap<String,Case> casesDecale = new HashMap<String,Case>();
+		int[] coordInt = {0,0};
+		
+		this.cases.forEach((coordStr, emplacement) -> {
+			
+            coordInt[0] = this.getCoord(emplacement)[0];
+            coordInt[1] = this.getCoord(emplacement)[1];
+            
+            coordInt[0] += x;
+            coordInt[1] += y;
+            String newCoordStr = Plateau.getKey(coordInt[0], coordInt[1]);
+            
+            casesDecale.put(newCoordStr, emplacement);
+        });
+		
+		this.cases = casesDecale;
+		
+		return reussite;
 	}
 	
 	
@@ -222,6 +245,64 @@ public class Plateau {
 			}
         }
 		return coord;
+	}
+	
+	
+	//	Cette fonction prend en paramètre "xMax", "xMin", "yMax" ou "yMin" et renvoit la valeur de cette coordonnée
+	public int getExtremum(String extremumStr) {
+		int extremum = 0;
+		boolean estInitialise = false;
+		int xMax = 0;
+		int xMin = 0;
+		int yMax = 0;
+		int yMin = 0;
+		int xSuivant;
+		int ySuivant;
+		
+		if (extremumStr.equals("xMax") || extremumStr.equals("xMin") || extremumStr.equals("yMax") || extremumStr.equals("yMin")) {
+			
+			for(String coordStr : this.cases.keySet()) {
+				xSuivant = Integer.parseInt(coordStr.split(";")[0]);
+				ySuivant = Integer.parseInt(coordStr.split(";")[1]);
+				
+				if (!estInitialise) {
+					xMax = xSuivant;
+					xMin = xSuivant;
+					yMax = ySuivant;
+					yMin = ySuivant;
+					estInitialise = true;
+				}
+				
+				if (xMax < xSuivant) {
+					xMax = xSuivant;
+				}
+				if (xMin > xSuivant) {
+					xMin = xSuivant;
+				}
+				if (yMax < ySuivant) {
+					yMax = ySuivant;
+				}
+				if (yMin > ySuivant) {
+					yMin = ySuivant;
+				}
+	        }
+			
+			if (extremumStr == "xMax") {
+				extremum = xMax;
+			}
+			if (extremumStr == "xMin") {
+				extremum = xMin;
+			}
+			if (extremumStr == "yMax") {
+				extremum = yMax;
+			}
+			if (extremumStr == "yMin") {
+				extremum = yMin;
+			}
+			
+		}
+		
+		return extremum;	
 	}
 	
 	public static String getKey(int x, int y) {

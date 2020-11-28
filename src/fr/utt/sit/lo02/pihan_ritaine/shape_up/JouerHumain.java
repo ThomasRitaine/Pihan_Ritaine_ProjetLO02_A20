@@ -125,7 +125,8 @@ public class JouerHumain extends Jouer{
 		            		aPoseCarte = this.poserCarte(coordX, coordY, numCarte);
 		            		if (aPoseCarte) {
 		            			System.out.println("La carte a bien été posée sur la case ( " + coordX + " ; " + coordY + " ) !" );
-							} else {
+		            			this.plateau.afficher();
+		            		} else {
 								System.out.println("Erreur lors du placement de la carte.");
 								System.out.println("Il y a peut-être déjà une carte sur cette case, ou bien elle n'est pas adjacente à une case contenant une carte.");
 							}
@@ -153,7 +154,8 @@ public class JouerHumain extends Jouer{
 		            		aBouge = this.plateau.bougerCarte(coordX1, coordY1, coordX2, coordY2);
 		            		if (aBouge) {
 		            			System.out.println("La carte de la case ( " + coordX1 + " ; " + coordY1 + " ) a bien été bougée sur la case ( " + coordX2 + " ; " + coordY2 + " ) !" );
-							} else {
+		            			this.plateau.afficher();
+		            		} else {
 								System.out.println("Erreur lors du déplacement de la carte.");
 								System.out.println("Il y a peut-être déjà une carte sur la case ciblée, ou bien elle n'est pas adjacente à une case contenant une carte, ou alors il n'y a pas de carte sur la première case.");
 							}
