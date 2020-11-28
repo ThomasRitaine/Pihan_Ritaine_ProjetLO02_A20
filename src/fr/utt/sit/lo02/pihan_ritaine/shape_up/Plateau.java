@@ -68,6 +68,10 @@ public class Plateau {
 	public Carte getCarteCachee() {
 		return this.carteCachee;
 	}
+	
+	public FormesPlateau getFormesPlateau() {
+		return this.forme;
+	}
 
 //	Méthodes
 	

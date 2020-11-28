@@ -1,7 +1,6 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package jeu;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Plateau.FormesPlateau;
+
 
 public class Partie {
 	
@@ -18,7 +17,7 @@ public class Partie {
 //	Constructeur
     public Partie(Parametre parametre) {
 		
-    	//	Rï¿½cupï¿½ration des paramï¿½tres
+    	//	Récupération des paramètres
     	this.parametre = parametre;
     	
     	//	Initialisation des joueurs
@@ -45,7 +44,7 @@ public class Partie {
     
 
     
-//	Mï¿½thodes
+//	Méthodes
     public void jouerPartie() {
     	//	Pour chacune des manches
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
@@ -64,7 +63,7 @@ public class Partie {
     	for (int idJoueur = 0; idJoueur < this.getParametre().getNbJoueur(); idJoueur++) {
     		nomJoueur = this.getJoueurParId(idJoueur).getNom();
     		points = this.getPointsTotaux(idJoueur);
-    		System.out.println(nomJoueur + " possï¿½de " + points + " points.");
+    		System.out.println(nomJoueur + " possède " + points + " points.");
     	}
     }
     
@@ -116,14 +115,14 @@ public class Partie {
     public static void main(String[] args) {
     	System.out.println("\n---  Bienvenue dans le jeu Shape Up !  ---\n\n");
     	
-    	//	Demande de paramï¿½tres ï¿½ l'utilisateur
+    	//	Demande de paramètres à l'utilisateur
     	Parametre parametre = new Parametre();
     	parametre.parametrerPartie();
     	
-    	//	Paramï¿½trage rapide, sans passer par le formulaire
-    	//String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
-		//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.ROND, ModeJeu.AVANCE, 2);
-    	//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, ModeJeu.NORMAL, 2);
+    	//	Paramétrage rapide, sans passer par le formulaire
+
+    	//String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
+    	//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.ROND, ModeJeu.AVANCE, 2);
     	
     	Partie maPartie = new Partie(parametre);
     	maPartie.jouerPartie();
