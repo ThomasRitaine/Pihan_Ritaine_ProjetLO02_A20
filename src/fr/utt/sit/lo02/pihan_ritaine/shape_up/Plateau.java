@@ -1,4 +1,4 @@
-package jeu;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
 import java.util.HashMap;
 
@@ -151,17 +151,6 @@ public class Plateau {
 	}
 	
 	
-	/*	Affichage pour le rectangle
-		
-				
-		4	|	*		TKT		MDR		*		*
-		3	|	*		*		LOL		TGV		*
-		2	|			*		*				*
-		1	|	*		*		*				*
-		Y	|_____________________________________
-		   X	1		2		3		4		5
-		
-	 */
 	public void afficher() {
 		
 		//	Déclaration des variables

@@ -1,6 +1,6 @@
-package jeu;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
-import jeu.Plateau.FormesPlateau;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.Plateau.FormesPlateau;
 
 
 /**

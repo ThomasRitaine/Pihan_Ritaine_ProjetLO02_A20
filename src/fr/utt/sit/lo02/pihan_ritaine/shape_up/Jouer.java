@@ -1,4 +1,4 @@
-package jeu;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
 public abstract class Jouer implements InterfaceNatureJoueur{
 	

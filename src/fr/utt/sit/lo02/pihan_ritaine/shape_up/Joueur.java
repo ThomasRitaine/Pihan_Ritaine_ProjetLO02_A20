@@ -1,6 +1,6 @@
-package jeu;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
-import jeu.Parametre.ModeJeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
 
 public class Joueur {
 	

@@ -1,6 +1,6 @@
-package jeu;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
-import jeu.Parametre.ModeJeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
 
 public class JouerHumain extends Jouer{
 	
@@ -43,13 +43,12 @@ public class JouerHumain extends Jouer{
     		System.out.println('\n');
     		System.out.println("Saisissez une commande.\n\"aide\" pour avoir la liste des commandes.");
         	
-        	String commande;	//	Sert à récupérer la commande
-        	String[] mots;		//	Sert à contenir les mots
-        	commande = Input.scanner.nextLine();
-        	System.out.println('\n');
-        	mots = commande.split(" ");
+        	String[] commande;		//	Sert à contenir les mots
+        	commande = Input.scanner.nextLine().split(" ");
         	
-        	switch (mots[0]) {
+        	System.out.println('\n');
+        	
+        	switch (commande[0]) {
         	
 	            case "aide":
 	            	System.out.println("Liste des commandes :");
@@ -115,13 +114,13 @@ public class JouerHumain extends Jouer{
 	            		try {
 	            			if (this.joueur.modeJeu == ModeJeu.NORMAL) {
 		            			numCarte = 1;	//	Dans ce mode, la carte à jouer a l'id 1
-		            			coordX = Integer.parseInt(mots[1]);
-			            		coordY = Integer.parseInt(mots[2]);
+		            			coordX = Integer.parseInt(commande[1]);
+			            		coordY = Integer.parseInt(commande[2]);
 		            		}
 		            		if (this.joueur.modeJeu == ModeJeu.AVANCE) {
-		            			numCarte = Integer.parseInt(mots[1]) - 1;	//	On fait -1 car pour l'affichage, on montre id+1
-		            			coordX = Integer.parseInt(mots[2]);
-			            		coordY = Integer.parseInt(mots[3]);
+		            			numCarte = Integer.parseInt(commande[1]) - 1;	//	On fait -1 car pour l'affichage, on montre id+1
+		            			coordX = Integer.parseInt(commande[2]);
+			            		coordY = Integer.parseInt(commande[3]);
 		            		}
 		            		aPoseCarte = this.poserCarte(coordX, coordY, numCarte);
 		            		if (aPoseCarte) {
@@ -147,10 +146,10 @@ public class JouerHumain extends Jouer{
 	            	if (!aBouge) {
 		            		
             			try {
-            				int coordX1 = Integer.parseInt(mots[1]);
-            				int coordY1 = Integer.parseInt(mots[2]);
-            				int coordX2 = Integer.parseInt(mots[3]);
-            				int coordY2 = Integer.parseInt(mots[4]);
+            				int coordX1 = Integer.parseInt(commande[1]);
+            				int coordY1 = Integer.parseInt(commande[2]);
+            				int coordX2 = Integer.parseInt(commande[3]);
+            				int coordY2 = Integer.parseInt(commande[4]);
 		            		aBouge = this.plateau.bougerCarte(coordX1, coordY1, coordX2, coordY2);
 		            		if (aBouge) {
 		            			System.out.println("La carte de la case ( " + coordX1 + " ; " + coordY1 + " ) a bien été bougée sur la case ( " + coordX2 + " ; " + coordY2 + " ) !" );
@@ -185,7 +184,7 @@ public class JouerHumain extends Jouer{
 	            	break;
 	            	
 	            default:
-	            	System.out.println("La commande \"" + mots[0] + "\" n'est pas connue de nos services.");
+	            	System.out.println("La commande \"" + commande[0] + "\" n'est pas connue de nos services.");
 	            	break;
         	}
     		
