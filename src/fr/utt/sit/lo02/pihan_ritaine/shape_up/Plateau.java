@@ -72,6 +72,10 @@ public class Plateau {
 	public FormesPlateau getFormesPlateau() {
 		return this.forme;
 	}
+	
+	public HashMap<String,Case> getCases(){
+		return this.cases;
+	}
 
 //	Méthodes
 	
