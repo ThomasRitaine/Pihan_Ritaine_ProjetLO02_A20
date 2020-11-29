@@ -15,7 +15,7 @@ public class CalculePointsVisitor implements Visitor {
 		return this.calculerPoints(this.carteVictoire, m.getPlateau());
     }
 
-    private int calculerPoints(Carte carteVictoire, Plateau plateau) {
+    static public int calculerPoints(Carte carteVictoire, Plateau plateau) {
     	
     	switch(plateau.getFormesPlateau()) {
     	case RECTANGLE:

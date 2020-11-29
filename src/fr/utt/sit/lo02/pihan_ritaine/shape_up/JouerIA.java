@@ -9,7 +9,8 @@ public class JouerIA extends Jouer{
     public void jouerTour() {
     	System.out.println("\nAu tour de l'ordinateur " + this.joueur.getNom());
     	
-    	
+    	//	Tu appelles cette fonction et les points seront calculés
+    	int nbPoints = CalculePointsVisitor.calculerPoints(carteVictoire, plateau);
     	
     	//	Test, on simule que le joueur pose sa carte
     	this.afficherMain();
