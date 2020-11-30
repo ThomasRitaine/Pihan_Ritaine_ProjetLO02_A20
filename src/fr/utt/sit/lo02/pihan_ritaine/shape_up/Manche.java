@@ -53,7 +53,7 @@ public class Manche implements Visitable {
 	}
     
     public void jouerManche() {
-    	System.out.println("\n\n---   Bébut de la manche " + (this.partie.getMancheActuelle()+1) + " sur " + this.partie.getParametre().getNbManche() + "   ---");
+    	System.out.println("\n\n---   Bébut de la manche " + (this.partie.getNumMancheActuelle()+1) + " sur " + this.partie.getParametre().getNbManche() + "   ---");
     	int tour = 0;
     	while (!this.mancheFinie()) {
 			this.jouerTour(tour);
@@ -121,19 +121,28 @@ public class Manche implements Visitable {
     private void calculerPts() {
     	int points = 0;
     	Carte carteVictoire;
+    	
+    	//	Pour chaque joueur
     	for (int idJoueur = 0; idJoueur < this.partie.getParametre().getNbJoueur(); idJoueur++) {
+    		
+    		//	On prend la carte de victoire
     		carteVictoire = this.partie.getJoueurParId(idJoueur).getCarteVictoire();
-    		System.out.println("Carte de victoire de " + this.partie.getJoueurParId(idJoueur).getNom() + " = " + carteVictoire.toString());		// DEBUGG
+    		
+    		//	On donne cette carte au calculateur de points
     		this.partie.getCalculateurPts().setCarteVictoire(carteVictoire);
+    		
+    		//	On lance le calculateur
     		points = this.accept(this.partie.getCalculateurPts());
-    		this.partie.setPointsTotaux(idJoueur, this.partie.getMancheActuelle(), points);
+    		
+    		//	On sauvegarde les points dans le tableau des scores
+    		this.partie.setPointsTotaux(idJoueur, this.partie.getNumMancheActuelle(), points);
 		}
 	}
     
     private void afficherScoresManche() {
     	String nomJoueur;
     	int points;
-    	int mancheActuelle = this.partie.getMancheActuelle();
+    	int mancheActuelle = this.partie.getNumMancheActuelle();
     	
     	System.out.println("\n---   Fin de la manche " + (mancheActuelle+1) + " sur " + this.partie.getParametre().getNbManche() + "   ---");
     	for (int idJoueur = 0; idJoueur < this.partie.getParametre().getNbJoueur(); idJoueur++) {
