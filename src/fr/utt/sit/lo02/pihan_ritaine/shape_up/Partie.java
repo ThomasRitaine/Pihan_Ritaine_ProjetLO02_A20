@@ -145,14 +145,13 @@ public class Partie {
     public static void main(String[] args) {
     	System.out.println("\n---  Bienvenue dans le jeu Shape Up !  ---\n\n");
     	
-    	//	Demande de paramï¿½tres ï¿½ l'utilisateur
-    	Parametre parametre = new Parametre();
-    	parametre.parametrerPartie();
+    	//	Demande de paramètres à l'utilisateur
+    	//Parametre parametre = new Parametre();
+    	//parametre.parametrerPartie();
     	
-    	//	Paramï¿½trage rapide, sans passer par le formulaire
-    	//String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
-		//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.ROND, ModeJeu.AVANCE, 2);
-    	//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, ModeJeu.NORMAL, 2);
+    	//	Paramétrage rapide, sans passer par le formulaire
+    	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
+		Parametre parametre = new Parametre(2, 2, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();

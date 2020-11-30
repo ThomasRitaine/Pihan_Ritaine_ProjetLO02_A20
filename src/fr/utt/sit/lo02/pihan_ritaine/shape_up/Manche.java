@@ -11,8 +11,9 @@ public class Manche implements Visitable {
     
 //	Constructeur
     public Manche(Partie partieEnCours) {
-		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau());
-		this.pioche = Pioche.getPioche();
+    	this.pioche = Pioche.getPioche();
+    	Carte carteCachee = this.pioche.piocher();
+		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau(), carteCachee);
 		this.partie = partieEnCours;
 		
 		this.attribuerCartes();

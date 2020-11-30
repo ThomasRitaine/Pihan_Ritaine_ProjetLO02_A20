@@ -216,7 +216,7 @@ public class CalculePointsVisitor implements Visitor {
 	
 	
 	public static void main(String[] args) {
-		 Plateau p = new Plateau(FormesPlateau.RECTANGLE);
+		 Plateau p = new Plateau(FormesPlateau.RECTANGLE, null);
 		 Carte carteVictoire=new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU);
 		 p.afficher();
 		 p.getCase(1,1).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU));
