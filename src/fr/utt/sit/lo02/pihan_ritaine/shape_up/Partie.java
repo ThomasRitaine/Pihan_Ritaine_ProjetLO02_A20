@@ -5,6 +5,10 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.Plateau.FormesPlateau;
 
 public class Partie {
 	
+//	Attribut de classe
+	private static boolean cree = false;
+	public static Partie uniqueInstance = null;
+	
 //	Attributs
     private Joueur[] joueurHumain;
     private JoueurIA[] joueurIA;
@@ -42,7 +46,28 @@ public class Partie {
 		this.pointsTotaux = new int[this.parametre.getNbJoueur()][this.parametre.getNbManche()];
 	}
     
+   
+//	Méthodes static
     
+    //	Créer une instance du singleton
+    public static Partie createPartie(Parametre parametre) {
+    	Partie partie = null;
+    	if (!Partie.cree) {
+			partie = new Partie(parametre);
+			Partie.cree = true;
+			Partie.uniqueInstance = partie;
+		}
+    	return partie;
+    }
+    
+    //	Obtenir une instance du singleton
+    public static Partie getPartie() {
+    	Partie partie = null;
+    	if (Partie.cree) {
+			partie = Partie.uniqueInstance;
+		}
+    	return partie;
+    }
 
     
 //	Mï¿½thodes
@@ -98,14 +123,18 @@ public class Partie {
 	
 	public int getPointsTotaux(int idJoueur) {
 		int points = 0;
-		for (int i = 0; i < (this.getMancheActuelle()+1); i++) {
+		for (int i = 0; i < (this.getNumMancheActuelle()+1); i++) {
 			points += this.pointsTotaux[idJoueur][i];
 		}
 		return points;
 	}
 	
-	public int getMancheActuelle() {
+	public int getNumMancheActuelle() {
 		return this.mancheActuelle;
+	}
+	
+	public Manche getMancheActuelle() {
+		return this.manches[this.mancheActuelle];
 	}
 	
 
@@ -116,16 +145,15 @@ public class Partie {
     public static void main(String[] args) {
     	System.out.println("\n---  Bienvenue dans le jeu Shape Up !  ---\n\n");
     	
-    	//	Demande de paramï¿½tres ï¿½ l'utilisateur
-    	Parametre parametre = new Parametre();
-    	parametre.parametrerPartie();
+    	//	Demande de paramètres à l'utilisateur
+    	//Parametre parametre = new Parametre();
+    	//parametre.parametrerPartie();
     	
-    	//	Paramï¿½trage rapide, sans passer par le formulaire
-    	//String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
-		//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.ROND, ModeJeu.AVANCE, 2);
-    	//Parametre parametre = new Parametre(3, 2, noms, FormesPlateau.RECTANGLE, ModeJeu.NORMAL, 2);
+    	//	Paramétrage rapide, sans passer par le formulaire
+    	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
+		Parametre parametre = new Parametre(2, 2, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
     	
-    	Partie maPartie = new Partie(parametre);
+    	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();
     	AsciiArt.thanks();
     }

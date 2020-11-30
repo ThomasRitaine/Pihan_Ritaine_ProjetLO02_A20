@@ -16,14 +16,18 @@ public class Plateau {
 
 //	Attributs
 	private HashMap<String,Case> cases = new HashMap<String,Case>();
+	@SuppressWarnings("unused")
 	private Carte carteCachee;
 	private FormesPlateau forme;
 	
 //	Constructeur
-	public Plateau(FormesPlateau forme) {
+	public Plateau(FormesPlateau forme, Carte carteCachee) {
 		this.forme = forme;
+		this.setCarteCachee(carteCachee);
 		// Génération des cases du plateau et de leurs coordonnées
 		String coord;
+		
+		//	Les formes de plateau doivent contenir au minimum 15 cases.
 		if (this.forme == FormesPlateau.RECTANGLE) {
 			// on doit générer un rectangle de 3*5
 			for (int y = 1; y <= 3; y++) {
@@ -33,6 +37,7 @@ public class Plateau {
 				}
 			}		
 		}
+		
 		else if (forme == FormesPlateau.TRIANGLE) {
 			//	Un triangle de 7 + 5 + 3 + 1
 			for (int y = 1; y <= 4; y++) {
@@ -42,6 +47,7 @@ public class Plateau {
 				}
 			}
 		}
+		
 		else if (forme == FormesPlateau.ROND) {
 			//	Un rond, dans un rectangle de 4*5 sans les coins
 			for (int y = 1; y <= 5; y++) {
@@ -59,14 +65,10 @@ public class Plateau {
 
 	}
 
-//get et set
+//getter et setter
 	
-	public void setCarteCachee(Carte value) {
+	private void setCarteCachee(Carte value) {
 		this.carteCachee = value;
-	}
-
-	public Carte getCarteCachee() {
-		return this.carteCachee;
 	}
 	
 	public FormesPlateau getFormesPlateau() {
@@ -90,16 +92,148 @@ public class Plateau {
 		return vide;
 	}
 	
-	public boolean peutPoserCarte(Case emplacement) {
+	
+	public boolean peutPoserCarte(int x, int y) {
 		
 		boolean peutPoserCarte=false;
-		int[] coord = this.getCoord(emplacement);
-		if( this.estVide() || (emplacement.estVide() && this.estAdjacente(coord[0], coord[1]))) {
-			peutPoserCarte=true;
-		}		
+		
+		Case emplacement = this.getCase(x, y);
+		if (emplacement != null) {
+			if( this.estVide() || (emplacement.estVide() && this.estAdjacente(x, y)) ) {
+				peutPoserCarte=true;
+			}
+		}
+				
 		return peutPoserCarte;
 	}
 	
+	public boolean poserCarte(int coordX, int coordY, Carte carteAPoser) {
+		boolean reussite = false;
+		boolean aDecale;
+		int decalageX = 0;
+		int decalageY = 0;
+		Case emplacement = this.getCase(coordX, coordY);
+		
+		//	Conserve l'état des cases du plateau avant de le modifier en le décalant
+		HashMap<String,Case> copieCases = new HashMap<String,Case>();
+		copieCases.putAll(this.cases);  
+		
+		//	On sort de la boucle si on reussi à poser la carte ou si on a regarder dans toutes les directions
+		//	On regarde si, en décalant le plateau en haut, à droite, en bas, à gauche, puis dans en diagonale, on peut poser la carte.
+		int i = 0;
+		while (!reussite && i<9) {
+			
+			aDecale = false;
+			switch (i) {
+				case 1:
+					decalageX = 0;
+					decalageY = 1;
+					break;
+				
+				case 2:
+					decalageX = 1;
+					decalageY = 0;
+					break;
+					
+				case 3:
+					decalageX = 0;
+					decalageY = -1;
+					break;
+					
+				case 4:
+					decalageX = -1;
+					decalageY = 0;
+					break;
+					
+				case 5:
+					decalageX = 1;
+					decalageY = 1;
+					break;
+				
+				case 6:
+					decalageX = 1;
+					decalageY = -1;
+					break;
+					
+				case 7:
+					decalageX = -1;
+					decalageY = -1;
+					break;
+					
+				case 8:
+					decalageX = -1;
+					decalageY = 1;
+					break;
+			}
+			
+			//System.out.println("decalageX = " + decalageX);
+			//System.out.println("decalageY = " + decalageY);
+			aDecale = this.decaler(decalageX, decalageY);
+			//this.afficher();
+			
+			if(aDecale) {
+				if (this.peutPoserCarte(coordX, coordY)) {
+					//	On recalcule l'emplacement car plateau.peutPoserCarte modifie les emplacements
+					emplacement = this.getCase(coordX, coordY);
+					
+					//	On met la carte sur la case
+					emplacement.setCarte(carteAPoser);
+					
+					//	On indique que l'opération a réussi
+					reussite = true;
+					
+				} else {
+					//	On remet le plateau comme avant
+					this.cases.clear();
+					this.cases.putAll(copieCases);
+				}
+				//System.out.println("Après remise comme avant");
+				//this.afficher();
+			}
+			
+			//	Fin de la bouge, on passe au prochain décalage
+			i++;
+		}
+		
+		return reussite;
+	}
+
+	/*
+	 * Dans cette méthode : 
+	 * - on vérifie si la carte a bouger existe
+	 * - on supprime la carte à bouger de sa case (depuis)
+	 * - on vérifie si la case où la carte sera déplacée est vide
+	 * - on pose ou non la carte dans cette nouvelle case (vers)
+	 * - on renvoie un boolean indiquant si la carte a pu être bougée
+	 * 	
+	 */
+	public boolean bougerCarte(int x1, int y1, int x2, int y2) {
+		Case depuis = this.getCase(x1, y1);
+		boolean aBougeCarte = true;
+		
+		if (depuis != null) {
+			if(!depuis.estVide()) {
+				Carte carteABougee = depuis.getCarte();
+				depuis.setCarte(null);
+				
+				//	On essaye de poser la carte
+				if( ! this.poserCarte(x2, y2, carteABougee)) {
+					
+					//	Si on n'a pas pu poser la carte, on recalcule la case depuis et on y remet la carte
+					depuis = this.getCase(x1, y1);
+					depuis.setCarte(carteABougee);
+					aBougeCarte = false;
+				}
+			} else {
+				aBougeCarte=false;
+			}
+		} else {
+			aBougeCarte=false;
+		}
+		
+		return aBougeCarte;
+	}
+
 	//	Cette méthode sert à savoir si une case de coord x, y est adjacente a une case qui a une carte
 	public boolean estAdjacente(int x, int y) {
 		boolean estAdjacente = false;
@@ -122,46 +256,6 @@ public class Plateau {
 		return estAdjacente;
 	}
 
-	public Case getCase(int x, int y) {		
-		String coord = Plateau.getKey(x, y);
-		return this.cases.get(coord);
-	}
-
-	/*
-	 * Dans cette méthode : 
-	 * - on vérifie si la carte a bouger existe
-	 * - on supprime la carte à bouger de sa case (depuis)
-	 * - on vérifie si la case où la carte sera déplacée est vide
-	 * - on pose ou non la carte dans cette nouvelle case (vers)
-	 * - on renvoie un boolean indiquant si la carte a pu être bougée
-	 * 	
-	 */
-	public boolean bougerCarte(int x1, int y1, int x2, int y2) {
-		Case depuis = this.getCase(x1, y1);
-		Case vers = this.getCase(x2, y2);
-		boolean peutBougerCarte = true;
-		
-		if (depuis != null && vers != null) {
-			if(!depuis.estVide()) {
-				Carte carteABougee = depuis.getCarte();
-				depuis.setCarte(null);
-				if(this.peutPoserCarte(vers)) {			
-					vers.setCarte(carteABougee);
-				} else {
-					peutBougerCarte = false;
-					depuis.setCarte(carteABougee);
-				}
-			} else {
-				peutBougerCarte=false;
-			}
-		} else {
-			peutBougerCarte=false;
-		}
-		
-		return peutBougerCarte;
-	}
-	
-	
 	public void afficher() {
 		
 		//	Déclaration des variables
@@ -249,12 +343,12 @@ public class Plateau {
             coordAutorise.add(newCoordStr);
         }
 		
-		//	Vérifier si les cases contenant des cartes peuvent rester aux même coord tout en restant
+		//	Vérifier si les cases contenant des cartes peuvent rester aux mêmes coord tout en restant
 		//	dans les cases autorisées
 		for (Entry<String, Case> entry : this.cases.entrySet()) {
 			
 			//	Si la case a une carte
-			if(entry.getValue().getCarte() != null) {
+			if(! entry.getValue().estVide()) {
 				//	Si les coords ne sont pas autorisées, on annule le décalage
 				if ( !coordAutorise.contains(entry.getKey()) ) {
 					reussite = false;
@@ -276,20 +370,28 @@ public class Plateau {
             String newCoordStr = Plateau.getKey(coordInt[0], coordInt[1]);
             
             // 	Si la case ne contient pas de carte, on la décale
-        	if (emplacement.getCarte() == null) {
+        	if (emplacement.estVide()) {
         		if (! casesDecale.containsKey(newCoordStr)) {
         			casesDecale.put(newCoordStr, emplacement);
 				}
 			}
 			else {	//	Si la case contient une carte, on la laisse et on ajoute une case avec les nouvelles coords
 				casesDecale.put(entry.getKey(), emplacement);
-				casesDecale.put(newCoordStr, new Case());
+				if (! casesDecale.containsKey(newCoordStr)) {
+					casesDecale.put(newCoordStr, new Case());
+				}
 			}
 			
         }
 		
-		if (reussite) {
+		//	Si les coord sont 0 0, on ne décale pas
+		if (reussite && (x!=0 || y!=0)) {
 			this.cases = casesDecale;
+		}
+		
+		//	Si les coords sont 0 0, on ne fait rien et on le considère comme une réussite
+		if (x==0 && y==0) {
+			reussite = true;
 		}
 		
 		return reussite;
@@ -305,6 +407,12 @@ public class Plateau {
 			}
         }
 		return coord;
+	}
+	
+	
+	public Case getCase(int x, int y) {		
+		String coord = Plateau.getKey(x, y);
+		return this.cases.get(coord);
 	}
 	
 	

@@ -11,16 +11,21 @@ public class JouerIA extends Jouer{
     public void jouerTour() {
     	System.out.println("\nAu tour de l'ordinateur " + this.joueur.getNom());
     	
+    //	Mise en place du calculateur de points
     	
+    	// 	On récupère le calculateur
+    	CalculePointsVisitor calculateur = Partie.getPartie().getCalculateurPts();
     	
-    	//	Test, on simule que le joueur pose sa carte
-    	this.afficherMain();
+    	//  On donne la carte de victoire du joueur au calculateur de points
+    	Carte carteVictoire = this.joueur.getCarteVictoire();
+		calculateur.setCarteVictoire(carteVictoire);
+		
+		//	On récupère la manche
+		Manche mancheEnCours = Partie.getPartie().getMancheActuelle();
+		
+		//	On calcule les points
+		int points = mancheEnCours.accept(calculateur);
     	
-    	if (this.joueur.getCarteDeMain(0) == null) {
-    		this.joueur.setCarteDeMain(1, null);
-		} else {
-			this.joueur.setCarteDeMain(0, null);
-		}
     	
     	//this.poserCarteIA(emplacement);	
     	
