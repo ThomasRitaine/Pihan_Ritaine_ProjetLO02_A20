@@ -11,15 +11,15 @@ public class JouerIA extends Jouer{
     	
     //	Mise en place du calculateur de points
     	
+    	// 	On récupère le calculateur
+    	CalculePointsVisitor calculateur = Partie.getPartie().getCalculateurPts();
+    	
     	//  On donne la carte de victoire du joueur au calculateur de points
     	Carte carteVictoire = this.joueur.getCarteVictoire();
-		Partie.getPartie().getCalculateurPts().setCarteVictoire(carteVictoire);
+		calculateur.setCarteVictoire(carteVictoire);
 		
 		//	On récupère la manche
 		Manche mancheEnCours = Partie.getPartie().getMancheActuelle();
-		
-		//	On récupère le calculateur
-		CalculePointsVisitor calculateur = Partie.getPartie().getCalculateurPts();
 		
 		//	On calcule les points
 		int points = mancheEnCours.accept(calculateur);

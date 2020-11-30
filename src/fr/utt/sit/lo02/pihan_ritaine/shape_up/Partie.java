@@ -123,7 +123,7 @@ public class Partie {
 	
 	public int getPointsTotaux(int idJoueur) {
 		int points = 0;
-		for (int i = 0; i < (this.getMancheActuelle()+1); i++) {
+		for (int i = 0; i < (this.getNumMancheActuelle()+1); i++) {
 			points += this.pointsTotaux[idJoueur][i];
 		}
 		return points;
