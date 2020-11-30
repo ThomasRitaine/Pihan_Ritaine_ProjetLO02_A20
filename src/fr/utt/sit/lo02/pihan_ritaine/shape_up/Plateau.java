@@ -11,7 +11,10 @@ public class Plateau {
 	public enum FormesPlateau {
 		RECTANGLE,
 		ROND,
-		TRIANGLE;
+		TRIANGLE,
+		CERCEAU,
+		ECHELLE,
+		COEUR;
 	}
 
 //	Attributs
@@ -28,8 +31,9 @@ public class Plateau {
 		String coord;
 		
 		//	Les formes de plateau doivent contenir au minimum 15 cases.
+		
 		if (this.forme == FormesPlateau.RECTANGLE) {
-			// on doit générer un rectangle de 3*5
+			// on doit générer un rectangle de 3*5 => 15 cases
 			for (int y = 1; y <= 3; y++) {
 				for (int x = 1; x <= 5; x++) {
 					coord = Plateau.getKey(x, y);
@@ -39,7 +43,7 @@ public class Plateau {
 		}
 		
 		else if (forme == FormesPlateau.TRIANGLE) {
-			//	Un triangle de 7 + 5 + 3 + 1
+			//	Un triangle de 7 + 5 + 3 + 1 => 16 cases
 			for (int y = 1; y <= 4; y++) {
 				for (int x = y; x <= (8-y); x++) {
 					coord = Plateau.getKey(x, y);
@@ -49,7 +53,7 @@ public class Plateau {
 		}
 		
 		else if (forme == FormesPlateau.ROND) {
-			//	Un rond, dans un rectangle de 4*5 sans les coins
+			//	Un rond, dans un rectangle de 4*5 sans les coins => 16 cases
 			for (int y = 1; y <= 5; y++) {
 				for (int x = 1; x <= 4; x++) {
 					coord = Plateau.getKey(x, y);
@@ -61,6 +65,58 @@ public class Plateau {
 			this.cases.remove("1;5");
 			this.cases.remove("4;1");
 			this.cases.remove("4;5");
+		}
+		
+		else if (forme == FormesPlateau.CERCEAU) {
+			//	Un cerceau rond avec un trou au milieu => 20 cases
+			for (int y = 1; y <= 3; y++) {
+				for (int x = (4-y); x <= (3+y); x++) {
+					coord = Plateau.getKey(x, y);
+					this.cases.put(coord,new Case());
+					coord = Plateau.getKey(x, 7-y);
+					this.cases.put(coord,new Case());
+				}
+			}
+			//	On enlève les cases du milieu
+			this.cases.remove("3;3");
+			this.cases.remove("3;4");
+			this.cases.remove("4;3");
+			this.cases.remove("4;4");
+		}
+		
+		else if (forme == FormesPlateau.ECHELLE) {
+			//	Une  échelle de 7 cases de hauteur avec des barreaux de 2 cases => 20 cases
+			for (int y = 1; y <= 7; y++) {
+				for (int x = 1; x <= 4; x++) {
+					coord = Plateau.getKey(x, y);
+					this.cases.put(coord,new Case());
+				}
+				if (y%2 == 1) {
+					for (int x = 2; x <= 3; x++) {
+						coord = Plateau.getKey(x, y);
+						this.cases.remove(coord);
+					}
+				}
+			}
+		}
+		
+		else if (forme == FormesPlateau.COEUR) {
+			//	Un  coeur plutôt grand => 27 cases
+			for (int y = 1; y <= 4; y++) {
+				for (int x = (5-y); x <= (3+y); x++) {
+					coord = Plateau.getKey(x, y);
+					this.cases.put(coord,new Case());
+				}
+			}
+			for (int x = 1; x <= 7; x++) {
+				coord = Plateau.getKey(x, 5);
+				this.cases.put(coord,new Case());
+			}
+			this.cases.put("2;6",new Case());
+			this.cases.put("3;6",new Case());
+			this.cases.put("5;6",new Case());
+			this.cases.put("6;6",new Case());
+			
 		}
 
 	}

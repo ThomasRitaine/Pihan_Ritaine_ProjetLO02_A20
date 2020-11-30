@@ -123,6 +123,7 @@ public class Parametre {
 //	Méthodes
     public void parametrerPartie() {
     	boolean validInput;
+    	boolean choisi;
     	
     	System.out.println("-   1. Paramétrons la partie !   -\n");
     	
@@ -197,78 +198,136 @@ public class Parametre {
     	
     	// 	Choix de la forme du plateau
     	do {
-    		validInput = true;
-			try {
-				//	Affichage
-				System.out.println("\nChoisissez un plateau parmi ceux-ci : (Entrez le numéro)");
-		    	int nbPlateau = 0;
-		    	for ( FormesPlateau forme : FormesPlateau.values()) {
-		    		nbPlateau++;
-		    		System.out.println("\t" + nbPlateau + ") " + forme);
-		    	}
-		    	System.out.println("Choisissez un numéro.");
-		    	
-				//	Récupération de l'input
-		    	int choix = Input.scanner.nextInt();
-		    	
-				//	Validation de l'input
-		    	if (choix < 1 || choix > nbPlateau) {
-					throw new Exception();
-				}
-		    	
-		    	//	Ajout de l'input
-		    	nbPlateau = 0;
-		    	for ( FormesPlateau forme : FormesPlateau.values()) {
-		    		nbPlateau++;
-		    		if (nbPlateau == choix) {
-						this.formePlateau = forme;
+    		choisi = true;
+			
+			//	Affichage
+			System.out.println("\nChoisissez un plateau parmi ceux-ci : (Entrez le numéro)");
+	    	int nbPlateau = 0;
+	    	for ( FormesPlateau forme : FormesPlateau.values()) {
+	    		nbPlateau++;
+	    		System.out.println("\t" + nbPlateau + ") " + forme);
+	    	}
+	    	System.out.println("Choisissez un numéro, ou bien saisissez \"afficher n\" pour afficher le plateau numéro n. ");
+	    	
+			//	Récupération de l'input
+	    	String[] commande = Input.scanner.nextLine().split(" ");
+	    	
+	    	if (commande[0].equals("afficher")) {
+	    		choisi = false;
+				try {
+					int choix = Integer.parseInt(commande[1]);
+					//	Validation de l'input
+			    	if (choix < 1 || choix > nbPlateau) {
+						throw new Exception();
 					}
-		    	}
-		    	
-			} catch (Exception e) {
-				Input.scanner.nextLine();		//	On vide le buffer
-				System.out.println("Saisie incorrecte : Votre choix doit être un entier donné au dessus.\n");
-				validInput = false;
+					nbPlateau = 0;
+			    	for ( FormesPlateau forme : FormesPlateau.values()) {
+			    		nbPlateau++;
+			    		if (nbPlateau == choix) {
+							Plateau plateau = new Plateau(forme, null);
+							plateau.afficher();
+						}
+			    	}
+				} catch (Exception e) {
+					System.out.println("Saisie incorrecte : Le plateau à afficher doit être un entier donné au dessus.\n");
+				}
 			}
-		} while (!validInput);
+	    	else {
+				try {
+					int choix = Integer.parseInt(commande[0]);
+					//	Validation de l'input
+			    	if (choix < 1 || choix > nbPlateau) {
+						throw new Exception();
+					}
+			    	
+			    	//	Ajout de l'input
+			    	nbPlateau = 0;
+			    	for ( FormesPlateau forme : FormesPlateau.values()) {
+			    		nbPlateau++;
+			    		if (nbPlateau == choix) {
+							this.formePlateau = forme;
+						}
+			    	}
+				} catch (Exception e) {
+					Input.scanner.nextLine();		//	On vide le buffer
+					System.out.println("Saisie incorrecte : Votre choix doit être un entier donné au dessus.\n");
+					choisi = false;
+				}
+			}
+			
+		} while (!choisi);
     	
     	
     	//	Choix du mode de jeu
     	do {
-    		validInput = true;
-			try {
-				//	Affichage
-				System.out.println("\nChoisissez un mode de jeu parmi les suivants : (Entrez le numéro)");
-		    	int nbMode = 0;
-		    	for ( ModeJeu mode : ModeJeu.values()) {
-		    		nbMode++;
-		    		System.out.println("\t" + nbMode + ") " + mode);
-		    	}
-		    	System.out.println("Choisissez un numéro.");
-		    	
-				//	Récupération de l'input
-		    	int choix = Input.scanner.nextInt();
-		    	
-				//	Validation de l'input
-		    	if (choix < 1 || choix > nbMode) {
-					throw new Exception();
-				}
-		    	
-		    	//	Ajout de l'input
-		    	nbMode = 0;
-		    	for ( ModeJeu mode : ModeJeu.values()) {
-		    		nbMode++;
-		    		if (nbMode == choix) {
-						this.modeJeu = mode;
+    		choisi = true;
+			
+			//	Affichage
+    		System.out.println("\nChoisissez un mode de jeu parmi les suivants : (Entrez le numéro)");
+    		int nbMode = 0;
+	    	for ( ModeJeu mode : ModeJeu.values()) {
+	    		nbMode++;
+	    		System.out.println("\t" + nbMode + ") " + mode);
+	    	}
+	    	System.out.println("Choisissez un numéro, ou bien saisissez \"info n\" pour afficher les règles du mode de jeu numéro n. ");
+	    	
+			//	Récupération de l'input
+	    	String[] commande = Input.scanner.nextLine().split(" ");
+	    	
+	    	if (commande[0].equals("info")) {
+	    		choisi = false;
+				try {
+					int choix = Integer.parseInt(commande[1]);
+					//	Validation de l'input
+			    	if (choix < 1 || choix > nbMode) {
+						throw new Exception();
 					}
-		    	}
-		    	
-			} catch (Exception e) {
-				Input.scanner.nextLine();		//	On vide le buffer
-				System.out.println("Saisie incorrecte : Votre choix doit être un entier donné au dessus.\n");
-				validInput = false;
+					nbMode = 0;
+					ModeJeu modeJeuInfo = null;
+					for ( ModeJeu mode : ModeJeu.values()) {
+			    		nbMode++;
+			    		if (nbMode == choix) {
+							modeJeuInfo = mode;
+						}
+			    	}
+					switch (modeJeuInfo) {
+					case NORMAL: 
+						System.out.println("\nInformations sur le mode normal :\nDans ce mode, une carte de victoire vous est attibuée au début de la manche.\nVous piochez une carte à jouer au début de chaque tour.\nLa manche se termine quand la pioche est vide.");
+						break;
+					case AVANCE: 
+						System.out.println("\nInformations sur le mode avancé :\nDans ce mode, vous avez 3 cartes en main. A vous de choisir quelle carte vous voulez poser ! A chaque début de tour, vous piochez une carte.\nLa manche se termine quand chaque joueur ne possède plus qu'une seule carte dans sa main. Cette carte sera sa carte de victoire !");
+						break;
+					default:
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println("Saisie incorrecte : Le mode dont vous voulez voir les informations doit être un entier donné au dessus.\n");
+				}
 			}
-		} while (!validInput);
+	    	else {
+				try {
+					int choix = Integer.parseInt(commande[0]);
+					//	Validation de l'input
+			    	if (choix < 1 || choix > nbMode) {
+						throw new Exception();
+					}
+			    	
+			    	// 	Ajout de l'input
+			    	nbMode = 0;
+			    	for ( ModeJeu mode : ModeJeu.values()) {
+			    		nbMode++;
+			    		if (nbMode == choix) {
+							this.modeJeu = mode;
+						}
+			    	}
+				} catch (Exception e) {
+					Input.scanner.nextLine();		//	On vide le buffer
+					System.out.println("Saisie incorrecte : Votre choix doit être un entier donné au dessus.\n");
+					choisi = false;
+				}
+			}
+			
+		} while (!choisi);
     	
     	
     	//	Choix du nombre de manche

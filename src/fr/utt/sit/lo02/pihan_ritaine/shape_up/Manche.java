@@ -7,14 +7,13 @@ public class Manche implements Visitable {
 //	Attributs
     private Plateau plateau;
     private Pioche pioche;
-    private Partie partie;
     
 //	Constructeur
-    public Manche(Partie partieEnCours) {
+    public Manche() {
+    	Partie partieEnCours = Partie.getPartie();
     	this.pioche = Pioche.getPioche();
     	Carte carteCachee = this.pioche.piocher();
 		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau(), carteCachee);
-		this.partie = partieEnCours;
 		
 		this.attribuerCartes();
 		
@@ -30,20 +29,22 @@ public class Manche implements Visitable {
 //	Méthodes 
     public void attribuerCartes() {
     	
-    	if (this.partie.getParametre().getModeJeu() == ModeJeu.NORMAL) {
+    	Partie partieEnCours = Partie.getPartie();
+    	
+    	if (partieEnCours.getParametre().getModeJeu() == ModeJeu.NORMAL) {
     		Joueur joueur;
-    		for (int i = 0; i < this.partie.getParametre().getNbJoueur(); i++) {
-    			joueur = this.partie.getJoueurParId(i);
+    		for (int i = 0; i < partieEnCours.getParametre().getNbJoueur(); i++) {
+    			joueur = partieEnCours.getJoueurParId(i);
     			Carte cartePiochee = this.pioche.piocher();
     			joueur.setCarteVictoire(cartePiochee);
     		}
     	}
     	
-    	if (this.partie.getParametre().getModeJeu() == ModeJeu.AVANCE) {
+    	if (partieEnCours.getParametre().getModeJeu() == ModeJeu.AVANCE) {
     		Joueur joueur;
     		Carte cartePiochee;
-    		for (int i = 0; i < this.partie.getParametre().getNbJoueur(); i++) {
-    			joueur = this.partie.getJoueurParId(i);
+    		for (int i = 0; i < partieEnCours.getParametre().getNbJoueur(); i++) {
+    			joueur = partieEnCours.getJoueurParId(i);
     			for (int j = 0; j < 2; j++) {
     				cartePiochee = this.pioche.piocher();
         			joueur.setCarteDeMain(j, cartePiochee);
@@ -54,7 +55,9 @@ public class Manche implements Visitable {
 	}
     
     public void jouerManche() {
-    	System.out.println("\n\n---   Bébut de la manche " + (this.partie.getNumMancheActuelle()+1) + " sur " + this.partie.getParametre().getNbManche() + "   ---");
+    	
+    	Partie partieEnCours = Partie.getPartie();
+    	System.out.println("\n\n---   Bébut de la manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
     	int tour = 0;
     	while (!this.mancheFinie()) {
 			this.jouerTour(tour);
@@ -72,14 +75,16 @@ public class Manche implements Visitable {
     
     public boolean mancheFinie() {
 		boolean mancheFinie = true;
+		Partie partieEnCours = Partie.getPartie();
+		ModeJeu modeJeu = partieEnCours.getParametre().getModeJeu();
 		
-		if (this.partie.getParametre().getModeJeu() == ModeJeu.NORMAL) {
+		if (modeJeu == ModeJeu.NORMAL) {
 			mancheFinie = this.pioche.estVide();
 		}
-		if (this.partie.getParametre().getModeJeu() == ModeJeu.AVANCE) {
+		if (modeJeu == ModeJeu.AVANCE) {
 			Joueur joueur;
-			for (int i = 0; i < this.partie.getParametre().getNbJoueur(); i++) {
-				joueur = this.partie.getJoueurParId(i);
+			for (int i = 0; i < partieEnCours.getParametre().getNbJoueur(); i++) {
+				joueur = partieEnCours.getJoueurParId(i);
 				if (joueur.nbCarteDansMain() != 1) {
 					mancheFinie = false;
 				}
@@ -90,9 +95,12 @@ public class Manche implements Visitable {
 	}
     
     private void jouerTour(int tour) {
+    	
+    	Partie partieEnCours = Partie.getPartie();
+    	
     		//	Obtenir le joueur
-    	int idJoueur = tour%this.partie.getParametre().getNbJoueur();
-    	Joueur joueur = this.partie.getJoueurParId(idJoueur);
+    	int idJoueur = tour%partieEnCours.getParametre().getNbJoueur();
+    	Joueur joueur = partieEnCours.getJoueurParId(idJoueur);
     	
 			//	Donner une carte au joueur
     	this.donnerCarte(joueur);
@@ -102,12 +110,13 @@ public class Manche implements Visitable {
 	}
     
     public void donnerCarte(Joueur joueur) {
+    	ModeJeu modeJeu = Partie.getPartie().getParametre().getModeJeu();
     	Carte cartePiochee = this.pioche.piocher();
     	
-		if (this.partie.getParametre().getModeJeu() == ModeJeu.NORMAL) {
+		if (modeJeu == ModeJeu.NORMAL) {
 			joueur.setCarteAJouer(cartePiochee);
 		}
-		if (this.partie.getParametre().getModeJeu() == ModeJeu.AVANCE) {
+		if (modeJeu == ModeJeu.AVANCE) {
 			joueur.ajouterCarteMain(cartePiochee);
 		}
 	}
@@ -122,33 +131,35 @@ public class Manche implements Visitable {
     private void calculerPts() {
     	int points = 0;
     	Carte carteVictoire;
+    	Partie partieEnCours = Partie.getPartie();
     	
     	//	Pour chaque joueur
-    	for (int idJoueur = 0; idJoueur < this.partie.getParametre().getNbJoueur(); idJoueur++) {
+    	for (int idJoueur = 0; idJoueur < partieEnCours.getParametre().getNbJoueur(); idJoueur++) {
     		
     		//	On prend la carte de victoire
-    		carteVictoire = this.partie.getJoueurParId(idJoueur).getCarteVictoire();
+    		carteVictoire = partieEnCours.getJoueurParId(idJoueur).getCarteVictoire();
     		
     		//	On donne cette carte au calculateur de points
-    		this.partie.getCalculateurPts().setCarteVictoire(carteVictoire);
+    		partieEnCours.getCalculateurPts().setCarteVictoire(carteVictoire);
     		
     		//	On lance le calculateur
-    		points = this.accept(this.partie.getCalculateurPts());
+    		points = this.accept(partieEnCours.getCalculateurPts());
     		
     		//	On sauvegarde les points dans le tableau des scores
-    		this.partie.setPointsTotaux(idJoueur, this.partie.getNumMancheActuelle(), points);
+    		partieEnCours.setPointsTotaux(idJoueur, partieEnCours.getNumMancheActuelle(), points);
 		}
 	}
     
     private void afficherScoresManche() {
     	String nomJoueur;
     	int points;
-    	int mancheActuelle = this.partie.getNumMancheActuelle();
+    	Partie partieEnCours = Partie.getPartie();
+    	int mancheActuelle = partieEnCours.getNumMancheActuelle();
     	
-    	System.out.println("\n---   Fin de la manche " + (mancheActuelle+1) + " sur " + this.partie.getParametre().getNbManche() + "   ---");
-    	for (int idJoueur = 0; idJoueur < this.partie.getParametre().getNbJoueur(); idJoueur++) {
-    		nomJoueur = this.partie.getJoueurParId(idJoueur).getNom();
-    		points = this.partie.getPointsManche(idJoueur, mancheActuelle);
+    	System.out.println("\n---   Fin de la manche " + (mancheActuelle+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
+    	for (int idJoueur = 0; idJoueur < partieEnCours.getParametre().getNbJoueur(); idJoueur++) {
+    		nomJoueur = partieEnCours.getJoueurParId(idJoueur).getNom();
+    		points = partieEnCours.getPointsManche(idJoueur, mancheActuelle);
     		if(idJoueur == 0) {
     			System.out.println("Lors de cette manche, " + nomJoueur + " a marqué " + points + " points !");
     		} else if (idJoueur == 1) {
