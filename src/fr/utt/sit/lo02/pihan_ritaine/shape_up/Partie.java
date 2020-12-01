@@ -70,11 +70,11 @@ public class Partie {
     }
 
     
-//	Mï¿½thodes
+//	Méthodes
     public void jouerPartie() {
     	//	Pour chacune des manches
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
-			this.manches[this.mancheActuelle] = new Manche(this);
+			this.manches[this.mancheActuelle] = new Manche();
 			this.manches[this.mancheActuelle].jouerManche();
 			this.afficherScores();
 		}
@@ -151,7 +151,7 @@ public class Partie {
     	
     	//	Paramétrage rapide, sans passer par le formulaire
     	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
-		Parametre parametre = new Parametre(2, 2, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
+		Parametre parametre = new Parametre(2, 2, noms, FormesPlateau.COEUR, ModeJeu.NORMAL, 2);
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();
