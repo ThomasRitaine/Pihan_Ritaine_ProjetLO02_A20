@@ -163,6 +163,20 @@ public class Plateau {
 		return peutPoserCarte;
 	}
 	
+	//autre version plus pratique pour l'ia (jouerIA fonction poserCarteIA) 
+	public boolean peutPoserCarte(Case emplacement) {
+			
+			boolean peutPoserCarte=false;
+			int[] coord =this.getCoord(emplacement);
+			if (emplacement != null) {
+				if( this.estVide() || (emplacement.estVide() && this.estAdjacente(coord[0], coord[1])) ) {
+					peutPoserCarte=true;
+				}
+			}
+					
+			return peutPoserCarte;
+		}
+	
 	public boolean poserCarte(int coordX, int coordY, Carte carteAPoser) {
 		boolean reussite = false;
 		boolean aDecale;

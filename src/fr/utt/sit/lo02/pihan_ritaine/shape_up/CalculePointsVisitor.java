@@ -16,7 +16,7 @@ public class CalculePointsVisitor implements Visitor {
     }
 
     public int calculerPoints(Carte carteVictoire, Plateau plateau) {
-    	
+    	//prise en considération des dimensions maximales de x (const2)et y(const1) en fonction de la nature du plateau
     	switch(plateau.getFormesPlateau()) {
     	case RECTANGLE:
     		this.const1=3;
@@ -29,42 +29,57 @@ public class CalculePointsVisitor implements Visitor {
     	case ROND:
     		this.const1=5;
     		this.const2=4;
-    		break;
-		
+    		break;		
     	}
+    	//récupération de la carte victoire du joueur pour lequel il faut calculer les points
     	this.setCarteVictoire(carteVictoire);
-    	System.out.println("\n\n****Calcul du score couleur du joueur****");
-    	int scoreCouleur=CalculerPointsLignesCouleur(plateau);
-    	System.out.println("\n\n****Calcul du score forme du joueur****");
-    	int scoreForme=CalculerPointsLignesForme(plateau);
-    	System.out.println("\n\n****Calcul du score remplissage du joueur****");
-    	int scoreRemplissage= CalculerPointsLignesRemplissage(plateau);
-    	int scoreTotalManche = scoreCouleur
-				    		  +scoreForme
-				    		  +scoreRemplissage;
+    	
+    	//calcul du nombre de points accumulés en plusieurs étapes. 
+    	//enregistrement en mémoire de chaque résultat dans des variables int
+    	//puis somme enregistrée dans scoreTotalManche
+    	System.out.println("****Calcul du score couleur du joueur****");
+    	int scoreCouleur=calculerPointsLignesCouleur(plateau);
+    	System.out.println("****score couleur : "+scoreCouleur+"****");
+    	
+    	System.out.println("****Calcul du score forme du joueur****");
+    	int scoreForme=calculerPointsLignesForme(plateau);
+    	System.out.println("****score couleur : "+scoreForme+"****");
+    	
+    	System.out.println("****Calcul du score remplissage du joueur****");
+    	int scoreRemplissage= calculerPointsLignesRemplissage(plateau);
+    	System.out.println("****score couleur : "+scoreRemplissage+"****");    	
+    	
+    	int scoreTotalManche = scoreCouleur + scoreForme + scoreRemplissage;
+    	
     	return scoreTotalManche;
-
     }
 
     public void setCarteVictoire(Carte carteVictoire) {
         this.carteVictoire = carteVictoire;
     }
   
-	public int CalculerPointsLignesCouleur(Plateau plateau) {
+    //3 algorithmes identiques à quelques conditions et constantes près. 
+    //ils calculent les points accumulés pour chaque lignes et chaque colonne pour ensuite en faire la somme
+    //la constante k permet dans un premier temps (k=1) de parcourir toutes les cases des plateaux par ligne 
+    //dans un second temps (k=2) de parcourir toutes les cases des plateaux par colonne.
+	public int calculerPointsLignesCouleur(Plateau plateau) {
+		//estContinu permet de découvrir si une ligne ou une colonne existe		
 		boolean estContinu;
 		int scoreLigne = 0;
 		int score = 0;
+		//nbCaseLigneCouleur permet de compter combien de cases forment la ligne ou la colonne
+		//comme une ligne ou une colonne comprend au moins 2 cartes, par défaut = 1
 		int nbCaseLigneCouleur = 1;
 		for (int k = 1; k <= 2; k++) {
 			for (int y = 1; y <= this.const1; y++) {
+				//A chaque nouvelle ligne ou chaque nouvelle colonne il faut réinitialiser estContinu et nbCaseLigneCouleur
+				//cela évite de compter par ex la première case d'une nouvelle ligne (ex : k=1 y=2 (2eme ligne) et x=1 (1ere case))  comme appartenant au dernier alignement de la ligne précédente (ex :k=1 y=1)  
 				estContinu = false;
 				nbCaseLigneCouleur = 1;
 				for (int x = 1; x <= this.const2; x++) {
-					if(k==1) {
-						System.out.println(x+";"+y);
-					}else {							
-						System.out.println(y+";"+x);	
-					}
+					//conditions pour vérifier que :
+					//la case considérée existe, qu'elle n'est pas vide et que la carte qui s'y trouve est de la même couleur que la carte victoire
+					//les conditions sont écrites 2 fois, une pour k =1 une pour k=2 car on doit inverser x et y dans getCase pour k=2
 					if ( k == 1 
 							&& (plateau.getCase(x, y) != null) 
 							&& !plateau.getCase(x, y).estVide()
@@ -73,37 +88,47 @@ public class CalculePointsVisitor implements Visitor {
 					        && (plateau.getCase(y, x) != null) 
 					        && !plateau.getCase(y, x).estVide()
 							&& plateau.getCase(y, x).getCarte().getCouleur().equals(carteVictoire.getCouleur())) {
+				    //si les conditions précédentes sont vérifiées 
+							 //si est continu était faux 
+							    //alors on a affaire à la première case d'un nouvel alignement de couleur
+								//on ajoute alors les points de la dernière ligne au score final
+							 //sinon si continu était vrai
+							   //alors la case sur laquelle l'algo s'est arrêté parcours un alignement
+							   //on peut donc incrémenter le compteur de cases alignées "nbCaseLigneCouleur"
+							   //et il faut recalculer le score de la ligne scoreLigne 
+						       //sachant que pour les alignements de couleurs, on compatabilise les points que si plus de 2 cases sont alignés
+							
 						if (estContinu == false) {
-							estContinu = true;
-							System.out.println("[score couleur] avant ajout de scoreLigne : " + score +"[scoreLigne] couleur:"+scoreLigne);
-							score+=scoreLigne;
-							System.out.println("[score couleur] après ajout : " + score);
+							estContinu = true;							
+							score+=scoreLigne;							
 						} else {
-							nbCaseLigneCouleur++;
-							System.out.println("[nbCaseLigneCouleur] : " + nbCaseLigneCouleur);
+							nbCaseLigneCouleur++;							
 							if(nbCaseLigneCouleur>=3) {
-								scoreLigne = nbCaseLigneCouleur +1;
-								System.out.println("[scoreLigne couleur] : " + scoreLigne);
+								scoreLigne = nbCaseLigneCouleur +1;								
 							}									
 						}
+					//sinon, les conditions précédentes ne sont pas vérifiés
+					//comme cela peut marquer la fin d'un alignement, on réinitialise estContinu et nbCaseLigneCouleur
 					} else {
 						estContinu = false;
 						nbCaseLigneCouleur = 1;
 					}
-				}
+				}//fin du parcours d'une ligne ou d'une colonne
+				//on ajoute le score comptabilisé sur cette ligne ou colonne
+				//on réinitialise le score de la ligne à 0
+				//je pense qu'on peut passer ces deux lignes en dessous de l'ouverture de la boucle des y
 				score+=scoreLigne;
 				scoreLigne=0;
-			}
+			}//fin de la boucle des y le plateau a donc été parcouru entièrement au moins 1 fois 
+			//son deuxième parcours doit considérer des colonnes on doit donc inverser les const1 et const2
 			int pourInverser = const1;
 			const1 = const2;
-			const2 = pourInverser;
-			System.out.println("\n");
-		}
-		System.out.println("\n[score total couleur] : "+score);
+			const2 = pourInverser;			
+		}		
 		return score;
 	}
 	
-	public int CalculerPointsLignesForme(Plateau plateau) {
+	public int calculerPointsLignesForme(Plateau plateau) {
 		boolean estContinu;
 		int scoreLigne = 0;
 		int score=0;
@@ -112,12 +137,7 @@ public class CalculePointsVisitor implements Visitor {
 			for (int y = 1; y <= this.const1; y++) {				
 					estContinu = false;
 					nbCaseLigneForme = 1;					
-					for (int x = 1; x <= this.const2; x++) {
-						if(k==1) {
-							System.out.println(x+";"+y);
-						}else {							
-							System.out.println(y+";"+x);	
-						}
+					for (int x = 1; x <= this.const2; x++) {				
 						
 						if ( k==1
 								&&(plateau.getCase(x, y) != null)
@@ -129,16 +149,12 @@ public class CalculePointsVisitor implements Visitor {
 								&& plateau.getCase(y, x).getCarte().getForme().equals(carteVictoire.getForme())){
 								
 						  	if (estContinu == false) {
-								estContinu = true;
-								System.out.println("[score forme] avant ajout de scoreLigne : " + score +"[scoreLigne forme]:"+scoreLigne);
-								score+=scoreLigne;
-								System.out.println("[score forme] après ajout : " + score);
+								estContinu = true;								
+								score+=scoreLigne;								
 								
 							} else {
-								nbCaseLigneForme++;
-								System.out.println("[nbCaseLigneForme] : " + nbCaseLigneForme);
-								scoreLigne = nbCaseLigneForme-1;
-								System.out.println("[scoreLigne forme] : " + scoreLigne);								
+								nbCaseLigneForme++;								
+								scoreLigne = nbCaseLigneForme-1;																
 							}
 						} else {							
 							estContinu = false;
@@ -150,16 +166,14 @@ public class CalculePointsVisitor implements Visitor {
 				}			    		    
 				int pourInverser = const1;
 				const1 = const2;
-				const2 = pourInverser;
-				System.out.println("\n");
-			}
-		System.out.println("\n[score Total forme] : "+score);
+				const2 = pourInverser;				
+			}		
 		return score;			
 	}
 		
 	
 
-	public int CalculerPointsLignesRemplissage(Plateau plateau) {
+	public int calculerPointsLignesRemplissage(Plateau plateau) {
 		boolean estContinu;
 		int scoreLigne = 0;
 		int score = 0;
@@ -169,11 +183,6 @@ public class CalculePointsVisitor implements Visitor {
 				estContinu = false;
 				nbCaseLigneRemplissage = 1;
 				for (int x = 1; x <= this.const2; x++) {
-					if(k==1) {
-						System.out.println(x+";"+y);
-					}else {							
-						System.out.println(y+";"+x);	
-					}
 					if ((  k == 1 
 								&& (plateau.getCase(x, y) != null) 
 								&& !plateau.getCase(x, y).estVide()							
@@ -185,16 +194,13 @@ public class CalculePointsVisitor implements Visitor {
 							    && (plateau.getCase(y, x).getCarte().estRemplie() && carteVictoire.estRemplie()
 											|| !plateau.getCase(y, x).getCarte().estRemplie() && !carteVictoire.estRemplie())) {
 						if (estContinu == false) {
-							estContinu = true;
-							System.out.println("[score remplissage] avant ajout de scoreLigne : " + score +"[scoreLigne]:"+scoreLigne);
+							estContinu = true;							
 							score+=scoreLigne;
-							System.out.println("[score remplissage] après ajout : " + score);
+							
 						} else {
-							nbCaseLigneRemplissage++;
-							System.out.println("[nbCaseLigneRemplissage] : " + nbCaseLigneRemplissage);
+							nbCaseLigneRemplissage++;							
 							if(nbCaseLigneRemplissage>=3) {										
-								scoreLigne = nbCaseLigneRemplissage;
-								System.out.println("[scoreLigne remplissage] : " + scoreLigne);
+								scoreLigne = nbCaseLigneRemplissage;								
 							}									
 						}
 				      } else {
@@ -207,194 +213,13 @@ public class CalculePointsVisitor implements Visitor {
 			}
 			int pourInverser = this.const1;
 			this.const1 = this.const2;
-			this.const2 = pourInverser;
-			System.out.println("\n");
-		}
-		System.out.println("\n[score Remplissage Total] : "+score);
+			this.const2 = pourInverser;			
+		}		
 		return score;
 	}
 	
 	
-	public static void main(String[] args) {
-		 Plateau p = new Plateau(FormesPlateau.RECTANGLE, null);
-		 Carte carteVictoire=new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU);
-		 p.afficher();
-		 p.getCase(1,1).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU));
-		 p.getCase(2,1).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU));
-		 p.getCase(3,1).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU));
-		 p.getCase(4,1).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU));
-		 p.getCase(5,1).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.BLEU));
-		 
-		 p.getCase(1,2).setCarte(new Carte(true,FormesCarte.TRIANGLE,CouleursCarte.VERT));
-		 p.getCase(2,2).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.VERT));
-		 p.getCase(3,2).setCarte(new Carte(true,FormesCarte.CARRE,CouleursCarte.VERT));
-		 p.getCase(4,2).setCarte(new Carte(false,FormesCarte.CARRE,CouleursCarte.VERT));
-		 p.getCase(5,2).setCarte(new Carte(false,FormesCarte.TRIANGLE,CouleursCarte.VERT));
-		 
-		 p.getCase(1,3).setCarte(new Carte(false,FormesCarte.CARRE,CouleursCarte.ROUGE));
-		 p.getCase(2,3).setCarte(new Carte(false,FormesCarte.CARRE,CouleursCarte.VERT));
-		 p.getCase(3,3).setCarte(new Carte(false,FormesCarte.TRIANGLE,CouleursCarte.VERT));
-		 p.getCase(4,3).setCarte(new Carte(false,FormesCarte.CARRE,CouleursCarte.ROUGE));
-		 p.getCase(5,3).setCarte(new Carte(false,FormesCarte.CARRE,CouleursCarte.ROUGE));
-		 p.afficher();
-		 boolean estContinu;
-			int scoreLigne = 0;
-			int score=0;
-			int nbCaseLigneForme = 1;
-			int const1 = 3;
-			int const2 = 5;
-			for(int k=1; k<=2;k++) {
-			for (int y = 1; y <= const1; y++) {				
-					estContinu = false;
-					nbCaseLigneForme = 1;					
-					for (int x = 1; x <= const2; x++) {
-						if(k==1) {
-							System.out.println(x+";"+y);
-						}else {							
-							System.out.println(y+";"+x);	
-						}
-						
-						if ( k==1
-								&&(p.getCase(x, y) != null)
-								&&(!p.getCase(x, y).estVide())
-								&& p.getCase(x, y).getCarte().getForme().equals(carteVictoire.getForme())
-						   ||k==2
-							    &&(p.getCase(y, x) != null)
-							    &&(!p.getCase(y, x).estVide())
-								&& p.getCase(y, x).getCarte().getForme().equals(carteVictoire.getForme())){
-								
-						  	if (estContinu == false) {
-								estContinu = true;
-								System.out.println("[score] avant ajout de scoreLigne : " + score +"[scoreLigne]:"+scoreLigne);
-								score+=scoreLigne;
-								System.out.println("[score] après ajout : " + score);
-								
-							} else {
-								nbCaseLigneForme++;
-								System.out.println("[nbCaseLigneForme] : " + nbCaseLigneForme);
-								scoreLigne = nbCaseLigneForme-1;
-								System.out.println("[scoreLigne] : " + scoreLigne);
-								
-							}
-						} else {
-							
-							estContinu = false;
-							nbCaseLigneForme = 1;
-						}						
-					}
-					System.out.println("[score] avant ajout de scoreLigne : " + score +"[scoreLigne]:"+scoreLigne);
-					score+=scoreLigne;
-					System.out.println("[score] après ajout : " + score);
-					scoreLigne=0;
-				}			    		    
-				int pourInverser = const1;
-				const1 = const2;
-				const2 = pourInverser;
-				System.out.println("\nCalcul des colonnes");
-			}
-				System.out.println(score);
-				
-				
-				System.out.println("\nCalcul des lignes couleurs\n");
-				int nbCaseLigneCouleur = 1;
-				 
-				for (int k = 1; k <= 2; k++) {
-					for (int y = 1; y <= const1; y++) {
-						estContinu = false;
-						nbCaseLigneCouleur = 1;
-						for (int x = 1; x <= const2; x++) {
-							if(k==1) {
-								System.out.println(x+";"+y);
-							}else {							
-								System.out.println(y+";"+x);	
-							}
-							if ( k == 1 
-									&& (p.getCase(x, y) != null) 
-									&& !p.getCase(x, y).estVide()
-									&& p.getCase(x, y).getCarte().getCouleur().equals(carteVictoire.getCouleur())
-							   ||k == 2 
-							        && (p.getCase(y, x) != null) 
-							        && !p.getCase(y, x).estVide()
-									&& p.getCase(y, x).getCarte().getCouleur().equals(carteVictoire.getCouleur())) {
-								if (estContinu == false) {
-									estContinu = true;
-									System.out.println("[score] avant ajout de scoreLigne : " + score +"[scoreLigne]:"+scoreLigne);
-									score+=scoreLigne;
-									System.out.println("[score] après ajout : " + score);
-								} else {
-									nbCaseLigneCouleur++;
-									System.out.println("[nbCaseLigneCouleur] : " + nbCaseLigneCouleur);
-									if(nbCaseLigneCouleur>=3) {
-										scoreLigne = nbCaseLigneCouleur +1;
-										System.out.println("[scoreLigne] : " + scoreLigne);
-									}									
-								}
-							} else {
-								estContinu = false;
-								nbCaseLigneCouleur = 1;
-							}
-						}
-						score+=scoreLigne;
-						scoreLigne=0;
-					}
-					int pourInverser = const1;
-					const1 = const2;
-					const2 = pourInverser;
-					System.out.println("\nCalcul des colonnes");
-				}
-				System.out.println(score);
-				System.out.println("\nCalcul des lignes remplissage\n");
-				
-				int nbCaseLigneRemplissage = 1;
-				
-				for (int k = 0; k < 2; k++) {
-					for (int y = 0; y < const1; y++) {
-						estContinu = false;
-						nbCaseLigneRemplissage = 1;
-						for (int x = 0; x < const2; x++) {
-							if(k==1) {
-								System.out.println(x+";"+y);
-							}else {							
-								System.out.println(y+";"+x);	
-							}
-							if ((  k == 0 
-										&& (p.getCase(x, y) != null) 
-										&& !p.getCase(x, y).estVide()							
-										&& (p.getCase(x, y).getCarte().estRemplie() && carteVictoire.estRemplie()
-													|| !p.getCase(x, y).getCarte().estRemplie() && !carteVictoire.estRemplie()))
-								||(k == 1 
-									    && (p.getCase(y, x) != null) 
-									    && !p.getCase(y, x).estVide()
-									    && (p.getCase(y, x).getCarte().estRemplie() && carteVictoire.estRemplie()
-													|| !p.getCase(y, x).getCarte().estRemplie() && !carteVictoire.estRemplie()))) {
-								if (estContinu == false) {
-									estContinu = true;
-									System.out.println("[score] avant ajout de scoreLigne : " + score +"[scoreLigne]:"+scoreLigne);
-									score+=scoreLigne;
-									System.out.println("[score] après ajout : " + score);
-								} else {
-									nbCaseLigneRemplissage++;
-									System.out.println("[nbCaseLigneRemplissage] : " + nbCaseLigneRemplissage);
-									if(nbCaseLigneRemplissage>=3) {										
-										scoreLigne = nbCaseLigneRemplissage;
-										System.out.println("[scoreLigne] : " + scoreLigne);
-									}									
-								}
-							} else {
-								estContinu = false;
-								nbCaseLigneRemplissage = 1;
-							}
-						}
-						score+=scoreLigne;
-						scoreLigne=0;
-					}
-					int pourInverser = const1;
-					const1 = const2;
-					const2 = pourInverser;
-					System.out.println("\nCalcul des colonnes");
-				}
-			System.out.println(score);	
-	 }
+	
 
 		
 		 
