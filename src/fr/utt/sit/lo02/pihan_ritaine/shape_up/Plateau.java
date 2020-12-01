@@ -498,7 +498,6 @@ public class Plateau {
 		int ySuivant;
 		
 		if (extremumStr.equals("xMax") || extremumStr.equals("xMin") || extremumStr.equals("yMax") || extremumStr.equals("yMin")) {
-			
 			for(String coordStr : this.cases.keySet()) {
 				xSuivant = Integer.parseInt(coordStr.split(";")[0]);
 				ySuivant = Integer.parseInt(coordStr.split(";")[1]);
@@ -525,16 +524,16 @@ public class Plateau {
 				}
 	        }
 			
-			if (extremumStr == "xMax") {
+			if (extremumStr.equals("xMax")) {
 				extremum = xMax;
 			}
-			if (extremumStr == "xMin") {
+			if (extremumStr.equals("xMin")) {
 				extremum = xMin;
 			}
-			if (extremumStr == "yMax") {
+			if (extremumStr.equals("yMax")) {
 				extremum = yMax;
 			}
-			if (extremumStr == "yMin") {
+			if (extremumStr.equals("yMin")) {
 				extremum = yMin;
 			}
 			
