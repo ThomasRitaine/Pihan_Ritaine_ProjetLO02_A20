@@ -22,7 +22,9 @@ public class JouerIA extends Jouer{
 	
     public void jouerTour() {
     	
-    	System.out.println("\nAu tour de l'ordinateur " + this.joueur.getNom() + ".\n");
+    	System.out.println("\n\n");
+    	AsciiArt.littleDivider();
+    	System.out.println("\n\tAu tour de l'ordinateur " + this.joueur.getNom() + ".  [o_o]\n");
     	System.out.println("Sa carte à jouer est " + this.joueur.getCarteAJouer().toString() + ".");
     	
     	this.plateau.afficher();

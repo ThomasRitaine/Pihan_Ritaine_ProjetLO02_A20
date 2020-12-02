@@ -57,7 +57,9 @@ public class Manche implements Visitable {
     public void jouerManche() {
     	
     	Partie partieEnCours = Partie.getPartie();
-    	System.out.println("\n\n---   Bébut de la manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
+    	System.out.println("\n\n");
+    	AsciiArt.bigDivider();
+    	System.out.println("\n\t---   Bébut de la manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
     	int tour = 0;
     	while (!this.mancheFinie()) {
 			this.jouerTour(tour);
@@ -156,7 +158,9 @@ public class Manche implements Visitable {
     	Partie partieEnCours = Partie.getPartie();
     	int mancheActuelle = partieEnCours.getNumMancheActuelle();
     	
-    	System.out.println("\n---   Fin de la manche " + (mancheActuelle+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
+    	System.out.println("\n\n");
+    	AsciiArt.bigDivider();
+    	System.out.println("\n\t---   Fin de la manche " + (mancheActuelle+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---\n\n");
     	for (int idJoueur = 0; idJoueur < partieEnCours.getParametre().getNbJoueur(); idJoueur++) {
     		nomJoueur = partieEnCours.getJoueurParId(idJoueur).getNom();
     		points = partieEnCours.getPointsManche(idJoueur, mancheActuelle);

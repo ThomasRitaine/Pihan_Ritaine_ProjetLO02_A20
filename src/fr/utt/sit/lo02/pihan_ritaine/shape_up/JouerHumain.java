@@ -10,7 +10,9 @@ public class JouerHumain extends Jouer{
 	
     public void jouerTour() {
         
-    	System.out.println("\nAu tour de " + this.joueur.getNom() + ".\n");
+    	System.out.println("\n\n");
+    	AsciiArt.littleDivider();
+    	System.out.println("\n\tAu tour de " + this.joueur.getNom() + ".  (^_^)\n");
     	
     	if (this.joueur.modeJeu == ModeJeu.NORMAL) {
     		System.out.println("Votre carte de victoire est " + this.joueur.getCarteVictoire().toString() + ".");

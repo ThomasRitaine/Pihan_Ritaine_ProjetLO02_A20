@@ -78,6 +78,8 @@ public class Partie {
 			this.manches[this.mancheActuelle].jouerManche();
 			this.afficherScores();
 		}
+    	this.mancheActuelle--;
+    	this.afficherVainqueur();
     }
     
 
@@ -85,13 +87,39 @@ public class Partie {
     	String nomJoueur;
     	int points;
     	
-    	System.out.println("Voici les points totaux :");
+    	//	Affichage séparateur et tableau score
+    	System.out.println("\n\n");
+    	AsciiArt.bigDivider();
+    	System.out.println("\n");
+    	AsciiArt.score();
+    	System.out.println("\n");
+    	
     	for (int idJoueur = 0; idJoueur < this.getParametre().getNbJoueur(); idJoueur++) {
     		nomJoueur = this.getJoueurParId(idJoueur).getNom();
     		points = this.getPointsTotaux(idJoueur);
     		System.out.println(nomJoueur + " possède " + points + " points.");
     	}
     }
+    
+    public void afficherVainqueur() {
+		int meilleurScore = 0;
+		int idJoueurGagnant = 0;
+		
+		//	On parcourt les scores pour trouver le meilleur
+		for (int idJoueur = 0; idJoueur < this.getParametre().getNbJoueur(); idJoueur++) {
+			int points = this.getPointsTotaux(idJoueur);
+    		if (points > meilleurScore) {
+				meilleurScore = points;
+				idJoueurGagnant = idJoueur;
+			}
+    	}
+		
+		//	Affichage de séparateur et du meilleur score
+		System.out.println("\n\n");
+    	AsciiArt.bigDivider();
+		System.out.println("\n\t"+this.getJoueurParId(idJoueurGagnant).getNom() + " gagne avec "+ meilleurScore + " points !");
+		AsciiArt.medal();
+	}
     
     
     public Joueur getJoueurParId(int id) {
@@ -143,7 +171,8 @@ public class Partie {
 
 	//	Main
     public static void main(String[] args) {
-    	System.out.println("\n---  Bienvenue dans le jeu Shape Up !  ---\n\n");
+    	//System.out.println("\n\t---  Bienvenue dans le jeu Shape Up !  ---\n\n");
+    	AsciiArt.welcome();
     	
     	//	Demande de paramètres à l'utilisateur
     	//Parametre parametre = new Parametre();
@@ -151,7 +180,7 @@ public class Partie {
     	
     	//	Paramétrage rapide, sans passer par le formulaire
     	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
-		Parametre parametre = new Parametre(3, 0, noms, FormesPlateau.COEUR, ModeJeu.NORMAL, 1);
+		Parametre parametre = new Parametre(3, 0, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();
