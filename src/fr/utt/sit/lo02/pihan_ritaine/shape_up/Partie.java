@@ -22,7 +22,7 @@ public class Partie {
 //	Constructeur
     public Partie(Parametre parametre) {
 		
-    	//	Rï¿½cupï¿½ration des paramï¿½tres
+    	//	Récupération des paramètres
     	this.parametre = parametre;
     	
     	//	Initialisation des joueurs
@@ -89,7 +89,7 @@ public class Partie {
     	for (int idJoueur = 0; idJoueur < this.getParametre().getNbJoueur(); idJoueur++) {
     		nomJoueur = this.getJoueurParId(idJoueur).getNom();
     		points = this.getPointsTotaux(idJoueur);
-    		System.out.println(nomJoueur + " possï¿½de " + points + " points.");
+    		System.out.println(nomJoueur + " possède " + points + " points.");
     	}
     }
     
@@ -151,7 +151,7 @@ public class Partie {
     	
     	//	Paramétrage rapide, sans passer par le formulaire
     	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
-		Parametre parametre = new Parametre(2, 2, noms, FormesPlateau.COEUR, ModeJeu.NORMAL, 2);
+		Parametre parametre = new Parametre(3, 0, noms, FormesPlateau.COEUR, ModeJeu.NORMAL, 1);
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();

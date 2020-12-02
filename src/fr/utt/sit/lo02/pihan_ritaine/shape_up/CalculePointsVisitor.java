@@ -59,42 +59,48 @@ public class CalculePointsVisitor implements Visitor {
 				}
     			
     			if (emplacement != null) {
+    				
+    				if (!emplacement.estVide()) {
 					
-    				if (emplacement.getCarte().getCouleur() == carteVictoire.getCouleur()) {
-        				nbAlignementCouleur++;
-    				} else {
-    					//	Si trop de cartes sont alignées, on limite à 5 pour ne pas dépasser du tableau des scores.
-    					if (nbAlignementCouleur > 5) {
-    						nbAlignementCouleur = 5;
-    					}
-    					//	On attibut les points
-    					pointsPartiels += ptAlignementCouleur[nbAlignementCouleur];
-    					nbAlignementCouleur = 0;
-    				}
-    				
-    				if (emplacement.getCarte().getForme() == carteVictoire.getForme()) {
-        				nbAlignementForme++;
-    				} else {
-    					//	Si trop de cartes sont alignées, on limite à 5 pour ne pas dépasser du tableau des scores.
-    					if (nbAlignementForme > 5) {
-    						nbAlignementForme = 5;
-    					}
-    					//	On attibut les points
-    					pointsPartiels += ptAlignementForme[nbAlignementForme];
-    					nbAlignementForme = 0;
-    				}
-    				
-    				if (emplacement.getCarte().estRemplie() == carteVictoire.estRemplie()) {
-        				nbAlignementRemplie++;
-    				} else {
-    					//	Si trop de cartes sont alignées, on limite à 5 pour ne pas dépasser du tableau des scores.
-    					if (nbAlignementRemplie > 5) {
-    						nbAlignementRemplie = 5;
-    					}
-    					//	On attibut les points
-    					pointsPartiels += ptAlignementRemplie[nbAlignementRemplie];
-    					nbAlignementRemplie = 0;
-    				}
+	    				if (emplacement.getCarte().getCouleur() == carteVictoire.getCouleur()) {
+	        				nbAlignementCouleur++;
+	    				} else {
+	    					//	Si trop de cartes sont alignées, on limite à 5 pour ne pas dépasser du tableau des scores.
+	    					if (nbAlignementCouleur > 5) {
+	    						nbAlignementCouleur = 5;
+	    					}
+	    					//	On attibut les points
+	    					pointsPartiels += ptAlignementCouleur[nbAlignementCouleur];
+	    					nbAlignementCouleur = 0;
+	    				}
+	    				
+	    				if (emplacement.getCarte().getForme() == carteVictoire.getForme()) {
+	        				nbAlignementForme++;
+	    				} else {
+	    					//	Si trop de cartes sont alignées, on limite à 5 pour ne pas dépasser du tableau des scores.
+	    					if (nbAlignementForme > 5) {
+	    						nbAlignementForme = 5;
+	    					}
+	    					//	On attibut les points
+	    					pointsPartiels += ptAlignementForme[nbAlignementForme];
+	    					nbAlignementForme = 0;
+	    				}
+	    				
+	    				if (emplacement.getCarte().estRemplie() == carteVictoire.estRemplie()) {
+	        				nbAlignementRemplie++;
+	    				} else {
+	    					//	Si trop de cartes sont alignées, on limite à 5 pour ne pas dépasser du tableau des scores.
+	    					if (nbAlignementRemplie > 5) {
+	    						nbAlignementRemplie = 5;
+	    					}
+	    					//	On attibut les points
+	    					pointsPartiels += ptAlignementRemplie[nbAlignementRemplie];
+	    					nbAlignementRemplie = 0;
+	    				}
+	    				
+	    			} else {
+						ajouterPoints = true;
+					}
     				
 				} else {
 					ajouterPoints = true;

@@ -122,7 +122,7 @@ public class JouerHumain extends Jouer{
 		            			coordX = Integer.parseInt(commande[2]);
 			            		coordY = Integer.parseInt(commande[3]);
 		            		}
-		            		aPoseCarte = this.poserCarte(coordX, coordY, numCarte);
+		            		aPoseCarte = this.poserCarte(this.plateau, coordX, coordY, numCarte);
 		            		if (aPoseCarte) {
 		            			System.out.println("La carte a bien été posée sur la case ( " + coordX + " ; " + coordY + " ) !" );
 		            			this.plateau.afficher();

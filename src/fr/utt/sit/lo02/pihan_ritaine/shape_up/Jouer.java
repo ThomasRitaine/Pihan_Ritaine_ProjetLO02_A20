@@ -11,13 +11,13 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 		this.joueur = joueur;
 	}
 	
-	protected boolean poserCarte(int coordX, int coordY, int idCarte) {
+	protected boolean poserCarte(Plateau plateau, int coordX, int coordY, int idCarte) {
 		boolean reussite = true;
 		
 		//	On récupère la carte du joueur
-		Carte carteAPoser = this.joueur.getCarteAJouer();
+		Carte carteAPoser = this.joueur.getCarteDeMain(idCarte);
 		
-		if(this.plateau.poserCarte(coordX, coordY, carteAPoser)) {
+		if(plateau.poserCarte(coordX, coordY, carteAPoser)) {
 			
 			//	Si la pose est une réussite, on enlève la carte au joueur
 			this.joueur.setCarteDeMain(idCarte, null);

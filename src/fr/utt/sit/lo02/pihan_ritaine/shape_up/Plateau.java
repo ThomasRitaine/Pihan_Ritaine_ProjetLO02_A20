@@ -163,19 +163,20 @@ public class Plateau {
 		return peutPoserCarte;
 	}
 	
+	/*
 	//autre version plus pratique pour l'ia (jouerIA fonction poserCarteIA) 
 	public boolean peutPoserCarte(Case emplacement) {
 			
-			boolean peutPoserCarte=false;
-			int[] coord =this.getCoord(emplacement);
-			if (emplacement != null) {
-				if( this.estVide() || (emplacement.estVide() && this.estAdjacente(coord[0], coord[1])) ) {
-					peutPoserCarte=true;
-				}
+		boolean peutPoserCarte=false;
+		int[] coord =this.getCoord(emplacement);
+		if (emplacement != null) {
+			if( this.estVide() || (emplacement.estVide() && this.estAdjacente(coord[0], coord[1])) ) {
+				peutPoserCarte=true;
 			}
-					
-			return peutPoserCarte;
 		}
+				
+		return peutPoserCarte;
+	}*/
 	
 	public boolean poserCarte(int coordX, int coordY, Carte carteAPoser) {
 		boolean reussite = false;
@@ -468,6 +469,18 @@ public class Plateau {
 	}
 	
 	
+	public void copy(Plateau plateauACopier) {
+		this.cases.clear();
+		//this.cases.putAll(plateauACopier.getCases());
+		for (Entry<String, Case> entry : plateauACopier.getCases().entrySet()) {
+			Case caseACopier = new Case();
+			Carte carteACopier = entry.getValue().getCarte();
+			caseACopier.setCarte(carteACopier);
+			this.cases.put(entry.getKey(), caseACopier);
+		}
+	}
+	
+	
 	public int[] getCoord(Case emplacement) {
 		int[] coord = {0,0};
 		for(String coordStr : this.cases.keySet()) {
@@ -479,8 +492,15 @@ public class Plateau {
 		return coord;
 	}
 	
+	public int[] getCoord(String coordStr) {
+		int[] coord = {0,0};
+		coord[0] = Integer.parseInt(coordStr.split(";")[0]);
+		coord[1] = Integer.parseInt(coordStr.split(";")[1]);
+		return coord;
+	}
 	
-	public Case getCase(int x, int y) {		
+	
+	public Case getCase(int x, int y) {
 		String coord = Plateau.getKey(x, y);
 		return this.cases.get(coord);
 	}
