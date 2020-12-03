@@ -191,8 +191,13 @@ public class Partie {
     	parametre.parametrerPartie();
     	
     	//	Paramétrage rapide, sans passer par le formulaire
+<<<<<<< Updated upstream
     	//String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
 		//Parametre parametre = new Parametre(3, 0, noms, FormesPlateau.ECHELLE, ModeJeu.NORMAL, 2);
+=======
+    	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
+		Parametre parametre = new Parametre(2, 0, noms, FormesPlateau.COEUR, ModeJeu.NORMAL, 1);
+>>>>>>> Stashed changes
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();
