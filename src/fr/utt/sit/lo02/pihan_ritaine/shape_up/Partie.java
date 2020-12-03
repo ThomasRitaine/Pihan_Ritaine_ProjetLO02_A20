@@ -104,6 +104,7 @@ public class Partie {
     public void afficherVainqueur() {
 		int meilleurScore = 0;
 		int idJoueurGagnant = 0;
+		boolean egalite = false;
 		
 		//	On parcourt les scores pour trouver le meilleur
 		for (int idJoueur = 0; idJoueur < this.getParametre().getNbJoueur(); idJoueur++) {
@@ -111,14 +112,25 @@ public class Partie {
     		if (points > meilleurScore) {
 				meilleurScore = points;
 				idJoueurGagnant = idJoueur;
+				egalite = false;
+			} else if (points == meilleurScore) {
+    			egalite = true;
 			}
+    		
     	}
 		
 		//	Affichage de séparateur et du meilleur score
 		System.out.println("\n\n");
     	AsciiArt.bigDivider();
-		System.out.println("\n\t"+this.getJoueurParId(idJoueurGagnant).getNom() + " gagne avec "+ meilleurScore + " points !");
-		AsciiArt.medal();
+    	if (egalite) {
+			System.out.println("\n\tIl y a égalité !");
+			System.out.println("\tPas de vainqueur, on en refait une ?");
+			
+		} else {
+			System.out.println("\n\t"+this.getJoueurParId(idJoueurGagnant).getNom() + " gagne avec "+ meilleurScore + " points !");
+			AsciiArt.medal();
+		}
+		System.out.println("\n\n");
 	}
     
     
