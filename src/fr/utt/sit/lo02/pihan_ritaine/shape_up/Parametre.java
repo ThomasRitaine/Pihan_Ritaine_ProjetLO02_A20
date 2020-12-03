@@ -292,10 +292,10 @@ public class Parametre {
 			    	}
 					switch (modeJeuInfo) {
 					case NORMAL: 
-						System.out.println("\nInformations sur le mode normal :\nDans ce mode, une carte de victoire vous est attibuée au début de la manche.\nVous piochez une carte à jouer au début de chaque tour.\nLa manche se termine quand la pioche est vide.");
+						System.out.println("\nInformations sur le mode normal :\n\tDans ce mode, une carte de victoire vous est attibuée au début de la manche.\n\tVous piochez une carte à jouer au début de chaque tour.\n\tLa manche se termine quand la pioche est vide.");
 						break;
 					case AVANCE: 
-						System.out.println("\nInformations sur le mode avancé :\nDans ce mode, vous avez 3 cartes en main. A vous de choisir quelle carte vous voulez poser ! A chaque début de tour, vous piochez une carte.\nLa manche se termine quand chaque joueur ne possède plus qu'une seule carte dans sa main. Cette carte sera sa carte de victoire !");
+						System.out.println("\nInformations sur le mode avancé :\n\tDans ce mode, vous avez 3 cartes en main. A vous de choisir quelle carte vous voulez poser !\n\tA chaque début de tour, vous piochez une carte.\n\tLa manche se termine quand chaque joueur ne possède plus qu'une seule carte dans sa main. Cette carte sera sa carte de victoire !");
 						break;
 					default:
 						break;

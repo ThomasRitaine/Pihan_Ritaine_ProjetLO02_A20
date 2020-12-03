@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -26,17 +27,15 @@ public class JouerIA extends Jouer{
     	System.out.println("\n\n");
     	AsciiArt.littleDivider();
     	System.out.println("\n\tAu tour de l'ordinateur " + this.joueur.getNom() + ".  [o_o]\n");
-    	System.out.println("Sa carte à jouer est " + this.joueur.getCarteAJouer().toString() + ".");
     	
+    	//	Affichage des cartes
+    	if (this.joueur.modeJeu == ModeJeu.NORMAL) {
+    		System.out.println("Sa carte à jouer est " + this.joueur.getCarteAJouer().toString() + ".");
+		}
+    	if (this.joueur.modeJeu == ModeJeu.AVANCE) {
+    		this.afficherMain();
+		}
     	
-    	
-    	// 	On récupère le calculateur
-    	CalculePointsVisitor calculateur = Partie.getPartie().getCalculateurPts();
-    	
-    	//  On donne la carte de victoire du joueur au calculateur de points
-    	Carte carteVictoire = this.joueur.getCarteVictoire();
-		calculateur.setCarteVictoire(carteVictoire);
-		
 		
 		//	Calcul du meilleur placement de carte
 		int[] resultatPoserMeilleurCoup = this.calculPoserMeilleurCoup();
@@ -64,9 +63,10 @@ public class JouerIA extends Jouer{
     //		-	En 0 : la coordonnée x du meilleur placement
     //		-	En 1 : la coordonnée y du meilleur placement
     //		-	En 2 : les points gagnés en posant la carte sur cette case
+    //		-	En 3 : l'id de la carte à poser (surtout utile pour le mode avancé)
     public int[] calculPoserMeilleurCoup() {
     	
-    	int[] meilleurCoup = {0,0,0};
+    	int[] meilleurCoup = {0,0,0,0};
     	
     	//	Le tableau dans lequel on stock les coords et les points du placement sur ces coords
     	HashMap<String,Integer> listePointPlacement = new HashMap<String,Integer>();
@@ -74,8 +74,15 @@ public class JouerIA extends Jouer{
     	//	On récupère le calculateur
     	CalculePointsVisitor calculateur = Partie.getPartie().getCalculateurPts();
     	
-    	//  On récupère la carte de victoire
-    	Carte carteVictoire = this.joueur.getCarteVictoire();
+    	// 	On récupère la carte de victoire
+    		//	Pour simplifier le mode avancé, on considère que la carte de victoire est la carte 0 de la main.
+    	Carte carteVictoire = null;
+    	if (this.joueur.modeJeu == ModeJeu.NORMAL) {
+    		carteVictoire = this.joueur.getCarteVictoire();
+		}
+    	if (this.joueur.modeJeu == ModeJeu.AVANCE) {
+    		carteVictoire = this.joueur.getCarteDeMain(0);
+		}
     	
     	// 	Copie du plateau 
     	this.plateauCalcul.copy(this.plateau);
@@ -86,38 +93,51 @@ public class JouerIA extends Jouer{
 		int yMax = plateau.getExtremum("yMax");
 		int yMin = plateau.getExtremum("yMin");
 		
-		//Parcours d'un plateau en considérant même les cases n'existant pas encore mais qui le pourrait si un décalage du plateau avait lieu
-		for(int y=yMin-1; y<=yMax+1; y++) {
+		
+		//	On parcourt le tableau pour chaque carte à poser
+		for (int i = 1; i < this.joueur.nbCarteDansMain(); i++) {
 			
-			for(int x=xMin-1; x<=xMax+1; x++) {
+			if (this.joueur.getCarteDeMain(i) == null) {
+				i++;
+			}
+			
+			//Parcours d'un plateau en considérant même les cases n'existant pas encore mais qui le pourrait si un décalage du plateau avait lieu
+			for(int y=yMin-1; y<=yMax+1; y++) {
 				
-				//this.poserCarte(x,y,1) fait appel à la fonction plateau.poserCarte(int coordX, int coordY, Carte carteAPoser)
-				//cette dernière vérifie si une carte peut être posée en fonction de sa position et pose la carte dans ce cas(ici la carte à jouer)  en considérant un plateau dynamique
-				if( this.plateauCalcul.poserCarte(x, y, this.joueur.getCarteDeMain(1)) ) {
+				for(int x=xMin-1; x<=xMax+1; x++) {
 					
-					//	Calcul des points
-					int points = calculateur.calculerPoints(carteVictoire, this.plateauCalcul);
-					
-					//ajout de la valeur "points" associé aux coords de la case jouée 
-					listePointPlacement.put( Plateau.getKey(x,y), points);
-					
-					//	On remet le plateau de calcul comme avant
-					this.plateauCalcul.copy(this.plateau);
+					//this.poserCarte(x,y,1) fait appel à la fonction plateau.poserCarte(int coordX, int coordY, Carte carteAPoser)
+					//cette dernière vérifie si une carte peut être posée en fonction de sa position et pose la carte dans ce cas(ici la carte à jouer)  en considérant un plateau dynamique
+					if( this.plateauCalcul.poserCarte(x, y, this.joueur.getCarteDeMain(i)) ) {
+						
+						//	Calcul des points
+						int points = calculateur.calculerPoints(carteVictoire, this.plateauCalcul);
+						
+						//ajout de la valeur "points" associé aux coords de la case jouée et à la carte à poser. "3;4/1"
+						listePointPlacement.put( Plateau.getKey(x,y)+"/"+i, points);
+						
+						//	On remet le plateau de calcul comme avant
+						this.plateauCalcul.copy(this.plateau);
+					}
 				}
-				
 			}
 			
 		}
+		
 		
 		//	On calcul les points que rapporte le meilleur placement
 		meilleurCoup[2] = Collections.max(listePointPlacement.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();
 		
 		//	On calcule les coordonées du meilleur placement
-		String coordStr = Collections.max(listePointPlacement.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+		String key = Collections.max(listePointPlacement.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+		String coordStr = key.split("/")[0];
     	int[] coordInt = this.plateau.getCoord(coordStr);
+    	int idCarte = Integer.parseInt(key.split("/")[1]);
     	
     	meilleurCoup[0] = coordInt[0];
     	meilleurCoup[1] = coordInt[1];
+    	
+    	meilleurCoup[3] = idCarte;
     	
     	return meilleurCoup;
 	}
@@ -141,8 +161,15 @@ public class JouerIA extends Jouer{
     	//	On récupère le calculateur
     	CalculePointsVisitor calculateur = Partie.getPartie().getCalculateurPts();
     	
-    	//  On récupère la carte de victoire
-    	Carte carteVictoire = this.joueur.getCarteVictoire();
+    	//	On récupère la carte de victoire
+			//	Pour simplifier le mode avancé, on considère que la carte de victoire est la carte 0 de la main.
+		Carte carteVictoire = null;
+		if (this.joueur.modeJeu == ModeJeu.NORMAL) {
+			carteVictoire = this.joueur.getCarteVictoire();
+		}
+		if (this.joueur.modeJeu == ModeJeu.AVANCE) {
+			carteVictoire = this.joueur.getCarteDeMain(0);
+		}
     	
     	//	On copie le plateau
     	this.plateauCalcul.copy(this.plateau);
@@ -210,6 +237,7 @@ public class JouerIA extends Jouer{
 		coordInt[0] = resultatPoserMeilleurCoup[0];
 		coordInt[1] = resultatPoserMeilleurCoup[1];
 		int ptPoser = resultatPoserMeilleurCoup[2];
+		int idCarte = resultatPoserMeilleurCoup[3];
 
 		//	Récupération des coordonnées extrêmes du plateau
     	int xMax = plateau.getExtremum("xMax");
@@ -221,7 +249,7 @@ public class JouerIA extends Jouer{
 		//	Sinon, on choisi une case au hasard
 	    if (ptPoser > 0) {
 	    	//	On pose la carte sur l'emplacement
-		    this.poserCarte(this.plateau, coordInt[0], coordInt[1], 1);
+		    this.poserCarte(this.plateau, coordInt[0], coordInt[1], idCarte);
 		}
 	    else {
 			do {
@@ -232,11 +260,24 @@ public class JouerIA extends Jouer{
 		        r = new Random();
 		        coordInt[1] = r.nextInt((yMax - yMin) + 1) + yMin;
 
-			} while (!poserCarte(this.plateau, coordInt[0], coordInt[1], 1));
+			} while (!poserCarte(this.plateau, coordInt[0], coordInt[1], idCarte));
 		}
 	    
 	    //	Affichage emplacement carte posée
-	    System.out.println(this.joueur.getNom()+" a posé sa carte en ( "+ coordInt[0] +" ; "+ coordInt[1] + " ).\n");
+	    StringBuffer sb = new StringBuffer();
+		sb.append("\n");
+		sb.append(this.joueur.getNom());
+		sb.append(" a posé sa carte");
+		if (this.joueur.modeJeu == ModeJeu.AVANCE) {
+			sb.append(" n°");
+			sb.append(idCarte+1);
+		}
+		sb.append(" en ( ");
+		sb.append(coordInt[0]);
+		sb.append(" ; ");
+		sb.append(coordInt[1]);
+		sb.append(" ).\n");
+		System.out.println(sb.toString());
 	}
     
     
