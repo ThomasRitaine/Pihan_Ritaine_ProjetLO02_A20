@@ -180,7 +180,7 @@ public class Partie {
     	
     	//	Paramétrage rapide, sans passer par le formulaire
     	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
-		Parametre parametre = new Parametre(3, 0, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
+		Parametre parametre = new Parametre(2, 0, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 1);
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();
