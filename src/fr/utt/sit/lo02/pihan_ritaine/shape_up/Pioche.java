@@ -8,7 +8,13 @@ import java.util.Queue;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.Carte.CouleursCarte;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.Carte.FormesCarte;
 
-
+/**
+ * Pioche est la classe définissant la pioche du jeu.
+ * Elle constitue une liste de cartes mélangées aléatoirement et pouvant être retirées les unes à la suite des autres.
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ *
+ */
 public class Pioche {
 	
 //	Attribut de classe
@@ -19,6 +25,9 @@ public class Pioche {
 
     
 //	Constructeur
+    /**
+     * Initialise la pioche.
+     */
     private Pioche() {
     	this.cartes = new LinkedList<Carte>();
 		
@@ -40,6 +49,10 @@ public class Pioche {
 
 
 //	Obtenir une instance du singleton
+    /**
+     * Permet d'obtenir une instance du singleton de Pioche.
+     * @return La pioche.
+     */
     public static Pioche getPioche() {
     	Pioche pioche = null;
     	if (!Pioche.cree) {
@@ -51,11 +64,18 @@ public class Pioche {
     
     
 //	Méthodes
+    /**
+     * Mélange les cartes enregistrées dans la pioche.
+     */
     private void melanger() {
 		Collections.shuffle((List<?>) this.cartes);
 		this.cartes = (Queue<Carte>)this.cartes;
 	}
 
+    /**
+     * Permet de piocher en retirant la première carte de la liste pioche.
+     * @return
+     */
     public Carte piocher() {
     	Carte cartePiochee = null;
 		if (!this.cartes.isEmpty()) {
@@ -64,16 +84,27 @@ public class Pioche {
 		return cartePiochee;
     }
     
+    /**
+     * Annoce si la pioche est vide ou non.
+     * @return Vrai ou faux.
+     */
     public boolean estVide() {
     	return this.cartes.isEmpty();
 	}
     
+    /**
+     * Récupère le nombre de cartes restantes dans la pioche.
+     * @return
+     */
     public int nbCarteRestantes() {
 		return this.cartes.size();
 	}
     
 
 //	Supprimer l'instance de Pioche
+    /**
+     * Supprime le singleton de Pioche.
+     */
     public static void supprime() {
 		Pioche.cree = false;
 	}

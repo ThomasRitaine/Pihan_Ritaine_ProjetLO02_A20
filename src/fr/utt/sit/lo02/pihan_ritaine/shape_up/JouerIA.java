@@ -7,13 +7,30 @@ import java.util.Map.Entry;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
 import java.util.Collections;
 import java.util.Comparator;
-
+/**
+ * <b>JouerIA est la classe héritant de Jouer définissant les comportements d'un joueur IA.</b>
+ * <p>Elle est composée de la méthode jouerTour et de sous-méthodes assurant les calculs permettant de prendre les décisions des actions de l'IA : 
+ * <ul><li>calculPoserMeilleurCoup</li>
+ * <li>calculBougerMeilleurCoup</li>
+ * <li>poserMeilleurCoup</li>
+ * <li>bougerMeilleurCoup</li>
+ * </ul>
+ * </p>
+ * @author Yaëlle Pihan et Thomas Ritaine
+ * @version 1.0
+ * @see Jouer
+ */
 
 public class JouerIA extends Jouer{
 	
 	//	Cette variable sert à faire des calculs de points sans toucher au plateau de la partie
 	private Plateau plateauCalcul;
 	
+	/**
+	 * <b>Récupère le constructeur de la super classe Jouer.</b>
+	 * <p>Initialise le joueurIA et le plateau qui servira aux calculs de l'IA : un plateau copie du plateau du tour actuel.</p>
+	 * @see Jouer	
+	 */	
 	public JouerIA(Joueur joueur) {
 		super(joueur);
 		
@@ -22,6 +39,14 @@ public class JouerIA extends Jouer{
 		this.plateauCalcul = new Plateau(null, null);
 	}
 	
+	/**
+	 * <b>Gère les tours d'une manche pour les joueurs IA.</b>
+	 * <p>Annonce le nom du joueurIA qui va jouer, rappelle sa carte victoire et la carte à jouer ainsi que sa main si le mode est avancé.</p>	
+	 * @see  JouerIA#calculPoserMeilleurCoup()
+	 * @see  JouerIA#poserMeilleurCoup(int[])
+	 * @see  JouerIA#calculBougerMeilleurCoup()
+	 * @see  JouerIA#bougerMeilleurCoup(int[])
+	 */
     public void jouerTour() {
     	
     	System.out.println("\n\n");
@@ -59,11 +84,27 @@ public class JouerIA extends Jouer{
     
     
     //	Cette fonction calcule le meilleur coup pour poser sa carte
-    //	Retourne 3 entiers :
+    //	Retourne 4 entiers :
     //		-	En 0 : la coordonnée x du meilleur placement
     //		-	En 1 : la coordonnée y du meilleur placement
     //		-	En 2 : les points gagnés en posant la carte sur cette case
     //		-	En 3 : l'id de la carte à poser (surtout utile pour le mode avancé)
+    /**
+     * <b>Calcule le meilleur coup pour poser une carte.</b>
+     * @return Un tableau à 4 entiers : 
+     * <ul><li>En 0 : la coordonnée x du meilleur placement</li>
+     * <li>En 1 : la coordonnée y du meilleur placement</li>
+     * <li>En 2 : les points gagnés en posant la carte sur cette case</li>
+     * <li>En 3 : l'id de la carte à poser (surtout utile pour le mode avancé)</li></ul>
+     * @see Partie#getCalculateurPts()
+     * @see Joueur#getCarteVictoire()
+     * @see Joueur#getCarteDeMain(int)
+     * @see Joueur#nbCarteDeMain()
+     * @see Plateau#getExtremum(string)
+     * @see CalculPointsVisitor#calculerPoints(Carte,Plateau)
+     * @see	Plateau#getKey(int, int)
+     * @see Plateau#poserCarte(int, int, Carte)
+     */
     public int[] calculPoserMeilleurCoup() {
     	
     	int[] meilleurCoup = {0,0,0,0};
@@ -151,6 +192,23 @@ public class JouerIA extends Jouer{
     //		-	En 2 : la coordonnée x du meilleur emplacement où mettre la carte
     //		-	En 3 : la coordonnée y du meilleur emplacement où mettre la carte
     //		-	En 4 : les points gagnés en déplacant la carte
+    /**
+     * <b>Calcule le meilleur coup pour déplacer une carte</b>
+     * @return Un tableau de 5 entiers : 
+     * <ul><li>En 0 : la coordonnée x de la meilleur carte à déplacer</li>
+     * <li>En 1 : la coordonnée y de la meilleur carte à déplacer</li>
+     * <li>En 2 : la coordonnée x du meilleur emplacement où mettre la carte</li>
+     * <li>En 3 : la coordonnée y du meilleur emplacement où mettre la carte</li>
+     * <li>En 4 : les points gagnés en déplacant la carte</li></ul>
+     * @see Partie#getCalculateurPts()
+     * @see Joueur#getCarteVictoire()
+     * @see Joueur#getCarteDeMain(int)
+     * @see Joueur#nbCarteDeMain()
+     * @see Plateau#getExtremum(string)
+     * @see CalculPointsVisitor#calculerPoints(Carte,Plateau)
+     * @see	Plateau#getKey(int, int)
+     * @see Plateau#bougerCarte(int, int, int, int)
+     */
     public int[] calculBougerMeilleurCoup() {
     	
     	int[] meilleurCoup = {0,0,0,0,0};
@@ -230,7 +288,12 @@ public class JouerIA extends Jouer{
     	return meilleurCoup;
 	}
     
-    
+    /**
+     * <b>Pose la carte du joueurIA au meilleur endroit</b>
+     * <p></p>
+     * @see Jouer#poserCarte(Plateau, int, int, int)
+     * @see Plateau#getExtremum(string)	
+     */
     public void poserMeilleurCoup(int[] resultatPoserMeilleurCoup) {
     	
     	int[] coordInt = {0,0};
@@ -280,7 +343,11 @@ public class JouerIA extends Jouer{
 		System.out.println(sb.toString());
 	}
     
-    
+    /**
+     * <b>Bouge la carte du joueurIA</b>
+     * <p></p>
+     * @see Plateau#bougerCarte(int, int, int, int)	
+     */
     public void bougerMeilleurCoup(int[] resultatBougerMeilleurCoup) {
     	int[] coordDepuis = {0,0};
 		int[] coordVers = {0,0};

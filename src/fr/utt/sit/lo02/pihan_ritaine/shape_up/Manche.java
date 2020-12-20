@@ -1,7 +1,13 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
-
+/**
+ * Manche est la classe visitée par le visiteur "CalculePointsVisitor" conformément au patron de conception Visitor.
+ * Elle permet la gestion d'une manche d'une partie. 
+ * @author Yaëlle Pihan et Thomas Ritaine
+ * @version 1.0
+ *
+ */
 public class Manche implements Visitable {
 	
 //	Attributs
@@ -9,6 +15,10 @@ public class Manche implements Visitable {
     private Pioche pioche;
     
 //	Constructeur
+    /**
+     * Initialise une manche : sa partie, ses joueurs, sa carte cachée (première carte de la pioche), son plateau, les cartes victoires des joueurs. 
+     * 
+     */
     public Manche() {
     	Partie partieEnCours = Partie.getPartie();
     	this.pioche = Pioche.getPioche();
@@ -26,7 +36,10 @@ public class Manche implements Visitable {
 	}
     
     
-//	Méthodes 
+//	Méthodes
+    /**
+     * Attribue les cartes Victoires aux joueurs. 
+     */
     public void attribuerCartes() {
     	
     	Partie partieEnCours = Partie.getPartie();
@@ -54,12 +67,16 @@ public class Manche implements Visitable {
 		
 	}
     
+    /**
+     * Assure le déroulement d'une manche.
+     * Tant que le denier tour n'est pas joué, la manche continue.
+     */
     public void jouerManche() {
     	
     	Partie partieEnCours = Partie.getPartie();
     	System.out.println("\n\n");
     	AsciiArt.bigDivider();
-    	System.out.println("\n\t---   Bébut de la manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
+    	System.out.println("\n\t---   Début de la manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
     	int tour = 0;
     	while (!this.mancheFinie()) {
 			this.jouerTour(tour);
@@ -75,6 +92,10 @@ public class Manche implements Visitable {
     	this.afficherScoresManche();
 	}
     
+    /**
+     * Annonce si une manche est finie.
+     * @return Vrai ou faux selon si la manche est finie ou non.
+     */
     public boolean mancheFinie() {
 		boolean mancheFinie = true;
 		Partie partieEnCours = Partie.getPartie();
@@ -96,6 +117,11 @@ public class Manche implements Visitable {
 		return mancheFinie;
 	}
     
+    /**
+     * Permet à un joueur de jouer son tour.
+     * Donne la carte à jouer au joueur et lui permet de réaliser ses actions.
+     * @param tour - Le numéro du tour joué.
+     */
     private void jouerTour(int tour) {
     	
     	Partie partieEnCours = Partie.getPartie();
@@ -111,6 +137,10 @@ public class Manche implements Visitable {
 		joueur.getTypeJouer().jouerTour();
 	}
     
+    /**
+     * Donne la carte à jouer au joueur pourlequel c'est le tour.
+     * @param joueur - Le joueur qui doit jouer.
+     */
     public void donnerCarte(Joueur joueur) {
     	ModeJeu modeJeu = Partie.getPartie().getParametre().getModeJeu();
     	Carte cartePiochee = this.pioche.piocher();
@@ -123,6 +153,9 @@ public class Manche implements Visitable {
 		}
 	}
     
+    /**
+     * Supprime la pioche.
+     */
     public void supprimerPioche() {
     	//	Pour supprimer la pioche, on supprime sa seule référence
     	this.pioche = null;
@@ -130,6 +163,9 @@ public class Manche implements Visitable {
     	Pioche.supprime();
 	}
     
+    /**
+     * Calcule les points da chaque joueurs lors d'une manche.
+     */
     private void calculerPts() {
     	int points = 0;
     	Carte carteVictoire;
@@ -151,7 +187,10 @@ public class Manche implements Visitable {
     		partieEnCours.setPointsTotaux(idJoueur, partieEnCours.getNumMancheActuelle(), points);
 		}
 	}
-    
+   
+    /**
+     * Affiche le score des joueurs pour la manche.
+     */
     private void afficherScoresManche() {
     	String nomJoueur;
     	int points;
@@ -175,10 +214,18 @@ public class Manche implements Visitable {
 		}
 	}
 
+    /**
+     * Méthode acceptant la visite du visitor "CalculPointsVisitor".
+     * Conformément au patron de conception Visitor.
+     */
     public int accept(Visitor v) {
 		return v.visit(this);
     }
 
+    /**
+     * Récupère le plateau de la manche.
+     * @return
+     */
     Plateau getPlateau() {
         return this.plateau;
     }

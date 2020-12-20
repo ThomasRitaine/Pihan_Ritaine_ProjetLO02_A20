@@ -1,5 +1,12 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
+/**
+ *  AsciiArt est la classe permettant d'ajouter d'imprimer des dessins.
+ *  Chaque fonction contient un "dessin" soit une chaîne de caractère qui est imprimé à l'écran.
+ * 
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ */
 public class AsciiArt {
 
 	public static void welcome() {

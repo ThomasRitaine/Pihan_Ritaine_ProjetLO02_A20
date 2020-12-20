@@ -1,16 +1,41 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
+/**
+ * <b>CalculePointsVisitor est la classe implémentant l'interface Visitor, conformément au patron de conception Visitor, appliqué à la fonctionnalité du calcul des points des joueurs.</b>
+ * <p>
+ * Elle appelle la fonction calculerPointsLigneColonne qui contient un algorithme permettant de calculer les points gagnés par un joueur en fonction de sa carte Victoire et des cartes présentent sur le plateau.
+ * Elle est utilisée en fin de partie pour établir quel est le joueur vainqueur, mais aussi en pleine partie dès lors que c'est au tour d'un joueur IA de jouer (cf la classe JouerIA).* 
+ * </p>
+ * @author Yaëlle Pihan et Thomas Ritaine
+ * @version 1.0
+ */
 
 public class CalculePointsVisitor implements Visitor {
 	
     private Carte carteVictoire;
     
-
+    /**
+     * <b>Fonction visit.</b>
+     * <p>
+     * Conformément au patron de conception Visitor, la fonction visit prend en paramètre l'objet visité, dans ce cas un objet de type Manche, et y appelle la méthode à appliquer sur cet objet.
+     * </p>
+     * @param m Manche considérée lors du calcul des points d'un joueur.
+     * @return Le nombre de points gagnés par le joueur.  
+     * 
+     * @see CalculePointsVisitor#calculerPoints(Carte, Plateau)     
+     */
     public int visit(Manche m) {
 		return this.calculerPoints(this.carteVictoire, m.getPlateau());
     }
     
-    
+    /**
+     * <b>Calcule les points d'un joueur.</b>
+     * @param carteVictoire Carte du joueur pour lequel les points sont calculés.
+     * @param plateau Plateau de la manche au moment où cette fonction est appelée.
+     * @return Le nombre de points gagnés par le joueur.
+     *  
+     * @see CalculePointsVisitor#calculerPointsLigneColonne(char, char, Carte, Plateau)     
+     */ 
     public int calculerPoints(Carte carteVictoire, Plateau plateau) {
     	
     	int pointsTotaux = 0;
@@ -20,7 +45,16 @@ public class CalculePointsVisitor implements Visitor {
     	return pointsTotaux;
     }
     
-    
+    /**
+     * <b>Calcule les points d'un joueur par ligne et par colonne.</b>
+     * @param boucleExt Caractère déterminant le sens de lecture du plateau. Si boucleExt = 'y' et boucleInt = 'x' alors l'algorithme calcule les points à compatbiliser par ligne, l'inverse calcule les colonnes.  
+     * @param boucleInt Caractère déterminant le sens de lecture du plateau. Si boucleExt = 'y' et boucleInt = 'x' alors l'algorithme calcule les points à compatbiliser par ligne, l'inverse calcule les colonnes.
+     * @param carteVictoire Carte du joueur pour lequel les points sont calculés.
+     * @param plateau Plateau de la manche au moment où cette fonction est appelée.
+     * @return Le nombre de points gagnés par le joueur sur les lignes ou sur les colonnes en fonction des natures respectives des caractères boucleInt et boucleExt.
+     *  
+     * @see CalculePointsVisitor#setCarteVictoire(Carte)    
+     */
     public int calculerPointsLigneColonne(char boucleExt, char boucleInt, Carte carteVictoire, Plateau plateau) {
     	
     	//	La variable qui stocke le score avant de le retourner
@@ -139,6 +173,10 @@ public class CalculePointsVisitor implements Visitor {
     	return pointsPartiels;
 	}
     
+    /**
+     * <b>Initialise la carte Victoire du joueur.</b>
+     * @param carteVictoire CarteVictoire du joueur.
+     */
     public void setCarteVictoire(Carte carteVictoire) {
         this.carteVictoire = carteVictoire;
     }

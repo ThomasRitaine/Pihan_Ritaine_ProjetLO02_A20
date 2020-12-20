@@ -2,7 +2,14 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.Plateau.FormesPlateau;
-
+/**
+ * Partie est la classe définissant une partie de Jeu.
+ * Elle admet un constructeur permettant de mettre en place les paramètres d'une partie et d'initialiser les points. 
+ * Elle contient la fonction main du projet qui assure l'appel des différentes fonctions permettant de jouer ainsi que d'autres fonctions.
+ * @author Yaëlle Pihan et Thomas Ritaine
+ * @version 1.0
+ *
+ */
 public class Partie {
 	
 //	Attribut de classe
@@ -20,6 +27,10 @@ public class Partie {
     
     
 //	Constructeur
+    /**
+     * Le constructeur initialise les tableaux des joueurs IA et humains en fonction de leur nombre respectif, et crée les instances qui serviront au calcul des points.
+     * @param parametre
+     */
     public Partie(Parametre parametre) {
 		
     	//	Récupération des paramètres
@@ -50,6 +61,12 @@ public class Partie {
 //	Méthodes static
     
     //	Créer une instance du singleton
+    /**
+     * Crée la partie.
+     * Une partie est une instance d'un singleton. 
+     * @param parametre - Les paramètres de la partie.
+     * @return La partie créée.
+     */
     public static Partie createPartie(Parametre parametre) {
     	Partie partie = null;
     	if (!Partie.cree) {
@@ -61,6 +78,10 @@ public class Partie {
     }
     
     //	Obtenir une instance du singleton
+    /**
+     * Récupère la partie créée.
+     * @return La partie créée.
+     */
     public static Partie getPartie() {
     	Partie partie = null;
     	if (Partie.cree) {
@@ -71,6 +92,11 @@ public class Partie {
 
     
 //	Méthodes
+    /*
+     * Permet l'execution d'une partie. 
+     * En pratique une partie se caractérise par une sucession de plusieurs manches.
+     * Lorsqu'il ne reste plus de manche à jouer, la méthode affiche les scores.
+     */
     public void jouerPartie() {
     	//	Pour chacune des manches
     	for (this.mancheActuelle = 0; this.mancheActuelle < this.parametre.getNbManche(); this.mancheActuelle++) {
@@ -83,6 +109,9 @@ public class Partie {
     }
     
 
+    /**
+     * Permet d'afficher les scores d'une partie.
+     */
     public void afficherScores() {
     	String nomJoueur;
     	int points;
@@ -101,6 +130,9 @@ public class Partie {
     	}
     }
     
+    /**
+     * Permet d'afficher le nom du joueur vainqueur.
+     */
     public void afficherVainqueur() {
 		int meilleurScore = 0;
 		int idJoueurGagnant = 0;
@@ -133,7 +165,11 @@ public class Partie {
 		System.out.println("\n\n");
 	}
     
-    
+    /**
+     * Récupère un joueur par son identifiant.
+     * @param id - L'identifiant du joueur.
+     * @return Le joueur récupéré.
+     */
     public Joueur getJoueurParId(int id) {
     	Joueur joueur;
     	if (id < this.parametre.getNbJoueurHumain()) {
@@ -144,23 +180,47 @@ public class Partie {
 		return joueur;
 	}
     
+    /**
+     * Récupère les paramètres de la partie.
+     * @return Les paramètres de la partie.
+     */
     public Parametre getParametre() {
 		return this.parametre;
     }
     
+    /**
+     * Récupère le calculateur de points. 
+     * @return CalculePointsVisitor
+     */
     public CalculePointsVisitor getCalculateurPts() {
 		return this.calculateurPts;
     }
     
-    
+    /**
+     * Initialise le tableau des points totaux d'une partie.
+     * @param idJoueur - L'identifiant du joueur.
+     * @param manche - La manche considérée.
+     * @param points - les points gagnés par le joueur au total.
+     */
 	public void setPointsTotaux(int idJoueur, int manche, int points) {
 		this.pointsTotaux[idJoueur][manche] = points;
 	}
 	
+	/**
+	 * Récupère les points d'une manche.
+	 * @param idJoueur - l'identifiant du joueur.
+	 * @param manche - La manche considérée.
+	 * @return Les points gagnés par un joueur lors d'une manche.
+	 */
 	public int getPointsManche(int idJoueur, int manche) {
 		return this.pointsTotaux[idJoueur][manche];
 	}
 	
+	/**
+	 * Récupère les points totaux d'un joueur.
+	 * @param idJoueur - L'indentifiant du joueur.
+	 * @return Les points totaux du joueur.
+	 */
 	public int getPointsTotaux(int idJoueur) {
 		int points = 0;
 		for (int i = 0; i < (this.getNumMancheActuelle()+1); i++) {
@@ -169,10 +229,18 @@ public class Partie {
 		return points;
 	}
 	
+	/**
+	 * Récupère le numéro de la manche actuelle d'une partie : la manche en cours de jeu.
+	 * @return Le numéro de la manche actuelle.
+	 */
 	public int getNumMancheActuelle() {
 		return this.mancheActuelle;
 	}
 	
+	/**
+	 * Récupère la manche actuelle d'une partie : la manche en cours de jeu.
+	 * @return La manche actuelle.
+	 */
 	public Manche getMancheActuelle() {
 		return this.manches[this.mancheActuelle];
 	}
@@ -180,7 +248,11 @@ public class Partie {
 
  
 
-
+/**
+ * La fonction main dans laquelle sont appelées une à une toutes les fonctions assurant le déroulement d'une partie.
+ * Elle crée notamment une instance de Paramètre et appelle la fonction pour l'initialiser ainsi qu'une instance de Partie pour ensuite lancer la partie.   
+ * @param args
+ */
 	//	Main
     public static void main(String[] args) {
     	//System.out.println("\n\t---  Bienvenue dans le jeu Shape Up !  ---\n\n");
@@ -191,13 +263,10 @@ public class Partie {
     	parametre.parametrerPartie();
     	
     	//	Paramétrage rapide, sans passer par le formulaire
-<<<<<<< Updated upstream
+
     	//String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
 		//Parametre parametre = new Parametre(3, 0, noms, FormesPlateau.ECHELLE, ModeJeu.NORMAL, 2);
-=======
-    	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
-		Parametre parametre = new Parametre(2, 0, noms, FormesPlateau.COEUR, ModeJeu.NORMAL, 1);
->>>>>>> Stashed changes
+
     	
     	Partie maPartie = Partie.createPartie(parametre);
     	maPartie.jouerPartie();

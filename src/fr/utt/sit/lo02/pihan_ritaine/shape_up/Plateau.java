@@ -4,7 +4,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
-
+/**
+ * Plateau définit les caractéristique d'un plateau de jeu utilisé lors d'une manche.
+ * Elle définit donc la forme du plateau.
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ *
+ */
 public class Plateau {
 
 //	Enumération
@@ -24,6 +30,11 @@ public class Plateau {
 	private FormesPlateau forme;
 	
 //	Constructeur
+	/**
+	 * Initialise le plateau d'une manche.
+	 * @param forme - La forme du plateau.
+	 * @param carteCachee - La carte cachée du plateau, tirée en début de partie.
+	 */
 	public Plateau(FormesPlateau forme, Carte carteCachee) {
 		this.forme = forme;
 		this.setCarteCachee(carteCachee);
@@ -122,15 +133,26 @@ public class Plateau {
 	}
 
 //getter et setter
-	
+	/**
+	 * Initialise la carte cachée du plateau.
+	 * @param value - La carte cachée.
+	 */
 	private void setCarteCachee(Carte value) {
 		this.carteCachee = value;
 	}
 	
+	/**
+	 * Récupère la forme du plateau.
+	 * @return La forme du plateau.
+	 */
 	public FormesPlateau getFormesPlateau() {
 		return this.forme;
 	}
 	
+	/**
+	 * Récupère les cases du plateau.
+	 * @return
+	 */
 	public HashMap<String,Case> getCases(){
 		return this.cases;
 	}
