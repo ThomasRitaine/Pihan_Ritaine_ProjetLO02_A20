@@ -1,4 +1,4 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
 /**
  *  AsciiArt est la classe permettant d'ajouter d'imprimer des dessins.

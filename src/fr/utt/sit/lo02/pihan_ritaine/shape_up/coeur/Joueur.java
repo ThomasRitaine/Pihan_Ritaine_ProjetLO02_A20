@@ -1,6 +1,6 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Parametre.ModeJeu;
 /**
  * Joueur est la classe définissant un joueur. 
  * Elle associe a un joueur un nom, une main pouvant disposer de 3 cartes ou d'une en fonction du mode de jeu, d'un identifiant, d'un mode de jeu, et d'une nature : joueur humain ou IA.

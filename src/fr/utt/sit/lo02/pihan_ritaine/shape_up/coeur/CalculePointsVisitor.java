@@ -1,4 +1,4 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
 /**
  * <b>CalculePointsVisitor est la classe implémentant l'interface Visitor, conformément au patron de conception Visitor, appliqué à la fonctionnalité du calcul des points des joueurs.</b>

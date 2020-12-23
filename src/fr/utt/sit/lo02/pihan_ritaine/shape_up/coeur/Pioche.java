@@ -1,12 +1,12 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Carte.CouleursCarte;
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Carte.FormesCarte;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Carte.CouleursCarte;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Carte.FormesCarte;
 
 /**
  * Pioche est la classe définissant la pioche du jeu.

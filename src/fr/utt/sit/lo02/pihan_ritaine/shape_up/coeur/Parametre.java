@@ -1,6 +1,6 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Plateau.FormesPlateau;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Plateau.FormesPlateau;
 
 
 /**

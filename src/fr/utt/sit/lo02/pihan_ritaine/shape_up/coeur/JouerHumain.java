@@ -1,6 +1,6 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Parametre.ModeJeu;
 /**
  * <b>JouerHumain est la classe héritant de Jouer définissant les comportements d'un joueur humain.</b>
  * <p>Elle n'est composée que de la méthode jouerTour permettant à un joueur humain d'interragir avec le programme afin de réaliser ses actions et donc de jouer son tour. </p>

@@ -1,6 +1,6 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Parametre.ModeJeu;
 /**
  * JoueurIA est la classe héritant de la classe mère Joueur.
  * Elle spécifie le cas des joueurs IA qui possèdent en plus des caractéristiques d'un joueur normal (par défaut humain est normal) : les joueurs IA ont des niveaux de difficulté.

@@ -1,6 +1,6 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.Parametre.ModeJeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Parametre.ModeJeu;
 /**
  * Manche est la classe visitée par le visiteur "CalculePointsVisitor" conformément au patron de conception Visitor.
  * Elle permet la gestion d'une manche d'une partie. 

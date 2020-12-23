@@ -1,4 +1,4 @@
-package fr.utt.sit.lo02.pihan_ritaine.shape_up;
+package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 /**
  * <b>Carte est la classe définissant une carte du jeu ShapeUp.</b>
  * <p>
