@@ -65,7 +65,7 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 	 * @see Joueur#nbCarteDansMain()
 	 * @see Joeur#getCarteDeMain(int)
 	 */
-		protected void afficherMain() {
+	protected void afficherMain() {
 		System.out.println("Vous avez " + this.joueur.nbCarteDansMain() + " cartes dans votre main :");
 		for (int i = 0; i < 3; i++) {
 			if (this.joueur.getCarteDeMain(i) != null) {

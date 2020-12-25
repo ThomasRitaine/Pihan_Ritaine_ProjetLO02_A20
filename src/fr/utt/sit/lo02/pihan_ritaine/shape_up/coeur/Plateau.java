@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.exceptions.CaseDejaRemplieException;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.exceptions.CaseInexistanteException;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.exceptions.NonAdjacenteException;
 /**
  * Plateau définit les caractéristique d'un plateau de jeu utilisé lors d'une manche.
  * Elle définit donc la forme du plateau.
@@ -171,38 +175,40 @@ public class Plateau {
 	}
 	
 	
-	public boolean peutPoserCarte(int x, int y) {
+	private boolean peutPoserCarte(int x, int y) throws Exception {
 		
 		boolean peutPoserCarte=false;
-		
 		Case emplacement = this.getCase(x, y);
-		if (emplacement != null) {
-			if( this.estVide() || (emplacement.estVide() && this.estAdjacente(x, y)) ) {
-				peutPoserCarte=true;
+		
+		//	Si le plateau est vide, on ne regarde pas les règles d'adjacence.
+		//	Sinon, on fait les test
+		if( this.estVide() && emplacement != null) {
+			peutPoserCarte = true;
+		}
+		else {
+			//	Gestion des erreurs
+			if (emplacement == null) {
+				throw new CaseInexistanteException();
 			}
+			if (!this.estAdjacente(x, y)) {
+				throw new NonAdjacenteException();
+			}
+			if (!emplacement.estVide()) {
+				throw new CaseDejaRemplieException();
+			}
+			
+			//	Si aucune erreur n'a été levée, on met peutPoserCarte à vrai
+			peutPoserCarte = true;
 		}
 				
 		return peutPoserCarte;
 	}
 	
-	/*
-	//autre version plus pratique pour l'ia (jouerIA fonction poserCarteIA) 
-	public boolean peutPoserCarte(Case emplacement) {
-			
-		boolean peutPoserCarte=false;
-		int[] coord =this.getCoord(emplacement);
-		if (emplacement != null) {
-			if( this.estVide() || (emplacement.estVide() && this.estAdjacente(coord[0], coord[1])) ) {
-				peutPoserCarte=true;
-			}
-		}
-				
-		return peutPoserCarte;
-	}*/
 	
 	public boolean poserCarte(int coordX, int coordY, Carte carteAPoser) {
 		boolean reussite = false;
 		boolean aDecale;
+		boolean peutPoserCarte;
 		int decalageX = 0;
 		int decalageY = 0;
 		Case emplacement = this.getCase(coordX, coordY);
@@ -265,7 +271,14 @@ public class Plateau {
 			//this.afficher();
 			
 			if(aDecale) {
-				if (this.peutPoserCarte(coordX, coordY)) {
+				try {
+					peutPoserCarte = this.peutPoserCarte(coordX, coordY);
+				} catch (Exception e) {
+					//	On attrape une exception, on ne peut pas poser la carte
+					peutPoserCarte = false;
+				}
+				
+				if (peutPoserCarte) {
 					//	On recalcule l'emplacement car plateau.peutPoserCarte modifie les emplacements
 					emplacement = this.getCase(coordX, coordY);
 					
@@ -284,7 +297,7 @@ public class Plateau {
 				//this.afficher();
 			}
 			
-			//	Fin de la bouge, on passe au prochain décalage
+			//	Fin de la boucle, on passe au prochain décalage
 			i++;
 		}
 		

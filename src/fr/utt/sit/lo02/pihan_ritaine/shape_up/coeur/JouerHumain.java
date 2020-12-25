@@ -213,15 +213,6 @@ public class JouerHumain extends Jouer{
 	            	
 	            	break;
 	            	
-	            	/*
-	            case "d":
-	            	int x = Integer.parseInt(commande[1]);
-	            	int y = Integer.parseInt(commande[2]);
-	            	this.plateau.decaler(x,y);
-	            	this.plateau.afficher();
-	            	
-	            	break;*/
-	            	
 	            default:
 	            	System.out.println("La commande \"" + commande[0] + "\" n'est pas connue de nos services.");
 	            	break;
