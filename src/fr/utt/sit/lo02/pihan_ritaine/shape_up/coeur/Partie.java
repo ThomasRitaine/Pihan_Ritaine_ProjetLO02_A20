@@ -94,8 +94,8 @@ public class Partie {
 //	M�thodes
     /*
      * Permet l'execution d'une partie. 
-     * En pratique une partie se caract�rise par une sucession de plusieurs manches.
-     * Lorsqu'il ne reste plus de manche � jouer, la m�thode affiche les scores.
+     * En pratique une partie se caracterise par une sucession de plusieurs manches.
+     * Lorsqu'il ne reste plus de manche � jouer, la methode affiche les scores.
      */
     public void jouerPartie() {
     	//	Pour chacune des manches
@@ -151,7 +151,7 @@ public class Partie {
     		
     	}
 		
-		//	Affichage de s�parateur et du meilleur score
+		//	Affichage de separateur et du meilleur score
 		System.out.println("\n\n");
     	AsciiArt.bigDivider();
     	if (egalite) {
@@ -166,9 +166,9 @@ public class Partie {
 	}
     
     /**
-     * R�cup�re un joueur par son identifiant.
+     * Recupere un joueur par son identifiant.
      * @param id - L'identifiant du joueur.
-     * @return Le joueur r�cup�r�.
+     * @return Le joueur recupere.
      */
     public Joueur getJoueurParId(int id) {
     	Joueur joueur = null;
@@ -179,15 +179,15 @@ public class Partie {
 	}
     
     /**
-     * R�cup�re les param�tres de la partie.
-     * @return Les param�tres de la partie.
+     * Recupere les parametres de la partie.
+     * @return Les parametres de la partie.
      */
     public Parametre getParametre() {
 		return this.parametre;
     }
     
     /**
-     * R�cup�re le calculateur de points. 
+     * Recupere le calculateur de points. 
      * @return CalculePointsVisitor
      */
     public CalculePointsVisitor getCalculateurPts() {
@@ -197,8 +197,8 @@ public class Partie {
     /**
      * Initialise le tableau des points totaux d'une partie.
      * @param idJoueur - L'identifiant du joueur.
-     * @param manche - La manche consid�r�e.
-     * @param points - les points gagn�s par le joueur au total.
+     * @param manche - La manche considere.
+     * @param points - les points gagnes par le joueur au total.
      */
 	public void setPointsTotaux(int idJoueur, int manche, int points) {
 		this.pointsTotaux[idJoueur][manche] = points;
@@ -207,15 +207,15 @@ public class Partie {
 	/**
 	 * R�cup�re les points d'une manche.
 	 * @param idJoueur - l'identifiant du joueur.
-	 * @param manche - La manche consid�r�e.
-	 * @return Les points gagn�s par un joueur lors d'une manche.
+	 * @param manche - La manche consideree.
+	 * @return Les points gagnes par un joueur lors d'une manche.
 	 */
 	public int getPointsManche(int idJoueur, int manche) {
 		return this.pointsTotaux[idJoueur][manche];
 	}
 	
 	/**
-	 * R�cup�re les points totaux d'un joueur.
+	 * Recupere les points totaux d'un joueur.
 	 * @param idJoueur - L'indentifiant du joueur.
 	 * @return Les points totaux du joueur.
 	 */
@@ -228,15 +228,15 @@ public class Partie {
 	}
 	
 	/**
-	 * R�cup�re le num�ro de la manche actuelle d'une partie : la manche en cours de jeu.
-	 * @return Le num�ro de la manche actuelle.
+	 * Recupere le numero de la manche actuelle d'une partie : la manche en cours de jeu.
+	 * @return Le numero de la manche actuelle.
 	 */
 	public int getNumMancheActuelle() {
 		return this.mancheActuelle;
 	}
 	
 	/**
-	 * R�cup�re la manche actuelle d'une partie : la manche en cours de jeu.
+	 * Recupere la manche actuelle d'une partie : la manche en cours de jeu.
 	 * @return La manche actuelle.
 	 */
 	public Manche getMancheActuelle() {

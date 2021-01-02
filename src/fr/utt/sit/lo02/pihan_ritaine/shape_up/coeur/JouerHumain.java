@@ -2,15 +2,15 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Parametre.ModeJeu;
 /**
- * <b>JouerHumain est la classe héritant de Jouer définissant les comportements d'un joueur humain.</b>
- * <p>Elle n'est composée que de la méthode jouerTour permettant à un joueur humain d'interragir avec le programme afin de réaliser ses actions et donc de jouer son tour. </p>
+ * JouerHumain est la classe héritant de Jouer définissant les comportements d'un joueur humain.
+ * Elle n'est composée que de la méthode jouerTour permettant à un joueur humain d'interragir avec le programme afin de réaliser ses actions et donc de jouer son tour. 
  * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0
  * @see Jouer
  */
 public class JouerHumain extends Jouer{
 	/**
-	 * <b>Recupère le constructeur de la super classe Jouer.</b>
+	 * Recupère le constructeur de la super classe Jouer.
 	 * @param joueur
 	 */
 	public JouerHumain(Joueur joueur) {
@@ -18,21 +18,21 @@ public class JouerHumain extends Jouer{
 	}
 	
 	/**
-	 * <b>Gère les tours d'une manche pour les joueurs Humains.</b>
-	 * <p>Permet aux joueurs de jouer les uns après les autres : indique qui doit jouer, rappelle sa carte Victoire, annonce la carte piochée et pour le mode avancé, rappelle sa main.
+	 * Gère les tours d'une manche pour les joueurs Humains.
+	 * Permet aux joueurs de jouer les uns après les autres : indique qui doit jouer, rappelle sa carte Victoire, annonce la carte piochée et pour le mode avancé, rappelle sa main.
 	 * Propose au joueur une commande "aide" résumant toutes les commandes auxquelles il a accès lors de son tour de jeu ainsi que les actions qu'il peut faire :
-	 * <ul>
-	 * <li>aide</li>
-	 * <li>plateau</li>
-	 * <li>victoire</li>
-	 * <li>carte</li>
-	 * <li>main (mode avancé)</li>
-	 * <li>poser X Y</li>
-	 * <li>poser n°Carte X Y(mode avancé)</li>
-	 * <li>bouger X1 Y1 X2 Y2</li>
-	 * <li>fin</li>
+	 * 
+	 *  aide,
+	 *  plateau,
+	 *  victoire,
+	 *  carte,
+	 *  main (mode avancé),
+	 *  poser X Y,
+	 *  poser n°Carte X Y(mode avancé),
+	 *  bouger X1 Y1 X2 Y2,
+	 *  fin. 
 	 * Propose des rectifications aux erreurs d'entrées du joueur lorsqu'elles arrivent pour l'aider à comprendre ce qui n'a pas marché. 
-	 * </ul></p>
+	 * 
 	 */ 
     public void jouerTour() {
         
