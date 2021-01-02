@@ -6,7 +6,7 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
  *  le constructeur initialisant le joueur,
  *  la méthode poserCarte,
  *  la méthode affichant la main du joueur pour le mode avancé,
- *  la méthode initialisant le plateau,
+ *  la méthode initialisant le plateau.
  * 
  * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0

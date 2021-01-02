@@ -3,10 +3,10 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.coeur.Plateau.FormesPlateau;
 /**
- * Partie est la classe dï¿½finissant une partie de Jeu.
- * Elle admet un constructeur permettant de mettre en place les paramï¿½tres d'une partie et d'initialiser les points. 
- * Elle contient la fonction main du projet qui assure l'appel des diffï¿½rentes fonctions permettant de jouer ainsi que d'autres fonctions.
- * @author Yaï¿½lle Pihan et Thomas Ritaine
+ * Partie est la classe définissant une partie de Jeu.
+ * Elle admet un constructeur permettant de mettre en place les paramètres d'une partie et d'initialiser les points. 
+ * Elle contient la fonction main du projet qui assure l'appel des différentes fonctions permettant de jouer ainsi que d'autres fonctions.
+ * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0
  *
  */
@@ -27,7 +27,7 @@ public class Partie {
     
 //	Constructeur
     /**
-     * Le constructeur initialise les tableaux des joueurs IA et humains en fonction de leur nombre respectif, et crï¿½e les instances qui serviront au calcul des points.
+     * Le constructeur initialise les tableaux des joueurs IA et humains en fonction de leur nombre respectif, et crée les instances qui serviront au calcul des points.
      * @param parametre
      */
     public Partie(Parametre parametre) {
@@ -62,10 +62,10 @@ public class Partie {
     
     //	Crï¿½er une instance du singleton
     /**
-     * Crï¿½e la partie.
+     * Crée la partie.
      * Une partie est une instance d'un singleton. 
-     * @param parametre - Les paramï¿½tres de la partie.
-     * @return La partie crï¿½ï¿½e.
+     * @param parametre - Les paramètres de la partie.
+     * @return La partie créée.
      */
     public static Partie createPartie(Parametre parametre) {
     	Partie partie = null;
@@ -79,8 +79,8 @@ public class Partie {
     
     //	Obtenir une instance du singleton
     /**
-     * Rï¿½cupï¿½re la partie crï¿½ï¿½e.
-     * @return La partie crï¿½ï¿½e.
+     * Récupère la partie créée.
+     * @return La partie créée.
      */
     public static Partie getPartie() {
     	Partie partie = null;
@@ -95,7 +95,7 @@ public class Partie {
     /*
      * Permet l'execution d'une partie. 
      * En pratique une partie se caracterise par une sucession de plusieurs manches.
-     * Lorsqu'il ne reste plus de manche ï¿½ jouer, la methode affiche les scores.
+     * Lorsqu'il ne reste plus de manche à jouer, la methode affiche les scores.
      */
     public void jouerPartie() {
     	//	Pour chacune des manches
@@ -116,7 +116,7 @@ public class Partie {
     	String nomJoueur;
     	int points;
     	
-    	//	Affichage sï¿½parateur et tableau score
+    	//	Affichage séparateur et tableau score
     	System.out.println("\n\n");
     	AsciiArt.bigDivider();
     	System.out.println("\n");
@@ -167,7 +167,7 @@ public class Partie {
     
     /**
      * Recupere un joueur par son identifiant.
-     * @param id - L'identifiant du joueur.
+     * @param id L'identifiant du joueur.
      * @return Le joueur recupere.
      */
     public Joueur getJoueurParId(int id) {
@@ -196,18 +196,18 @@ public class Partie {
     
     /**
      * Initialise le tableau des points totaux d'une partie.
-     * @param idJoueur - L'identifiant du joueur.
-     * @param manche - La manche considere.
-     * @param points - les points gagnes par le joueur au total.
+     * @param idJoueur L'identifiant du joueur.
+     * @param manche La manche considérée.
+     * @param points Les points gagnés par le joueur au total.
      */
 	public void setPointsTotaux(int idJoueur, int manche, int points) {
 		this.pointsTotaux[idJoueur][manche] = points;
 	}
 	
 	/**
-	 * Rï¿½cupï¿½re les points d'une manche.
-	 * @param idJoueur - l'identifiant du joueur.
-	 * @param manche - La manche consideree.
+	 * Récupère les points d'une manche.
+	 * @param idJoueur L'identifiant du joueur.
+	 * @param manche La manche consideree.
 	 * @return Les points gagnes par un joueur lors d'une manche.
 	 */
 	public int getPointsManche(int idJoueur, int manche) {
@@ -216,7 +216,7 @@ public class Partie {
 	
 	/**
 	 * Recupere les points totaux d'un joueur.
-	 * @param idJoueur - L'indentifiant du joueur.
+	 * @param idJoueur L'indentifiant du joueur.
 	 * @return Les points totaux du joueur.
 	 */
 	public int getPointsTotaux(int idJoueur) {
@@ -247,15 +247,15 @@ public class Partie {
  
 
 /**
- * La fonction main dans laquelle sont appelï¿½es une ï¿½ une toutes les fonctions assurant le dï¿½roulement d'une partie.
- * Elle crï¿½e notamment une instance de Paramï¿½tre et appelle la fonction pour l'initialiser ainsi qu'une instance de Partie pour ensuite lancer la partie.   
+ * La fonction main dans laquelle sont appelï¿½es une ï¿½ une toutes les fonctions assurant le déroulement d'une partie.
+ * Elle crée notamment une instance de Paramï¿½tre et appelle la fonction pour l'initialiser ainsi qu'une instance de Partie pour ensuite lancer la partie.   
  * @param args
  */
 	//	Main
     public static void main(String[] args) {
     	AsciiArt.welcome();
 
-    	//	Demande de paramï¿½tres ï¿½ l'utilisateur
+    	//	Demande de paramères à l'utilisateur
     	//Parametre parametre = new Parametre();
     	//parametre.parametrerPartie();
     	
