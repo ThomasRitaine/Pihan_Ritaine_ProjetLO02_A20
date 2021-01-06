@@ -2,6 +2,8 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,11 +19,11 @@ import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 
-public class Jeu {
+public class Jeu implements Observer{
 	
 	//	LARG_CASE / LONG_CASE doit être 0.7
-	public static int LARG_CASE = 140; 	//	Largeur des cases en pixel
-	public static int LONG_CASE = 200; 	//	Longueur des cases en pixel
+	public static int LARG_CASE = 105; 	//	Largeur des cases en pixel
+	public static int LONG_CASE = 150; 	//	Longueur des cases en pixel
 
 	private JFrame frame;
 	private JPanel conteneurPlateau;
@@ -63,32 +65,6 @@ public class Jeu {
 		this.conteneurPlateau = new fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.Plateau(this.plateau);
 		getFrame().getContentPane().add(this.conteneurPlateau);
 		
-		/*
-		this.conteneurPlateau.setBackground(Color.LIGHT_GRAY);
-		this.conteneurPlateau.setSize(600,600);
-		this.conteneurPlateau.add(new fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.Plateau());
-		*/
-		
-        //this.conteneurPlateau.add(new fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.Plateau());
-		
-		
-		/*
-		//	Axe des X
-		String[] axeX = {};
-		for (int i = this.plateau.getExtremum("xMin"); i <= this.plateau.getExtremum("xMax"); i++) {
-			int N = axeX.length;
-			axeX = Arrays.copyOf(axeX, N + 1);
-			axeX[N] = String.valueOf(i);
-		}
-		
-		//	Affichage d'un emplacement
-		JLabel labelCarte = new JLabel();
-		Util.setImageOfLabel(labelCarte, "RVV");
-		frame.getContentPane().add(labelCarte);
-		*/
-		//JTable plateau = new JTable(donnees, axeX);
-		
-		//this.conteneurPlateau.add(plateau);
 	}
 
 	/**
@@ -96,5 +72,14 @@ public class Jeu {
 	 */
 	public JFrame getFrame() {
 		return frame;
+	}
+
+	@Override
+	public void update(Observable instanceObservable, Object arg) {
+		
+		/*if (instanceObservable instanceof Plateau) {
+			this.afficherTableau();
+		}*/
+		
 	}
 }

@@ -77,7 +77,7 @@ public class Partie implements Runnable {
     	
     	//	Param�trage rapide, sans passer par le formulaire
     	String[] noms = {"Rom�o", "Juliette", "L�a l'IA"};
-		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.RECTANGLE, ModeJeu.NORMAL, 2);
+		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
     	
 		Partie maPartie = Partie.creerPartie(parametre);
 		

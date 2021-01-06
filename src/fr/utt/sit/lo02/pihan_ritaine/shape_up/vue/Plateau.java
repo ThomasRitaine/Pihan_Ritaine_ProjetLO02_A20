@@ -50,14 +50,19 @@ public class Plateau extends JPanel {
 		
 		//	On dessine les cases dans ce rectangle et on met les cartes dans les cases
 		for (int i = Plateau.TAILLE_SEPARATEUR+Plateau.DECALAGE_X; i < largeurRect; i+=(Jeu.LARG_CASE+Plateau.TAILLE_SEPARATEUR)) {
-			for (int j = Plateau.TAILLE_SEPARATEUR; j < longeurRect; j+=(Jeu.LONG_CASE+Plateau.TAILLE_SEPARATEUR)) {
+			for (int j = longeurRect; j > Plateau.TAILLE_SEPARATEUR; j-=(Jeu.LONG_CASE+Plateau.TAILLE_SEPARATEUR)) {
 				
-				//	On dessine un espace blanc
-				g2d.clearRect(i, j, Jeu.LARG_CASE, Jeu.LONG_CASE);
 				
-				//	On met la carte si la case existe
+				//	Si la case existe, on met un carré blanc et la carte par dessus
 				Case emplacement = this.plateau.getCase(x, y);
+				//System.out.println("x = "+x+" ; y = "+y);
 				if (emplacement != null) {
+					
+					//System.out.println("passage");
+					//	On dessine un espace blanc
+					g2d.clearRect(i, j, Jeu.LARG_CASE, Jeu.LONG_CASE);
+					
+					//	Si il y a une carte sur cette case, on la met
 					if (emplacement.getCarte() != null) {
 						JLabel labelCarte = new JLabel();
 						String code = emplacement.getCarte().getCode();
@@ -70,6 +75,7 @@ public class Plateau extends JPanel {
 				y++;
 			}
 			x++;
+			y = yMin;
 		}
 		
 		//	On ajoute les coordonnées sur le côté
