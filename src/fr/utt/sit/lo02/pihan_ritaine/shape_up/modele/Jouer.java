@@ -1,14 +1,13 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 /**
- * <b>Jouer est la classe mère de JouerHumain et JouerIA. 
- * <p>
+ * Jouer est la classe mère de JouerHumain et JouerIA. 
+ *
  * Elle regroupe les membres communs des deux classes c'est à dire les fonctions communes aux joueurs quelque soit leur nature : 
- * <ul> </li>le constructeur initialisant le joueur</li>
- * </li>la méthode poserCarte</li>
- * </li>la méthode affichant la main du joueur pour le mode avancé</li>
- * </li>la méthode initialisant le plateau</li>
- * </ul></b>
- * </p>
+ *  le constructeur initialisant le joueur,
+ *  la méthode poserCarte,
+ *  la méthode affichant la main du joueur pour le mode avancé,
+ *  la méthode initialisant le plateau.
+ * 
  * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0
  */
@@ -20,21 +19,20 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 	
 	//Constructeur
 	/**
-	 *<b>Initialise le joueur à qui le tour revient.</b>
-	 *<p></p> 
-	 * @param joueur
+	 *Initialise le joueur à qui le tour revient.
+	 * 
+	 * @param joueur Joueur à qui le tour revient.
 	 */
 	public Jouer(Joueur joueur) {
 		this.joueur = joueur;
 	}
+	
 	/**
-	 *<b>Permet au joueur de poser une carte.</b>
-	 *<p></p> 
-	 * @param 
-	 *  
-	 * @param plateau - Plateau de la manche au moment où cette fonction est appelée.
-	 * @param coordX - Coordonnée X de la case du plateau sur laquelle est posée la carte.
-	 * @param coordY - Coordonnée Y de la case du plateau sur laquelle est posée la carte.
+	 *Permet au joueur de poser une carte.
+	 *   
+	 * @param plateau Plateau de la manche au moment où cette fonction est appelée.
+	 * @param coordX Coordonnée X de la case du plateau sur laquelle est posée la carte.
+	 * @param coordY Coordonnée Y de la case du plateau sur laquelle est posée la carte.
 	 * @param idCarte Identifiant de la carte.
 	 * @return Le booléen reussite, annoçant si la carte a bien pu être poser.
 	 * @see Joueur#getCarteDeMain(int)
@@ -61,7 +59,7 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 	}
 	
 	/**
-	 * <b>Affiche la main du joueur.</b>
+	 * Affiche la main du joueur.
 	 * @see Joueur#nbCarteDansMain()
 	 * @see Joeur#getCarteDeMain(int)
 	 */
@@ -78,7 +76,8 @@ public abstract class Jouer implements InterfaceNatureJoueur{
 	}
 	
 	/**
-	 * <b>Initialise le plateau.</b>
+	 * Initialise le plateau.
+	 * @param plateau Plateau de la manche au moment où cette fonction est appelée.
 	 */
 	public void setPlateau(Plateau plateau) {
 		this.plateau = plateau;

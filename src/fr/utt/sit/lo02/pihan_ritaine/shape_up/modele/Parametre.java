@@ -14,6 +14,11 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau.FormesPlateau;
 public class Parametre {
 	
 //	ENUMERATION
+	/**
+	 * Enumération définissant les différents modes de jeu.
+	 * @author Yaëlle Pihan & Thomas Ritaine
+     * @version 1.0
+	 */
 	public enum ModeJeu {
 		NORMAL,
 		AVANCE;

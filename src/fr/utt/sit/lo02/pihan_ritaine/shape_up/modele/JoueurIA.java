@@ -2,7 +2,7 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 /**
- * JoueurIA est la classe héritant de la classe mère Joueur.
+ * JoueurIA est la classe définissant un joueur IA et héritant de la classe Joueur.
  * Elle spécifie le cas des joueurs IA qui possèdent en plus des caractéristiques d'un joueur normal (par défaut humain est normal) : les joueurs IA ont des niveaux de difficulté.
  * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0

@@ -9,7 +9,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.exceptions.CaseDejaRemplieE
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.exceptions.CaseInexistanteException;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.exceptions.NonAdjacenteException;
 /**
- * Plateau définit les caractéristique d'un plateau de jeu utilisé lors d'une manche.
+ * Plateau définit les caractéristiques d'un plateau de jeu utilisé lors d'une manche.
  * Elle définit donc la forme du plateau.
  * @author Yaëlle Pihan & Thomas Ritaine
  * @version 1.0
@@ -18,6 +18,12 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.exceptions.NonAdjacenteExce
 public class Plateau {
 
 //	Enumération
+	/**
+	 * Enéumération définissant les différentes formes de plateau possibles.
+	 * @author Yaëlle Pihan & Thomas Ritaine
+     * @version 1.0
+	 *
+	 */
 	public enum FormesPlateau {
 		RECTANGLE,
 		ROND,
@@ -36,8 +42,8 @@ public class Plateau {
 //	Constructeur
 	/**
 	 * Initialise le plateau d'une manche.
-	 * @param forme - La forme du plateau.
-	 * @param carteCachee - La carte cachée du plateau, tirée en début de partie.
+	 * @param forme La forme du plateau.
+	 * @param carteCachee La carte cachée du plateau, tirée en début de partie.
 	 */
 	public Plateau(FormesPlateau forme, Carte carteCachee) {
 		this.forme = forme;
@@ -139,7 +145,7 @@ public class Plateau {
 //getter et setter
 	/**
 	 * Initialise la carte cachée du plateau.
-	 * @param value - La carte cachée.
+	 * @param value La carte cachée.
 	 */
 	private void setCarteCachee(Carte value) {
 		this.carteCachee = value;
@@ -155,7 +161,7 @@ public class Plateau {
 	
 	/**
 	 * Récupère les cases du plateau.
-	 * @return
+	 * @return Les cases du plateau enregistrées dans une HashMap ayant pour clé les coordonnées de la case. 
 	 */
 	public HashMap<String,Case> getCases(){
 		return this.cases;
@@ -204,7 +210,13 @@ public class Plateau {
 		return peutPoserCarte;
 	}
 	
-	
+	/**
+	 * Permet de poser une carte sur le plateau. 
+	 * @param coordX La coordonnée X lisible sur le plateau de jeu de la case sélectionnée.
+	 * @param coordY La coordonnée Y lisible sur le plateau de jeu de la case sélectionnée.
+	 * @param carteAPoser La carte que le joueur souhaite poser.
+	 * @return Le bouléen reussite attestant si la carte a réellement pu être posée.
+	 */
 	public boolean poserCarte(int coordX, int coordY, Carte carteAPoser) {
 		boolean reussite = false;
 		boolean aDecale;
@@ -306,11 +318,11 @@ public class Plateau {
 
 	/*
 	 * Dans cette méthode : 
-	 * - on vérifie si la carte a bouger existe
-	 * - on supprime la carte à bouger de sa case (depuis)
-	 * - on vérifie si la case où la carte sera déplacée est vide
-	 * - on pose ou non la carte dans cette nouvelle case (vers)
-	 * - on renvoie un boolean indiquant si la carte a pu être bougée
+	 *  on vérifie si la carte a bouger existe,
+	 *  on supprime la carte à bouger de sa case (depuis),
+	 *  on vérifie si la case où la carte sera déplacée est vide,
+	 *  on pose ou non la carte dans cette nouvelle case (vers),
+	 *  on renvoie un boolean indiquant si la carte a pu être bougée.
 	 * 	
 	 */
 	public boolean bougerCarte(int x1, int y1, int x2, int y2) {
@@ -341,6 +353,12 @@ public class Plateau {
 	}
 
 	//	Cette méthode sert à savoir si une case de coord x, y est adjacente a une case qui a une carte
+	/**
+	 * Test si une case est adjacente à au moins une autre sur laquelle se trouve une carte.
+	 * @param x La coordonnée X lisible sur le plateau de jeu de la case sélectionnée.
+	 * @param y La coordonnée Y lisible sur le plateau de jeu de la case sélectionnée.
+	 * @return Le bouléen réussite attestant si une case est adjacente. 
+	 */
 	public boolean estAdjacente(int x, int y) {
 		boolean estAdjacente = false;
 		
@@ -362,6 +380,10 @@ public class Plateau {
 		return estAdjacente;
 	}
 
+	/**
+	 * Affiche un plateau de manière dynamique.
+	 * @see Plateau#getExtremum(string)
+	 */
 	public void afficher() {
 		
 		//	Déclaration des variables
@@ -430,6 +452,12 @@ public class Plateau {
 	
 	//	Cette fonction décale chaque case du tableau par un vecteur (x;y) en laissant les cases
 	//	avec un carte là où elles sont. Si la forme du plateau ne peut pas être respectée, renvoit false
+	/**
+	 * 
+	 * @param x La coordonnée X lisible sur le plateau de jeu de la case sélectionnée.
+	 * @param y La coordonnée Y lisible sur le plateau de jeu de la case sélectionnée.
+	 * @return Le bouléen reussite attestant si le décalage a pu avoir lieu.
+	 */
 	public boolean decaler(int x, int y) {
 		boolean reussite = true;
 		HashMap<String,Case> casesDecale = new HashMap<String,Case>();
@@ -503,7 +531,10 @@ public class Plateau {
 		return reussite;
 	}
 	
-	
+	/**
+	 * Permet de créer une copie du tableau avant son potentiel décalage.
+	 * @param plateauACopier Copie du plateau.
+	 */
 	public void copy(Plateau plateauACopier) {
 		this.cases.clear();
 		//this.cases.putAll(plateauACopier.getCases());
@@ -515,7 +546,11 @@ public class Plateau {
 		}
 	}
 	
-	
+	/**
+	 * Récupère les coordonnées d'une case.
+	 * @param emplacement Case dont on souhaite récupérer les coordonnées.
+	 * @return Les coordonnées X et Y dans un tableau. 
+	 */
 	public int[] getCoord(Case emplacement) {
 		int[] coord = {0,0};
 		for(String coordStr : this.cases.keySet()) {
@@ -527,6 +562,11 @@ public class Plateau {
 		return coord;
 	}
 	
+	/**
+	 * Récupère les coordonnées d'une case à partir de la chaine de caractère de coordonnées servant de clé dans la hashPa
+	 * @param coordStr Chaine de caractère contenant les coordonnées d'une case.
+	 * @return Le tableau contenant les coordonnées X et y. 
+	 */
 	public int[] getCoord(String coordStr) {
 		int[] coord = {0,0};
 		coord[0] = Integer.parseInt(coordStr.split(";")[0]);
@@ -534,7 +574,12 @@ public class Plateau {
 		return coord;
 	}
 	
-	
+	/**
+	 * Récupère une case à partir de ses coordonnées.
+	 * @param x Coordonnée X de la case à récupérer.
+	 * @param y Coordonnée Y de la case à récupérer.
+	 * @return La case récupérée.
+	 */
 	public Case getCase(int x, int y) {
 		String coord = Plateau.getKey(x, y);
 		return this.cases.get(coord);
@@ -542,6 +587,12 @@ public class Plateau {
 	
 	
 	//	Cette fonction prend en paramètre "xMax", "xMin", "yMax" ou "yMin" et renvoit la valeur de cette coordonnée
+	
+	/**
+	 * Récupère l'extremum d'un plateau en fonction de sa nature. 
+	 * @param extremumStr Nature de l'extremum sous forme de chaine de caractère.
+	 * @return L'extremum sous forme d'entier.
+	 */
 	public int getExtremum(String extremumStr) {
 		int extremum = 0;
 		boolean estInitialise = false;
@@ -597,6 +648,12 @@ public class Plateau {
 		return extremum;	
 	}
 	
+	/**
+	 * Transforme en clé de case les coordonnées X et y de cette case.
+	 * @param x Coordonnée X de la case.
+	 * @param y Coordonnée Y de la case.
+	 * @return La clé sous forme de chaine de caractère.
+	 */
 	public static String getKey(int x, int y) {
 		return x + ";" + y;
 	}

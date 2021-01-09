@@ -1,10 +1,10 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 /**
- * <b>Carte est la classe définissant une carte du jeu ShapeUp.</b>
- * <p>
+ * Carte est la classe définissant une carte du jeu ShapeUp.
+ * 
  * Elle est caractérisée par des membres définissant l'aspect des cartes du jeu :  forme, couleur et remplissage (nommé "remplie" dans le code).
  * Elle possède un constructeur initialisant ces membres relatifs à l'aspect, ainsi que les getters associés, une fonction toString permettant l'affichage d'une carte et une fonction getCode qui propose un affichage plus conscis, utilisé lors de l'affichage d'un plateau. 
- * </p>
+ * 
  * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0
  */
@@ -12,8 +12,8 @@ public class Carte {
 	
 //	Enumérations
 	/**
-	 * <b>Enumeration définissant les différentes formes possibles d'une carte.</b>
-	 * <p></p>
+	 * Enumeration définissant les différentes formes possibles d'une carte.
+	 * 
 	 *
 	 */
 	public enum FormesCarte {
@@ -23,8 +23,8 @@ public class Carte {
     }
 	
 	/**
-	 * <b>Enumeration définissant les différentes couleurs possibles d'une carte.</b>
-	 * <p></p>
+	 * Enumeration définissant les différentes couleurs possibles d'une carte.
+	 * 
 	 *
 	 */
 	public enum CouleursCarte {
@@ -41,8 +41,8 @@ public class Carte {
     
 //	Constructeur
     /**
-	 * <b>Constructeur initialisant les 3 aspects d'une carte : sa forme, sa couleur, son remplissage.</b>
-	 * <p></p>
+	 * Constructeur initialisant les 3 aspects d'une carte : sa forme, sa couleur, son remplissage.
+	 * 
 	 *@param remplie Définit le remplissage de la carte.
 	 *@param forme Définit la forme de la carte.
 	 *@param couleur Définit la couleur de la carte.
@@ -56,8 +56,8 @@ public class Carte {
 
 //	Méthode
     /**
-	 * <b>Définit l'affichage d'une carte.</b>
-	 * <p>En pratique affiche FORME COULEUR REMPLISSAGE.</p>
+	 * Définit l'affichage d'une carte.
+	 * En pratique affiche FORME COULEUR REMPLISSAGE.
 	 *
 	 */
     public String toString() {
@@ -75,8 +75,8 @@ public class Carte {
     }
     
     /**
-	 * <b>Définit l'affichage du code d'une carte.</b>
-	 * <p>En pratique retourne FCR (première lettres de forme, couleur et remplissage).</p>
+	 * Définit l'affichage du code d'une carte.
+	 * En pratique affiche FCR (première lettres de forme, couleur et remplissage).
 	 *
 	 */
     public String getCode() {
@@ -94,8 +94,8 @@ public class Carte {
 
 //	Getter
     /**
-	 * <b>Retourne le remplissage d'une carte.</b>
-	 * <p></p>
+	 * Retourne le remplissage d'une carte.
+	 * 
 	 *@return Le remplissage de la carte.
 	 */
     boolean estRemplie() {
@@ -103,8 +103,8 @@ public class Carte {
     }
 
     /**
-   	 * <b>Retourne la forme d'une carte.</b>
-   	 * <p></p>
+   	 * Retourne la forme d'une carte.
+   	 * 
    	 *@return La forme de la carte.
    	 */
     FormesCarte getForme() {
@@ -112,8 +112,8 @@ public class Carte {
     }
     
     /**
-   	 * <b>Retourne la couleur d'une carte.</b>
-   	 * <p></p>
+   	 * Retourne la couleur d'une carte.
+   	 * 
    	 *@return La couleur de la carte.
    	 */
     CouleursCarte getCouleur() {
