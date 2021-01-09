@@ -27,9 +27,6 @@ public class Manche implements Visitable {
     	Carte carteCachee = this.pioche.piocher();
 		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau(), carteCachee);
 		
-		//	Test
-		this.plateau.getCase(2, 1).setCarte(new Carte(true, FormesCarte.CARRE, CouleursCarte.BLEU));
-		
 		this.attribuerCartes();
 		
 		//	Initialisation des Jouer, pour jouer un tour
