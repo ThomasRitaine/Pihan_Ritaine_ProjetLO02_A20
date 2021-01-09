@@ -1,10 +1,7 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.vue;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,10 +18,6 @@ import javax.swing.BoxLayout;
 
 public class Jeu implements Observer{
 	
-	//	LARG_CASE / LONG_CASE doit être 0.7
-	public static int LARG_CASE = 105; 	//	Largeur des cases en pixel
-	public static int LONG_CASE = 150; 	//	Longueur des cases en pixel
-
 	private JFrame frame;
 	private JPanel conteneurPlateau;
 	private Manche manche;

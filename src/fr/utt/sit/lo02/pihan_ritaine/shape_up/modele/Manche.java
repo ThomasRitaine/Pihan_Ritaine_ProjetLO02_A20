@@ -1,5 +1,7 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Carte.CouleursCarte;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Carte.FormesCarte;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 /**
  * Manche est la classe visitée par le visiteur "CalculePointsVisitor" conformément au patron de conception Visitor.
@@ -24,6 +26,9 @@ public class Manche implements Visitable {
     	this.pioche = Pioche.getPioche();
     	Carte carteCachee = this.pioche.piocher();
 		this.plateau = new Plateau(partieEnCours.getParametre().getFormePlateau(), carteCachee);
+		
+		//	Test
+		this.plateau.getCase(2, 1).setCarte(new Carte(true, FormesCarte.CARRE, CouleursCarte.BLEU));
 		
 		this.attribuerCartes();
 		
