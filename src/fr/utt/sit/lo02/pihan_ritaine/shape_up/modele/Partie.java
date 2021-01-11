@@ -5,7 +5,9 @@ import java.util.Observer;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau.FormesPlateau;
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.Jeu;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche;
+
+
 /**
  * Partie est la classe définissant une partie de Jeu.
  * Elle admet un constructeur permettant de mettre en place les paramètres d'une partie et d'initialiser les points. 
@@ -89,7 +91,7 @@ public class Partie implements Runnable {
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Jeu fenetre = new Jeu(Partie.getPartie());
+					InterfaceGraphiqueManche fenetre = new InterfaceGraphiqueManche(Partie.getPartie());
 					fenetre.getFrame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

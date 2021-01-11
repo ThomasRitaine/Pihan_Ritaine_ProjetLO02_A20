@@ -3,6 +3,7 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.Observable;
 import java.util.Set;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.exceptions.CaseDejaRemplieException;
@@ -15,7 +16,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.exceptions.NonAdjacenteExce
  * @version 1.0
  *
  */
-public class Plateau {
+public class Plateau extends Observable{
 
 //	Enumération
 	/**
@@ -277,10 +278,7 @@ public class Plateau {
 					break;
 			}
 			
-			//System.out.println("decalageX = " + decalageX);
-			//System.out.println("decalageY = " + decalageY);
 			aDecale = this.decaler(decalageX, decalageY);
-			//this.afficher();
 			
 			if(aDecale) {
 				try {
@@ -297,6 +295,10 @@ public class Plateau {
 					//	On met la carte sur la case
 					emplacement.setCarte(carteAPoser);
 					
+					//	On notifie les observeurs que le plateau a changé
+					this.setChanged();
+					this.notifyObservers();
+					
 					//	On indique que l'opération a réussi
 					reussite = true;
 					
@@ -305,8 +307,6 @@ public class Plateau {
 					this.cases.clear();
 					this.cases.putAll(copieCases);
 				}
-				//System.out.println("Après remise comme avant");
-				//this.afficher();
 			}
 			
 			//	Fin de la boucle, on passe au prochain décalage

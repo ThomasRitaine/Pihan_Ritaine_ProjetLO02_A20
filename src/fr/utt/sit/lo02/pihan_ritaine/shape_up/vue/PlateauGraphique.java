@@ -4,8 +4,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -28,9 +26,6 @@ public class PlateauGraphique extends JPanel {
 	public static int LONG_CASE = 150; 	//	Longueur des cases en pixel
 	
 	private fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau plateau;
-	
-	//on déclare une liste de boutons pour les cases.
-	private ArrayList<JButton> listButtons;
 
 	public PlateauGraphique(fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau plateau) {
 		this.plateau = plateau;
@@ -98,7 +93,6 @@ public class PlateauGraphique extends JPanel {
 						g2d.drawImage(image, i, j, PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, this);
 						//on cree un bouton sur chaque case
 						JButton currentBt =new JButton();
-						listButtons.add(currentBt);
 						//on peut définir ici sans mvc un actionListener ou le faire avec la fonction rendreCaseCliquable mais deuxième option complexe pour récupérer X et Y.
 						/*currentBt.addActionListener((ActionListener) new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -107,7 +101,8 @@ public class PlateauGraphique extends JPanel {
 								
 							}
 						});*/
-						}
+					}
+				}
 				y++;
 			}
 			x++;
