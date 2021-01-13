@@ -15,6 +15,7 @@ public class Manche extends Observable implements Visitable {
 //	Attributs
     private Plateau plateau;
     private Pioche pioche;
+	private int tour;
     
 //	Constructeur
     /**
@@ -79,10 +80,10 @@ public class Manche extends Observable implements Visitable {
     	System.out.println("\n\n");
     	AsciiArt.bigDivider();
     	System.out.println("\n\t---   Début de la manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche() + "   ---");
-    	int tour = 0;
+    	this.tour = 0;
     	while (!this.mancheFinie()) {
 			this.jouerTour(tour);
-			tour++;
+			this.tour++;
 		}
 		
     	//	Fin de la manche
@@ -234,6 +235,17 @@ public class Manche extends Observable implements Visitable {
      */
     public Plateau getPlateau() {
         return this.plateau;
+    }
+    
+    /**
+     * Récupère le joueur duquel c'est le tour dans la manche
+     * @return
+     */
+    public Joueur getJoueurQuiJoueTour() {
+    	Partie partieEnCours = Partie.getPartie();
+    	int idJoueur = tour%partieEnCours.getParametre().getNbJoueur();
+    	Joueur joueur = partieEnCours.getJoueurParId(idJoueur);
+        return joueur;
     }
 
 }

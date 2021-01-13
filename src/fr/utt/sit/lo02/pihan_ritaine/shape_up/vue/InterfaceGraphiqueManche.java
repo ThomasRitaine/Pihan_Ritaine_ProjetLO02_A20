@@ -5,12 +5,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.FontUIResource;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.BorderLayout;
@@ -24,7 +21,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Partie;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau;
 
-public class InterfaceGraphiqueManche implements Observer {
+public class InterfaceGraphiqueManche implements Observer, Runnable {
 
 	//	Déclaration des membres du jeu initialis�s dans son constructeur.
 	private Plateau plateau;
@@ -64,6 +61,16 @@ public class InterfaceGraphiqueManche implements Observer {
 		this.plateau.addObserver(this);
 		Partie.getPartie().getMancheActuelle().addObserver(this);
 	}
+	
+	//	La fonction qui est appelée quand on crée lance un Thread de cette classe
+	public void run() {
+		try {
+			//	On affiche juste la frame car l'initialisation a été faite avant d'appeler le Thread
+			this.getFrame().setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 	/**
 	 * Initialize the contents of the frame.
@@ -86,8 +93,10 @@ public class InterfaceGraphiqueManche implements Observer {
 	 */
 	private void afficherMessagesEtBoutons() {
 		
+		Partie partieEnCours = Partie.getPartie();
+		
 		//	On crée une zone de texte pour y mettre le numéro de la manche en haut de l'écran
-		this.txtNumManche = new JLabel("Manche " + (Partie.getPartie().getNumMancheActuelle()+1) + " sur " + Partie.getPartie().getParametre().getNbManche());
+		this.txtNumManche = new JLabel("Manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche());
 		//	On met le texte au centre
 		this.txtNumManche.setHorizontalAlignment(SwingConstants.CENTER);
 		//	On agrandit la police d'écriture
@@ -101,7 +110,7 @@ public class InterfaceGraphiqueManche implements Observer {
 		//	On met un tableau dans ce conteneur
 		conteneurMessagesEtBoutons.setLayout(new GridLayout(6, 2, 20, 20));
 		
-		txtAuTourDe = new JLabel("Au tour de ");
+		txtAuTourDe = new JLabel("Au tour de "+partieEnCours.getJoueurParId(0).getNom());
 		conteneurMessagesEtBoutons.add(txtAuTourDe);
 		
 		//	On laisse une case vide à côté du label précédent
@@ -127,7 +136,7 @@ public class InterfaceGraphiqueManche implements Observer {
 		conteneurMessagesEtBoutons.add(txtCarte0);
 		//	Avec la carte à côté
 		this.imageCarte0 = new JLabel();
-		this.imageCarte0.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+		this.imageCarte0.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+partieEnCours.getJoueurParId(0).getCarteDeMain(0).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
 		conteneurMessagesEtBoutons.add(this.imageCarte0);
 		
 		
@@ -136,7 +145,7 @@ public class InterfaceGraphiqueManche implements Observer {
 		conteneurMessagesEtBoutons.add(txtCarte1);
 		//	Avec la carte à côté
 		this.imageCarte1 = new JLabel();
-		this.imageCarte1.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+		this.imageCarte1.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+partieEnCours.getJoueurParId(0).getCarteDeMain(1).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
 		conteneurMessagesEtBoutons.add(this.imageCarte1);
 		
 		//	Si le mode de jeu est avancé, on affiche la troisième carte de la main
@@ -147,7 +156,7 @@ public class InterfaceGraphiqueManche implements Observer {
 			//	Avec la carte à côté
 			this.imageCarte2 = new JLabel();
 
-			this.imageCarte2.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+			this.imageCarte2.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+partieEnCours.getJoueurParId(0).getCarteDeMain(2).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
 			conteneurMessagesEtBoutons.add(this.imageCarte2);
 		}
 		
@@ -204,7 +213,14 @@ public class InterfaceGraphiqueManche implements Observer {
 	public void update(Observable instanceObservable, Object arg) {
 		
 		if (instanceObservable instanceof Plateau) {
+			
+			//	Le plateau a été modifié, on l'actualise
 			this.afficherPlateau();
+			
+			//	On réaffiche la main du joueur
+			Joueur joueurQuiDoitJouer = Partie.getPartie().getMancheActuelle().getJoueurQuiJoueTour();
+			System.out.println("Carte à jouer du joueur "+joueurQuiDoitJouer.getNom()+" = "+joueurQuiDoitJouer.getCarteAJouer());
+			this.actualiserCarteEnMain(joueurQuiDoitJouer);
 		}
 		
 		//	C'est au tour d'un nouveau joueur, on actualise l'affichage
@@ -216,52 +232,32 @@ public class InterfaceGraphiqueManche implements Observer {
 			//	On remplit l'interface avec les informations du joueur
 			this.txtAuTourDe.setText("Au tour de "+joueur.getNom());
 			
-			//	On affiche la carte de la main du joueur
-			if (joueur.getCarteDeMain(0) != null) {
-				this.imageCarte0.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+joueur.getCarteDeMain(0).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
-			} else {
-				this.imageCarte0.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
-			}
-			if (joueur.getCarteDeMain(1) != null) {
-				this.imageCarte1.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+joueur.getCarteDeMain(1).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
-			} else {
-				this.imageCarte1.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
-			}
-			
-			//	On fait pareil sur la 3ème carte de la main si on est en mode de jeu avancé
-			if (this.mode == ModeJeu.AVANCE) {
-				if (joueur.getCarteDeMain(2) != null) {
-					this.imageCarte2.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+joueur.getCarteDeMain(2).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
-				} else {
-					this.imageCarte2.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
-				}
-			}
+			//	On actualise les cartes en main affichées
+			this.actualiserCarteEnMain(joueur);
 		}
 		
-		/*
-		if(arg instanceof EventsObservable) {
-			switch ((EventsObservable) arg) {
-				case AFFICHER_PLATEAU:
-				
-					plateau.afficher();
-					plateau.setCarte(o.getPosCarte());
-					frame.revalidate();
-					frame.repaint();
-					break;
-				case POSER_CARTE:
-					plateau.poserCarte();
-					frame.revalidate();
-					frame.repaint();
-					break;
-				case BOUGER_CARTE:
-					plateau.bougerCarte();
-					frame.revalidate();
-					frame.repaint();
-					break;
-				default:
-					break;*/
-		//	}
-		//}
+	}
+	
+	private void actualiserCarteEnMain(Joueur joueur) {
+		//	On affiche la carte de la main du joueur
+		if (joueur.getCarteDeMain(0) != null) {
+			this.imageCarte0.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+joueur.getCarteDeMain(0).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+		} else {
+			this.imageCarte0.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+		}
+		if (joueur.getCarteDeMain(1) != null) {
+			this.imageCarte1.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+joueur.getCarteDeMain(1).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+		} else {
+			this.imageCarte1.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+		}
 		
+		//	On fait pareil sur la 3ème carte de la main si on est en mode de jeu avancé
+		if (this.mode == ModeJeu.AVANCE) {
+			if (joueur.getCarteDeMain(2) != null) {
+				this.imageCarte2.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/"+joueur.getCarteDeMain(2).getCode()+".jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+			} else {
+				this.imageCarte2.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/cartes/vide.jpg")).getImage().getScaledInstance(PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, 0)));
+			}
+		}
 	}
 }

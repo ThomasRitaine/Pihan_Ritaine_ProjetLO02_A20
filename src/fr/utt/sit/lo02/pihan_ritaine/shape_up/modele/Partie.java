@@ -79,25 +79,16 @@ public class Partie implements Runnable {
     	
     	//	Paramï¿½trage rapide, sans passer par le formulaire
     	String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
-		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
+		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
     	
 		Partie maPartie = Partie.creerPartie(parametre);
 		
-		Thread t = new Thread(maPartie);
-		t.start();
-    	
+		Thread partieThread = new Thread(maPartie);
+		partieThread.start();
 		
-    		//	Démarrage de l'interface graphique
-    	EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InterfaceGraphiqueManche fenetre = new InterfaceGraphiqueManche(Partie.getPartie());
-					fenetre.getFrame().setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		InterfaceGraphiqueManche interfaceManche = new InterfaceGraphiqueManche(Partie.getPartie());
+		Thread interfaceMancheThread = new Thread(interfaceManche);
+		interfaceMancheThread.start();
     	
     }
     

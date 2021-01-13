@@ -44,13 +44,11 @@ public abstract class Jouer implements InterfaceNatureJoueur {
 		
 		//	On récupère la carte du joueur
 		Carte carteAPoser = this.joueur.getCarteDeMain(idCarte);
+		//	On enlève la carte de la main du joueur
+		this.joueur.setCarteDeMain(idCarte, null);
 		
-		if(plateau.poserCarte(coordX, coordY, carteAPoser)) {
+		if(!plateau.poserCarte(coordX, coordY, carteAPoser)) {
 			
-			//	Si la pose est une réussite, on enlève la carte au joueur
-			this.joueur.setCarteDeMain(idCarte, null);
-			
-   	 	} else {
    	 		// 	Si la pose est un echec, on remet la carte dans la main du joueur
    	 		this.joueur.setCarteDeMain(idCarte, carteAPoser);
    	 		reussite = false;

@@ -75,18 +75,18 @@ public class Plateau extends Observable{
 		}
 		
 		else if (forme == FormesPlateau.ROND) {
-			//	Un rond, dans un rectangle de 4*5 sans les coins => 16 cases
-			for (int y = 1; y <= 5; y++) {
-				for (int x = 1; x <= 4; x++) {
+			//	Un rond, dans un rectangle de 5*4 sans les coins => 16 cases
+			for (int y = 1; y <= 4; y++) {
+				for (int x = 1; x <= 5; x++) {
 					coord = Plateau.getKey(x, y);
 					this.cases.put(coord,new Case());
 				}
 			}
 			//	On enlève les cases des coins pour faire la forme du rond
 			this.cases.remove("1;1");
-			this.cases.remove("1;5");
-			this.cases.remove("4;1");
-			this.cases.remove("4;5");
+			this.cases.remove("1;4");
+			this.cases.remove("5;1");
+			this.cases.remove("5;4");
 		}
 		
 		else if (forme == FormesPlateau.CERCEAU) {
