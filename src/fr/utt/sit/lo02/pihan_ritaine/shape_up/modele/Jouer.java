@@ -1,4 +1,5 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
+
 /**
  * Jouer est la classe mère de JouerHumain et JouerIA. 
  *
@@ -12,7 +13,7 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
  * @version 1.0
  */
 
-public abstract class Jouer implements InterfaceNatureJoueur{
+public abstract class Jouer implements InterfaceNatureJoueur {
 	
 	protected Joueur joueur;
 	protected Plateau plateau;

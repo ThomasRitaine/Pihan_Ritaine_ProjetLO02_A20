@@ -8,7 +8,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
  * @version 1.0
  * @see Jouer
  */
-public class JouerHumain extends Jouer{
+public class JouerHumain extends Jouer {
 	/**
 	 * Recupère le constructeur de la super classe Jouer.
 	 * @param joueur

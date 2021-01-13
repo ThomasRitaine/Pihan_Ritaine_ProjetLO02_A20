@@ -1,7 +1,7 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Carte.CouleursCarte;
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Carte.FormesCarte;
+import java.util.Observable;
+
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 /**
  * Manche est la classe visitée par le visiteur "CalculePointsVisitor" conformément au patron de conception Visitor.
@@ -10,7 +10,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
  * @version 1.0
  *
  */
-public class Manche implements Visitable {
+public class Manche extends Observable implements Visitable {
 	
 //	Attributs
     private Plateau plateau;
@@ -134,6 +134,10 @@ public class Manche implements Visitable {
     	
 			//	Donner une carte au joueur
     	this.donnerCarte(joueur);
+    	
+    		//	On notifie les observers
+    	this.setChanged();
+		this.notifyObservers(joueur);
 		
 			//	Jouer le tour du joueur
 		joueur.getTypeJouer().jouerTour();

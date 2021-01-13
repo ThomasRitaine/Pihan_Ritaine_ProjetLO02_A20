@@ -4,10 +4,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Case;
@@ -89,10 +87,7 @@ public class PlateauGraphique extends JPanel {
 						
 						ImageIcon imageIcon = new ImageIcon(this.getClass().getResource(pathToImageString)); // load the image to a imageIcon
 						Image image = imageIcon.getImage(); // transform it
-						//g2d.drawImage(newimg, i, j, null);
 						g2d.drawImage(image, i, j, PlateauGraphique.LARG_CASE, PlateauGraphique.LONG_CASE, this);
-						//on cree un bouton sur chaque case
-						JButton currentBt =new JButton();
 						//on peut définir ici sans mvc un actionListener ou le faire avec la fonction rendreCaseCliquable mais deuxième option complexe pour récupérer X et Y.
 						/*currentBt.addActionListener((ActionListener) new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
