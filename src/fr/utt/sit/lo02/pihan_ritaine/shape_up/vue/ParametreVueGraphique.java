@@ -10,7 +10,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau.FormesPlateau;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre;
@@ -20,12 +19,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.Color;
 
-public class ParametreVueGraphique {
+public class ParametreVueGraphique implements Runnable {
 // noms des composants
 	private JFrame frame;
 	private JSpinner spinnerNombreJoueursIA;
@@ -114,12 +112,12 @@ public class ParametreVueGraphique {
 		frame.getContentPane().add(lblFormeDuPlateau);
 
 		formesPlateauComboBox = new JComboBox<FormesPlateau>();
-		formesPlateauComboBox.setModel(new DefaultComboBoxModel(FormesPlateau.values()));
+		formesPlateauComboBox.setModel(new DefaultComboBoxModel<FormesPlateau>(FormesPlateau.values()));
 		formesPlateauComboBox.setBounds(398, 339, 192, 30);
 		frame.getContentPane().add(formesPlateauComboBox);
 
 		modeJeuComboBox = new JComboBox<ModeJeu>();
-		modeJeuComboBox.setModel(new DefaultComboBoxModel(ModeJeu.values()));
+		modeJeuComboBox.setModel(new DefaultComboBoxModel<ModeJeu>(ModeJeu.values()));
 		modeJeuComboBox.setBounds(398, 293, 192, 30);
 		frame.getContentPane().add(modeJeuComboBox);
 
@@ -197,6 +195,16 @@ public class ParametreVueGraphique {
 		frame.getContentPane().add(btnJouer);
 
 	}
+	
+	//	La fonction qui est appelée quand on crée lance un Thread de cette classe
+	public void run() {
+		try {
+			//	On affiche juste la frame car l'initialisation a été faite avant d'appeler le Thread
+			this.getFrame().setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 	public JFrame getFrame() {
 		return frame;

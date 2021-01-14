@@ -11,7 +11,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau.FormesPlateau;
  * @author Yaëlle Pihan & Thomas Ritaine
  * @version 1.0
  */
-public class Parametre {
+public class Parametre implements Runnable {
 	
 //	ENUMERATION
 	/**
@@ -128,7 +128,7 @@ public class Parametre {
     
   
 //	Méthodes
-    public void parametrerPartie() {
+    public void run() {
     	boolean validInput;
     	boolean choisi;
     	

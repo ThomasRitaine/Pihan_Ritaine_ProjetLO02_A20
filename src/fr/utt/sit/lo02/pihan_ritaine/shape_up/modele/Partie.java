@@ -76,14 +76,19 @@ public class Partie implements Runnable {
 
     	//	Demande de paramï¿½tres ï¿½ l'utilisateur
     	Parametre parametre = new Parametre();
-    	//parametre.parametrerPartie();
+    	Thread parametreThread = new Thread(parametre);
+    	parametreThread.start();
+    	
+    	//	Démarrage de l'interface graphique du paramétrage
+    	ParametreVueGraphique interfaceParametre = new ParametreVueGraphique(parametre);
+    	Thread interfaceParametreThread = new Thread(interfaceParametre);
+    	interfaceParametreThread.start();
+		
     	
     	//	Paramï¿½trage rapide, sans passer par le formulaire
     	//String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
 		//Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
 		
-		ParametreVueGraphique fenetreParametre = new ParametreVueGraphique(parametre);
-		fenetreParametre.getFrame().setVisible(true);
 		
 		if(parametre.getPretAJouer()) {
 			parametre.resumerParametre();
