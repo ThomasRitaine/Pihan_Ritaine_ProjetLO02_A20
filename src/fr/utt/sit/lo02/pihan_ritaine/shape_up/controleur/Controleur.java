@@ -43,7 +43,7 @@ public class Controleur {
 		
 		btnFinirTour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtAuTourDe.setText("A votre tour"+"nom joueur");
+				/*txtAuTourDe.setText("A votre tour"+"nom joueur");*/
 				/*récupérer le nom du joueur.*/
 				/*appeler la méthode Fin tour.*/
 			}

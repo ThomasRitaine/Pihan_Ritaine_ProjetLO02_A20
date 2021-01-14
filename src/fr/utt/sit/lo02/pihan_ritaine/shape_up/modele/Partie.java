@@ -6,6 +6,7 @@ import java.util.Observer;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau.FormesPlateau;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.ParametreVueGraphique;
 
 
 /**
@@ -74,21 +75,27 @@ public class Partie implements Runnable {
 		AsciiArt.welcome();
 
     	//	Demande de param�tres � l'utilisateur
-    	//Parametre parametre = new Parametre();
+    	Parametre parametre = new Parametre();
     	//parametre.parametrerPartie();
     	
     	//	Param�trage rapide, sans passer par le formulaire
-    	String[] noms = {"Rom�o", "Juliette", "L�a l'IA"};
-		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
-    	
-		Partie maPartie = Partie.creerPartie(parametre);
+    	//String[] noms = {"Rom�o", "Juliette", "L�a l'IA"};
+		//Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
 		
-		Thread partieThread = new Thread(maPartie);
-		partieThread.start();
+		ParametreVueGraphique fenetreParametre = new ParametreVueGraphique(parametre);
+		fenetreParametre.getFrame().setVisible(true);
 		
-		InterfaceGraphiqueManche interfaceManche = new InterfaceGraphiqueManche(Partie.getPartie());
-		Thread interfaceMancheThread = new Thread(interfaceManche);
-		interfaceMancheThread.start();
+		if(parametre.getPretAJouer()) {
+			parametre.resumerParametre();
+			Partie maPartie = Partie.creerPartie(parametre);		
+			Thread partieThread = new Thread(maPartie);
+			partieThread.start();
+			
+			InterfaceGraphiqueManche interfaceManche = new InterfaceGraphiqueManche(Partie.getPartie());
+			Thread interfaceMancheThread = new Thread(interfaceManche);
+			interfaceMancheThread.start();
+		}
+		
     	
     }
     

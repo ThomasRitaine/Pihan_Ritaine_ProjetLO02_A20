@@ -78,6 +78,8 @@ public class Parametre {
     
     
     private ModeJeu modeJeu;
+    
+    private Boolean pretAJouer=false;
 
     
 //	CONSTRUCTEURS
@@ -422,7 +424,19 @@ public class Parametre {
 	}
 	
 	public String getNomJoueurs(int i) {
-		return this.nomsJoueurs[i];
+		return nomsJoueurs[i];
+	}
+	
+	public void setNomJoueurs(int i, String nom) {
+		this.nomsJoueurs[i]=nom;
+	}
+
+	public Boolean getPretAJouer() {
+		return pretAJouer;		
+	}
+	
+	public void setPretAJouer(boolean pretAJouer) {
+				this.pretAJouer=pretAJouer;
 	}
 
 }
