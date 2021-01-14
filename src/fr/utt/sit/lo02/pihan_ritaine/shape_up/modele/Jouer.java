@@ -39,7 +39,7 @@ public abstract class Jouer implements InterfaceNatureJoueur {
 	 * @see Joueur#getCarteDeMain(int)
 	 * @see Joueur#poserCarte(int, int, Carte)
 	 */
-	protected boolean poserCarte(Plateau plateau, int coordX, int coordY, int idCarte) {
+	public boolean poserCarte(Plateau plateau, int coordX, int coordY, int idCarte) {
 		boolean reussite = true;
 		
 		//	On récupère la carte du joueur

@@ -213,15 +213,4 @@ public class ParametreVueGraphique implements Runnable {
 		return frame;
 	}
 
-	@Override
-	public void run() {
-		try {
-			//	On affiche juste la frame car l'initialisation a été faite avant d'appeler le Thread
-			this.getFrame().setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
 }

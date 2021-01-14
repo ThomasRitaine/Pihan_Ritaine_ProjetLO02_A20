@@ -9,6 +9,10 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
  * @see Jouer
  */
 public class JouerHumain extends Jouer {
+	
+	public boolean aPoseCarte;
+	public boolean aBouge;
+	
 	/**
 	 * Recupère le constructeur de la super classe Jouer.
 	 * @param joueur
@@ -63,8 +67,8 @@ public class JouerHumain extends Jouer {
     	
     	//	Interface en ligne de commande
     	boolean finTour = false;
-    	boolean aPoseCarte = false;
-    	boolean aBouge = false;
+    	this.aPoseCarte = false;
+    	this.aBouge = false;
     	
     	while (!finTour) {
     		
@@ -105,7 +109,7 @@ public class JouerHumain extends Jouer {
 	        		break;
 	            	
 	            case "fin":
-	            	if (aPoseCarte) {
+	            	if (this.aPoseCarte) {
 	            		finTour = true;
 					} else {
 						System.out.println("Il faut d'abord poser votre carte avant de mettre fin au tour.");
@@ -122,7 +126,7 @@ public class JouerHumain extends Jouer {
 	            
 	            case "carte":
 	            	if (this.joueur.modeJeu == ModeJeu.NORMAL) {
-	            		if (!aPoseCarte) {
+	            		if (!this.aPoseCarte) {
 		            		System.out.println("Vous avez déjà oublié votre carte à jouer à jouer ?");
 		            		System.out.println("C'est la suivante : " + this.joueur.getCarteAJouer().toString());
 						} else {
@@ -134,7 +138,7 @@ public class JouerHumain extends Jouer {
 	            	break;
 	            	
 	            case "poser":
-	            	if (!aPoseCarte) {
+	            	if (!this.aPoseCarte) {
 	            		int coordX = 0;
 	            		int coordY = 0;
 	            		int numCarte = 0;
@@ -150,8 +154,8 @@ public class JouerHumain extends Jouer {
 		            			coordX = Integer.parseInt(commande[2]);
 			            		coordY = Integer.parseInt(commande[3]);
 		            		}
-		            		aPoseCarte = this.poserCarte(this.plateau, coordX, coordY, numCarte);
-		            		if (aPoseCarte) {
+		            		this.aPoseCarte = this.poserCarte(this.plateau, coordX, coordY, numCarte);
+		            		if (this.aPoseCarte) {
 		            			System.out.println("La carte a bien été posée sur la case ( " + coordX + " ; " + coordY + " ) !" );
 		            			this.plateau.afficher();
 		            		} else {
@@ -172,15 +176,15 @@ public class JouerHumain extends Jouer {
 	            	break;
 	            	
 	            case "bouger":
-	            	if (!aBouge) {
+	            	if (!this.aBouge) {
 		            		
             			try {
             				int coordX1 = Integer.parseInt(commande[1]);
             				int coordY1 = Integer.parseInt(commande[2]);
             				int coordX2 = Integer.parseInt(commande[3]);
             				int coordY2 = Integer.parseInt(commande[4]);
-		            		aBouge = this.plateau.bougerCarte(coordX1, coordY1, coordX2, coordY2);
-		            		if (aBouge) {
+		            		this.aBouge = this.plateau.bougerCarte(coordX1, coordY1, coordX2, coordY2);
+		            		if (this.aBouge) {
 		            			System.out.println("La carte de la case ( " + coordX1 + " ; " + coordY1 + " ) a bien été bougée sur la case ( " + coordX2 + " ; " + coordY2 + " ) !" );
 		            			this.plateau.afficher();
 		            		} else {
@@ -219,7 +223,7 @@ public class JouerHumain extends Jouer {
         	}
     		
         	//	On met fin au tour si la carte a été posée et qu'une carte a été bougée, on met fin au tour
-        	if (aBouge && aPoseCarte) {
+        	if (this.aBouge && this.aPoseCarte) {
 				finTour = true;
 			}
         	
@@ -227,6 +231,22 @@ public class JouerHumain extends Jouer {
     	
     }
     
+    
+    public boolean getAPoseCarte() {
+		return this.aPoseCarte;
+	}
+    
+    public void setAPoseCarte(boolean value) {
+		this.aPoseCarte = value;
+	}
+    
+    public boolean getABouge() {
+		return this.aBouge;
+	}
+    
+    public void setABouge(boolean value) {
+		this.aBouge = value;
+	}
     
 
 }

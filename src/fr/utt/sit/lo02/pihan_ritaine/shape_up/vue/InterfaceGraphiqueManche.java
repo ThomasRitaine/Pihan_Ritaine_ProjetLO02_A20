@@ -3,18 +3,22 @@ package fr.utt.sit.lo02.pihan_ritaine.shape_up.vue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.FontUIResource;
+
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurMancheBougerCarte;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurMancheFinTour;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurManchePoserCarte;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Joueur;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Manche;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
@@ -31,8 +35,7 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 	private JFrame frame;
 	
 	//	Déclaration zones textes
-	private JLabel txtNumManche;
-	private JLabel txtAuTourDe;
+	private JLabel txtNumMancheEtJoueur;
 	private JLabel imageCarte0;
 	private JLabel imageCarte1;
 	private JLabel imageCarte2;
@@ -43,6 +46,13 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 	private JButton btnPoserCarte;
 	private JButton btnBougerCarte;
 	private JPanel conteneurPlateau;
+	private JTextField coordXPoserInput;
+	private JTextField coordYPoserInput;
+	private JTextField coordXDepuisBougerInput;
+	private JTextField coordYDepuisBougerInput;
+	private JTextField coordXVersBougerInput;
+	private JTextField coordYVersBougerInput;
+	private JTextField idCarteInput;
 	
 	/**
 	 * Create the application.
@@ -60,6 +70,11 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		//	Ajout des observers
 		this.plateau.addObserver(this);
 		Partie.getPartie().getMancheActuelle().addObserver(this);
+		
+		//	Création des Controleurs : lien entre le Modèle et la Vue
+		new ControleurManchePoserCarte(this.txtMessage, this.btnPoserCarte, this.mode, this.idCarteInput, this.coordXPoserInput, this.coordYPoserInput);
+		new ControleurMancheBougerCarte(this.txtMessage, this.btnBougerCarte, this.coordXDepuisBougerInput, this.coordYDepuisBougerInput, this.coordXVersBougerInput, this.coordYVersBougerInput);
+		new ControleurMancheFinTour(this.txtMessage, this.btnFinirTour);
 	}
 	
 	//	La fonction qui est appelée quand on crée lance un Thread de cette classe
@@ -96,12 +111,12 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		Partie partieEnCours = Partie.getPartie();
 		
 		//	On crée une zone de texte pour y mettre le numéro de la manche en haut de l'écran
-		this.txtNumManche = new JLabel("Manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche());
+		this.txtNumMancheEtJoueur = new JLabel("Manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche()+" - Au tour de "+partieEnCours.getJoueurParId(0).getNom());
 		//	On met le texte au centre
-		this.txtNumManche.setHorizontalAlignment(SwingConstants.CENTER);
+		this.txtNumMancheEtJoueur.setHorizontalAlignment(SwingConstants.CENTER);
 		//	On agrandit la police d'écriture
-		this.txtNumManche.setFont(new FontUIResource("Serif", Font.BOLD, 22));
-		frame.getContentPane().add(txtNumManche, BorderLayout.NORTH);
+		this.txtNumMancheEtJoueur.setFont(new FontUIResource("Serif", Font.BOLD, 22));
+		frame.getContentPane().add(txtNumMancheEtJoueur, BorderLayout.NORTH);
 		
 		//	On crée un conteneur pour les messages et les boutons
 		JPanel conteneurMessagesEtBoutons = new JPanel();
@@ -109,13 +124,6 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		frame.getContentPane().add(conteneurMessagesEtBoutons, BorderLayout.EAST);
 		//	On met un tableau dans ce conteneur
 		conteneurMessagesEtBoutons.setLayout(new GridLayout(6, 2, 20, 20));
-		
-		txtAuTourDe = new JLabel("Au tour de "+partieEnCours.getJoueurParId(0).getNom());
-		conteneurMessagesEtBoutons.add(txtAuTourDe);
-		
-		//	On laisse une case vide à côté du label précédent
-		JLabel vide = new JLabel("");
-		conteneurMessagesEtBoutons.add(vide);
 		
 		//	On affiche la main ou les cartes de victoire et à jouer en fonction du mode de jeu
 		String messageTxtCarte0 = "";
@@ -160,41 +168,57 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 			conteneurMessagesEtBoutons.add(this.imageCarte2);
 		}
 		
-		txtMessage = new JLabel("Message");
+		txtMessage = new JLabel();
 		conteneurMessagesEtBoutons.add(txtMessage);
 		
-		btnBougerCarte = new JButton("Bouger une carte");
-		conteneurMessagesEtBoutons.add(btnBougerCarte);
+		JPanel poserCartePanel = new JPanel();
+		poserCartePanel.setLayout(new BoxLayout(poserCartePanel, BoxLayout.Y_AXIS));
+		conteneurMessagesEtBoutons.add(poserCartePanel);
+		JLabel coordXLabel = new JLabel("Coordonnée X :");
+		poserCartePanel.add(coordXLabel);
+		this.coordXPoserInput = new JTextField();
+		poserCartePanel.add(this.coordXPoserInput);
+		JLabel coordYLabel = new JLabel("Coordonnée Y :");
+		poserCartePanel.add(coordYLabel);
+		this.coordYPoserInput = new JTextField();
+		poserCartePanel.add(this.coordYPoserInput);
+		if (this.mode == ModeJeu.AVANCE) {
+			this.idCarteInput = new JTextField();
+			poserCartePanel.add(this.idCarteInput);
+		}
+		this.btnPoserCarte = new JButton("Poser ma carte");
+		poserCartePanel.add(this.btnPoserCarte);
 		
-		btnPoserCarte = new JButton("Poser une carte");	
-		conteneurMessagesEtBoutons.add(btnPoserCarte);
+		JPanel bougerCartePanel1 = new JPanel();
+		bougerCartePanel1.setLayout(new BoxLayout(bougerCartePanel1, BoxLayout.Y_AXIS));
+		conteneurMessagesEtBoutons.add(bougerCartePanel1);
+		JLabel coordXDepuisLabel = new JLabel("Depuis X :");
+		bougerCartePanel1.add(coordXDepuisLabel);
+		this.coordXDepuisBougerInput = new JTextField();
+		bougerCartePanel1.add(this.coordXDepuisBougerInput);
+		JLabel coordYDepuisLabel = new JLabel("Depuis Y :");
+		bougerCartePanel1.add(coordYDepuisLabel);
+		this.coordYDepuisBougerInput = new JTextField();
+		bougerCartePanel1.add(this.coordYDepuisBougerInput);
+		
+		JPanel bougerCartePanel2 = new JPanel();
+		bougerCartePanel2.setLayout(new BoxLayout(bougerCartePanel2, BoxLayout.Y_AXIS));
+		conteneurMessagesEtBoutons.add(bougerCartePanel2);
+		JLabel coordXVersLabel = new JLabel("Vers X :");
+		bougerCartePanel2.add(coordXVersLabel);
+		this.coordXVersBougerInput = new JTextField();
+		bougerCartePanel2.add(this.coordXVersBougerInput);
+		JLabel coordYVersLabel = new JLabel("Vers Y :");
+		bougerCartePanel2.add(coordYVersLabel);
+		this.coordYVersBougerInput = new JTextField();
+		bougerCartePanel2.add(this.coordYVersBougerInput);
+		this.btnBougerCarte = new JButton("Bouger la carte");
+		bougerCartePanel2.add(this.btnBougerCarte);
+		
 		
 		btnFinirTour = new JButton("Finir le tour");
 		conteneurMessagesEtBoutons.add(btnFinirTour);
 		
-		//Normalement à mettre dans le controleur du mvc
-		btnBougerCarte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtMessage.setText("Votre carte a bien �t� boug�e.");
-				//rendreCaseCliquable("bouger");
-				
-			}
-		});
-			
-			btnPoserCarte.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					txtMessage.setText("Votre carte a bien �t� pos�e.");
-					
-				}
-			});
-			
-			btnFinirTour.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					txtAuTourDe.setText("A votre tour"+"nom joueur");
-					/*r�cup�rer le nom du joueur.*/
-					/*appeler la m�thode Fin tour.*/
-				}
-			});
 		
 	}
 	/**
@@ -219,18 +243,20 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 			
 			//	On réaffiche la main du joueur
 			Joueur joueurQuiDoitJouer = Partie.getPartie().getMancheActuelle().getJoueurQuiJoueTour();
-			System.out.println("Carte à jouer du joueur "+joueurQuiDoitJouer.getNom()+" = "+joueurQuiDoitJouer.getCarteAJouer());
 			this.actualiserCarteEnMain(joueurQuiDoitJouer);
 		}
 		
 		//	C'est au tour d'un nouveau joueur, on actualise l'affichage
 		if (instanceObservable instanceof Manche) {
 			
+			//	On récupère la partie
+			Partie partieEnCours = Partie.getPartie();
+			
 			//	L'argument donné est le joueur qui va jouer
 			Joueur joueur = (Joueur) arg;
 			
 			//	On remplit l'interface avec les informations du joueur
-			this.txtAuTourDe.setText("Au tour de "+joueur.getNom());
+			this.txtNumMancheEtJoueur.setText("Manche " + (partieEnCours.getNumMancheActuelle()+1) + " sur " + partieEnCours.getParametre().getNbManche()+" - Au tour de "+partieEnCours.getJoueurParId(0).getNom());
 			
 			//	On actualise les cartes en main affichées
 			this.actualiserCarteEnMain(joueur);

@@ -73,7 +73,7 @@ public class Partie implements Runnable {
     		//	Démarrage de l'app en ligne de commande
     	
 		AsciiArt.welcome();
-
+/*
     	//	Demande de paramï¿½tres ï¿½ l'utilisateur
     	Parametre parametre = new Parametre();
     	Thread parametreThread = new Thread(parametre);
@@ -82,13 +82,13 @@ public class Partie implements Runnable {
     	//	Démarrage de l'interface graphique du paramétrage
     	ParametreVueGraphique interfaceParametre = new ParametreVueGraphique(parametre);
     	Thread interfaceParametreThread = new Thread(interfaceParametre);
-    	interfaceParametreThread.start();
+    	interfaceParametreThread.start();*/
 		
     	
     	//	Paramï¿½trage rapide, sans passer par le formulaire
-    	//String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
-		//Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
-		
+    	String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
+		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
+		parametre.setPretAJouer(true);
 		
 		if(parametre.getPretAJouer()) {
 			parametre.resumerParametre();
