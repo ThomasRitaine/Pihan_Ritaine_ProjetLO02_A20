@@ -59,10 +59,7 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		
 		//	Ajout des observers
 		this.plateau.addObserver(this);
-		partieEnCours.getMancheActuelle().addObserver(this);
-		for (int i = 0; i < partieEnCours.getParametre().getNbJoueur(); i++) {
-			partieEnCours.getJoueurParId(i).addObserver(this);
-		}
+		Partie.getPartie().getMancheActuelle().addObserver(this);
 	}
 	
 	//	La fonction qui est appelée quand on crée lance un Thread de cette classe
@@ -204,13 +201,6 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 	 * Affiche le plateau de cartes.
 	 */
 	private void afficherPlateau() {
-		
-		//	Si un plateau était déjà affiché, on l'enlève
-		if (this.conteneurPlateau != null) {
-			getFrame().getContentPane().remove(this.conteneurPlateau);
-		}
-
-		//	Puis on en recrée un à jour
 		this.conteneurPlateau = new fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.PlateauGraphique(this.plateau);
 		getFrame().getContentPane().add(this.conteneurPlateau, BorderLayout.CENTER);
 	}
@@ -226,6 +216,11 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 			
 			//	Le plateau a été modifié, on l'actualise
 			this.afficherPlateau();
+			
+			//	On réaffiche la main du joueur
+			Joueur joueurQuiDoitJouer = Partie.getPartie().getMancheActuelle().getJoueurQuiJoueTour();
+			System.out.println("Carte à jouer du joueur "+joueurQuiDoitJouer.getNom()+" = "+joueurQuiDoitJouer.getCarteAJouer());
+			this.actualiserCarteEnMain(joueurQuiDoitJouer);
 		}
 		
 		//	C'est au tour d'un nouveau joueur, on actualise l'affichage
@@ -238,13 +233,6 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 			this.txtAuTourDe.setText("Au tour de "+joueur.getNom());
 			
 			//	On actualise les cartes en main affichées
-			this.actualiserCarteEnMain(joueur);
-		}
-		
-		if (instanceObservable instanceof Joueur) {
-			//	On change instanceObservable en objet Joueur
-			Joueur joueur = (Joueur) instanceObservable;
-			//	La main du joueur a été modifiée, on actualise l'affichage
 			this.actualiserCarteEnMain(joueur);
 		}
 		

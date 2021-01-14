@@ -182,13 +182,16 @@ public class ParametreVueGraphique implements Runnable {
 				}
 				//nb manches
 				parametre.setNbManche((int) spinnerNombreManche.getValue());
+				
 				//forme plateau
 				parametre.setFormePlateau((FormesPlateau) formesPlateauComboBox.getSelectedItem());
 				//mode de jeu
 				parametre.setModeJeu((ModeJeu) modeJeuComboBox.getSelectedItem());
 
 				/* Pour court circuiter la fonction parametrerPartie() de parametre. */
-				parametre.setPretAJouer(true); 
+				parametre.setPretAJouer(true);
+				//frame.setVisible(false);
+				
 			}
 		});
 		btnJouer.setBounds(352, 398, 89, 23);
@@ -209,4 +212,16 @@ public class ParametreVueGraphique implements Runnable {
 	public JFrame getFrame() {
 		return frame;
 	}
+
+	@Override
+	public void run() {
+		try {
+			//	On affiche juste la frame car l'initialisation a été faite avant d'appeler le Thread
+			this.getFrame().setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }
