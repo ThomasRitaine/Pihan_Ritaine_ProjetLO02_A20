@@ -1,5 +1,7 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 
+import java.util.Observable;
+
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 /**
  * Joueur est la classe définissant un joueur. 
@@ -7,7 +9,7 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
  * @author Yaëlle Pihan et Thomas Ritaine
  * @version 1.0
  */
-public class Joueur {
+public class Joueur extends Observable{
 	
 //	Attributs
     protected String nom;
@@ -45,7 +47,7 @@ public class Joueur {
      * @param value - La carte victoire du joueur.
      */
     public void setCarteVictoire(Carte value) {
-    	this.main[0] = value;
+    	this.setCarteDeMain(0, value);
     }
     
 	/**
@@ -80,7 +82,7 @@ public class Joueur {
      * @param value - La carte à jouer.
      */
     public void setCarteAJouer(Carte value) {
-        this.main[1] = value;
+    	this.setCarteDeMain(1, value);
     }
 
     /**
@@ -151,7 +153,13 @@ public class Joueur {
      * @param carte - La carte devant être ajoutée à la main.
      */
     public void setCarteDeMain(int indice, Carte carte) {
-        this.main[indice] = carte;
+        
+		//	On sauvegarde les changements
+		this.main[indice] = carte;
+		
+		//	Puis on notifie les observeurs que le plateau a changé
+		this.setChanged();
+		this.notifyObservers();
     }
 
     /**
