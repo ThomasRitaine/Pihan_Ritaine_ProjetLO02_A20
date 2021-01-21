@@ -21,41 +21,137 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurMancheFinTour
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurManchePoserCarte;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Joueur;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Manche;
+import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Partie;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau;
 
+/**
+ * InterfaceGraphiqueManche est la classe qui lance l'interface graphique pour jouer une manche.
+ * 
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ */
 public class InterfaceGraphiqueManche implements Observer, Runnable {
 
 	//	Déclaration des membres du jeu initialis�s dans son constructeur.
+	
+	/**
+     * Le plateau que devra représenter l'interface graphique.
+     */
 	private Plateau plateau;
+	
+	/**
+     * Le mode de jeu de l'interface. Il va modifier l'interface graphique puisque les règles de jeu sont différentes.
+     */
 	private ModeJeu mode;
 	
-	//	Déclaration de la fenêtre
+	/**
+     * La fenêtre graphique de l'interface
+     * 
+     * @see InterfaceGraphiqueManche#getFrame()
+     */
 	private JFrame frame;
 	
 	//	Déclaration zones textes
+	/**
+     * Le zone de texte qui sera en haut de l'interface.
+     * Elle sert à afficher le numéro de la manche et le nom du joueur qui doit jouer.
+     */
 	private JLabel txtNumMancheEtJoueur;
+	
+	/**
+     * La zone qui sert à afficher l'image de la carte numéro 0 de la main du joueur.
+     * En mode de jeu normal, cette carte sera la carte de victoire.
+     */
 	private JLabel imageCarte0;
+	
+	/**
+     * La zone qui sert à afficher l'image de la carte numéro 1 de la main du joueur.
+     * En mode de jeu normal, cette carte sera la carte à jouer.
+     */
 	private JLabel imageCarte1;
+	
+	/**
+     * La zone qui sert à afficher l'image de la carte numéro 2 de la main du joueur.
+     * En mode de jeu avancé, cette carte sera affichée. Sinon, elle sera cachée.
+     */
 	private JLabel imageCarte2;
+	
+	/**
+     * La zone de texte qui va afficher les messages d'erreur et de feedback à l'utilisateur.
+     */
 	private JLabel txtMessage;
 	
-	/*D�claration boutons.*/
+	//	Déclaration boutons.
+	/**
+     * Ce bouton va déclencher l'action de fin de tour.
+     * 
+     * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurMancheFinTour
+     */
 	private JButton btnFinirTour;
+	
+	/**
+     * Ce bouton va déclencher l'action de poser une carte.
+     * 
+     * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurManchePoserCarte
+     */
 	private JButton btnPoserCarte;
+	
+	/**
+     * Ce bouton va déclencher l'action de bouger une carte.
+     * 
+     * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurMancheBougerCarte
+     */
 	private JButton btnBougerCarte;
+	
+	/**
+     * Ce conteneur va contenir le plateau graphique
+     * 
+     * @see InterfaceGraphiqueManche#afficherPlateau()
+     */
 	private JPanel conteneurPlateau;
+	
+	/**
+     * Cette zone de texte va récupérer la coordonnée X de la case sur laquelle poser la carte du joueur.
+     */
 	private JTextField coordXPoserInput;
+	
+	/**
+     * Cette zone de texte va récupérer la coordonnée Y de la case sur laquelle poser la carte du joueur.
+     */
 	private JTextField coordYPoserInput;
+	
+	/**
+     * Cette zone de texte va récupérer la coordonnée X de la case dont il faut bouger la carte.
+     */
 	private JTextField coordXDepuisBougerInput;
+	
+	/**
+     * Cette zone de texte va récupérer la coordonnée Y de la case dont il faut bouger la carte.
+     */
 	private JTextField coordYDepuisBougerInput;
+	
+	/**
+     * Cette zone de texte va récupérer la coordonnée X de la case vers laquelle il faut bouger la carte.
+     */
 	private JTextField coordXVersBougerInput;
+	
+	/**
+     * Cette zone de texte va récupérer la coordonnée Y de la case vers laquelle il faut bouger la carte.
+     */
 	private JTextField coordYVersBougerInput;
+	
+	/**
+     * Cette zone de texte va récupérer l'ID de la carte de la main qu'il faut jouer.
+     * Cette zone ne s'affiche que dans le mode avancé.
+     * 
+     * @see InterfaceGraphiqueManche#mode
+     */
 	private JTextField idCarteInput;
 	
 	/**
-	 * Create the application.
+	 * Crée l'application et ajouter les observers.
 	 */
 	public InterfaceGraphiqueManche(Partie partieEnCours) {
 		
@@ -77,7 +173,9 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		new ControleurMancheFinTour(this.txtMessage, this.btnFinirTour);
 	}
 	
-	//	La fonction qui est appelée quand on crée lance un Thread de cette classe
+	/**
+	 * La fonction qui est appelée quand on crée lance un Thread de cette classe
+	 */
 	public void run() {
 		try {
 			//	On affiche juste la frame car l'initialisation a été faite avant d'appeler le Thread
@@ -88,7 +186,7 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
     }
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialise le contenu de la fenêtre.
 	 */
 	private void initialize() {
 		/*Met en place la frame.*/
@@ -104,7 +202,7 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 	}
 	
 	/**
-	 * Affiche les messages.
+	 * Affiche les mesages et les boutons sur la fenêtre de l'interface graphique.
 	 */
 	private void afficherMessagesEtBoutons() {
 		
@@ -221,19 +319,34 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		
 		
 	}
+	
+	
 	/**
 	 * Affiche le plateau de cartes.
+	 * Cette méthode peut être appelée pour actualiser le plateau.
+	 * 
+	 * @see InterfaceGraphiqueManche#update(Observable, Object)
 	 */
 	private void afficherPlateau() {
 		this.conteneurPlateau = new fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.PlateauGraphique(this.plateau);
 		getFrame().getContentPane().add(this.conteneurPlateau, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Retourne la fenêtre.
+	 * 
+	 * @see InterfaceGraphiqueManche#frame
+	 * @return JFrame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	
 	@Override
+	/**
+	 * La méthode qui sera appelée quand un objet observé lance une notification.
+	 */
 	public void update(Observable instanceObservable, Object arg) {
 		
 		if (instanceObservable instanceof Plateau) {
@@ -264,6 +377,10 @@ public class InterfaceGraphiqueManche implements Observer, Runnable {
 		
 	}
 	
+	
+	/**
+	 * Méthode qui actualise les cartes affichées dans la main du joueur.
+	 */
 	private void actualiserCarteEnMain(Joueur joueur) {
 		//	On affiche la carte de la main du joueur
 		if (joueur.getCarteDeMain(0) != null) {

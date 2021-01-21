@@ -86,13 +86,13 @@ public class Partie implements Runnable {
 		
     	
     	//	Paramï¿½trage rapide, sans passer par le formulaire
-    	String[] noms = {"Romï¿½o", "Juliette", "Lï¿½a l'IA"};
-		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.ROND, ModeJeu.NORMAL, 2);
+    	String[] noms = {"Roméo", "Juliette", "Léa l'IA"};
+		Parametre parametre = new Parametre(3, 1, noms, FormesPlateau.TRIANGLE, ModeJeu.NORMAL, 2);
 		parametre.setPretAJouer(true);
 		
 		if(parametre.getPretAJouer()) {
 			parametre.resumerParametre();
-			Partie maPartie = Partie.creerPartie(parametre);		
+			Partie maPartie = Partie.creerPartie(parametre);
 			Thread partieThread = new Thread(maPartie);
 			partieThread.start();
 			
