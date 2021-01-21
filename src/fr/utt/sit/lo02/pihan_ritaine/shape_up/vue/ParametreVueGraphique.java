@@ -23,21 +23,74 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.Color;
 
+/**
+ * ParametreVueGraphique est la classe qui lance l'interface graphique pour paramétrer la partie.
+ * 
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ */
 public class ParametreVueGraphique implements Runnable {
 // noms des composants
+	
+	/**
+     * La fenêtre graphique de l'interface.
+     * 
+     * @see ParametreVueGraphique#getFrame()
+     */
 	private JFrame frame;
+	
+	/**
+     * L'input qui va servir à l'utilisateur pour saisir le nombre de joueurs IA.
+     */
 	private JSpinner spinnerNombreJoueursIA;
+	
+	/**
+     * L'input qui va servir à l'utilisateur pour saisir le nombre de joueurs Humain.
+     */
 	private JSpinner spinnerNombreJoueurHumain;
+	
+	/**
+     * L'input qui va servir à l'utilisateur pour saisir le nombre de manches.
+     */
 	private JSpinner spinnerNombreManche;
+	
+	/**
+     * L'input qui demander à l'utilisateur quelle forme de plateau utiliser.
+     */
 	private JComboBox<FormesPlateau> formesPlateauComboBox;
+	
+	/**
+     * L'input qui demander à l'utilisateur quel mode de jeu utiliser.
+     */
 	private JComboBox<ModeJeu> modeJeuComboBox;
+	
+	/**
+     * Le bouton qui finalise la réception des paramètres et lance la partie.
+     */
 	private JButton btnJouer;
 
-// instance pour parametrer la partie par le biais de cette interface
+	/**
+     * L'objet paramètre qui sera modifié au moment de la soumission du formulaire.
+     * 
+     * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre
+     */
 	private Parametre parametre;
 
-//pour gÃ©nÃ©rer des boutons dynamiquement
+	
+	/**
+     * La liste des input pour saisir le nom de joueurs humain.
+     * Elle est dynamique puisque le nombre de case dépend du nombre saisi de joueur humain saisi par l'utilisateur.
+     * 
+     * @see ParametreVueGraphique#spinnerNombreJoueurHumain
+     */
 	private ArrayList<JTextField> tabTextFieldHumain = new ArrayList<JTextField>();
+	
+	/**
+     * La liste des input pour saisir le nom de joueurs IA.
+     * Elle est dynamique puisque le nombre de case dépend du nombre saisi de joueur IA saisi par l'utilisateur.
+     * 
+     * @see ParametreVueGraphique#spinnerNombreJoueursIA
+     */
 	private ArrayList<JTextField> tabTextFieldIA = new ArrayList<JTextField>();
 
 	/**
@@ -161,7 +214,7 @@ public class ParametreVueGraphique implements Runnable {
 		btnRenseignerNoms.setBounds(306, 185, 172, 23);
 		frame.getContentPane().add(btnRenseignerNoms);
 
-//2nd bouton pour initialiser les parametres
+		//	2nd bouton pour initialiser les parametres
 		btnJouer = new JButton("Jouer");
 		btnJouer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -199,7 +252,10 @@ public class ParametreVueGraphique implements Runnable {
 
 	}
 	
-	//	La fonction qui est appelée quand on crée lance un Thread de cette classe
+	
+	/**
+     * La fonction qui est appelée quand on crée lance un Thread de cette classe.
+     */
 	public void run() {
 		try {
 			//	On affiche juste la frame car l'initialisation a été faite avant d'appeler le Thread
@@ -209,6 +265,12 @@ public class ParametreVueGraphique implements Runnable {
 		}
     }
 
+	/**
+	 * Retourne la fenêtre.
+	 * 
+	 * @see ParametreVueGraphique#frame
+	 * @return JFrame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

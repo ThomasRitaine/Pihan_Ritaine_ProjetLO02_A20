@@ -21,7 +21,6 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurMancheFinTour
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.controleur.ControleurManchePoserCarte;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Joueur;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Manche;
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Partie;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau;

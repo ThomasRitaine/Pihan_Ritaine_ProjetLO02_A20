@@ -10,27 +10,64 @@ import javax.swing.JPanel;
 
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Case;
 
+/**
+ * PlateauGraphique est la classe qui va générer une image du plateau pour l'afficher sur l'interface graphique de la manche.
+ * 
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
+ */
 public class PlateauGraphique extends JPanel {
 
 	/**
-	 * 
-	 */
+     * Un attribut conseillé par Eclipse pour résudre des erreurs.
+     */
 	private static final long serialVersionUID = 1L;
-	public static int TAILLE_SEPARATEUR = 2; 	//	Largeur du trait de s�paration en pixel.
-	public static int DECALAGE_X = 50; 			//	D�calage entre la gauche du plateau et son container
 	
-	//	LARG_CASE / LONG_CASE doit �tre 0.7
-	public static int LARG_CASE = 105; 	//	Largeur des cases en pixel
-	public static int LONG_CASE = 150; 	//	Longueur des cases en pixel
+	/**
+     * La taille des séparateurs entre les cases du tableau.
+     * C'est la largeur du trait de s�paration en pixel.
+     */
+	public static int TAILLE_SEPARATEUR = 2;
 	
+	/**
+     * La taille en pixel de la marge qu'on laisse à gauche du tableau pour afficher les coordonnées Y.
+     */
+	public static int DECALAGE_X = 50;
+	
+	/**
+     * La largeur des cases en pixel.
+     * LARG_CASE / LONG_CASE doit valoir 0.7
+     */
+	public static int LARG_CASE = 105;
+	
+	/**
+     * La longeur des cases en pixel.
+     * LARG_CASE / LONG_CASE doit valoir 0.7
+     */
+	public static int LONG_CASE = 150;
+	
+	/**
+     * Le plateau du modèle que cette interface doit recopier.
+     * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau
+     */
 	private fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau plateau;
 
+	
+	/**
+     * Le constructeur de la classe.
+     * 
+     * @param fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau
+     */
 	public PlateauGraphique(fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau plateau) {
 		this.plateau = plateau;
 	}
 
-	//	Est appel� apr�s la cr�ation d'un objet de cette classe
-	//	Permet de dessiner le plateau
+	/**
+     * Est appelé après la création d'un objet de cette classe.
+     * Permet de dessiner le plateau.
+     * 
+     * @param Graphics
+     */
 	public void paint(Graphics g) {
 		
 		//	On transforme le graphique en graphique 2D pour dessiner
