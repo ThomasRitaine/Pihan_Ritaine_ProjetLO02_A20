@@ -12,13 +12,34 @@ import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Partie;
 
 /**
- * Ce controleur surveille les evenements sur un objet graphique de la classe Button ou TextField et en fonction de ces evenements,
- *  il declenche des methodes de l'objet associes provenant des classes du modele.
- * @author Yaëlle Pihan et Thomas Ritaine
- *
+ * Ce controleur gère le clique sur le bouton pour poser une carte sur InterfaceGraphiqueManche.
+ * Il declenche des methodes de l'objet associé provenant des classes du modele.
+ * 
+ * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche
+ * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#btnPoserCarte
+ * 
+ * @author Yaëlle Pihan & Thomas Ritaine
+ * @version 1.0
  */
 public class ControleurManchePoserCarte {
 	
+	/**
+	 * Le constructeur de ce controleur gère le rôle du controleur.
+	 * 
+	 * @param JLabel
+	 * @param JButton
+	 * @param JTextField
+	 * @param JTextField
+	 * @param JTextField
+	 * 
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#txtMessage
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#btnPoserCarte
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#mode
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#idCarteInput
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#coordXPoserInput
+	 * @see fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche#coordYPoserInput
+	 */
 	public ControleurManchePoserCarte(JLabel txtMessage, JButton btnPoserCarte, ModeJeu mode, JTextField idCarteInput, JTextField coordXPoserInput, JTextField coordYPoserInput) {
 		
 		btnPoserCarte.addActionListener(new ActionListener() {
