@@ -1,12 +1,8 @@
 package fr.utt.sit.lo02.pihan_ritaine.shape_up.modele;
 
-import java.awt.EventQueue;
-import java.util.Observer;
-
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Parametre.ModeJeu;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.modele.Plateau.FormesPlateau;
 import fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.InterfaceGraphiqueManche;
-import fr.utt.sit.lo02.pihan_ritaine.shape_up.vue.ParametreVueGraphique;
 
 
 /**
@@ -73,16 +69,13 @@ public class Partie implements Runnable {
     		//	Démarrage de l'app en ligne de commande
     	
 		AsciiArt.welcome();
-/*
+
     	//	Demande de paramï¿½tres ï¿½ l'utilisateur
+		/*
     	Parametre parametre = new Parametre();
     	Thread parametreThread = new Thread(parametre);
     	parametreThread.start();
-    	
-    	//	Démarrage de l'interface graphique du paramétrage
-    	ParametreVueGraphique interfaceParametre = new ParametreVueGraphique(parametre);
-    	Thread interfaceParametreThread = new Thread(interfaceParametre);
-    	interfaceParametreThread.start();*/
+		 */
 		
     	
     	//	Paramï¿½trage rapide, sans passer par le formulaire
